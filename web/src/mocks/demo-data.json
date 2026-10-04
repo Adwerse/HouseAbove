@@ -1,0 +1,6964 @@
+{
+ "note": "DEMO DATA. Real OpenStreetMap geometry (ODbL); walks, readings, statuses and answers are invented.",
+ "walker": {
+  "id": "w_rodion",
+  "name": "Rodion",
+  "town": "Dublin"
+ },
+ "cameras": {
+  "Capel Street": {
+   "center": [
+    -6.268887,
+    53.348725
+   ],
+   "zoom": 17.1,
+   "pitch": 62,
+   "bearing": 288.3
+  },
+  "Talbot Street": {
+   "center": [
+    -6.255251,
+    53.350592
+   ],
+   "zoom": 17.1,
+   "pitch": 62,
+   "bearing": 16.7
+  }
+ },
+ "buildings": [
+  {
+   "id": "nearl_02",
+   "label": "North Earl St · facade 2",
+   "street": "North Earl Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2596509,
+     53.3500437
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2596902,
+       53.3499797
+      ],
+      [
+       -6.2595655,
+       53.3499985
+      ],
+      [
+       -6.259609,
+       53.3501013
+      ],
+      [
+       -6.2596116,
+       53.3501076
+      ],
+      [
+       -6.2597364,
+       53.3500888
+      ],
+      [
+       -6.2596902,
+       53.3499797
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/nearl_02.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "boarded window on the second floor",
+    "no curtains or blinds on any upper window"
+   ],
+   "separate_entrance": "yes",
+   "confidence": 0.84,
+   "evidence": "Boarded window on the second floor and no curtains or blinds on any upper window above a shuttered shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "boarded window on the second floor",
+     "no curtains or blinds on any upper window"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 37,
+    "grocery_m": 36,
+    "school_m": 273,
+    "gp_or_pharmacy_m": 53,
+    "park_m": 468,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 1,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:12:49Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_underused"
+  },
+  {
+   "id": "capel_02",
+   "label": "Capel St · facade 2",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2684409,
+     53.3471033
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.268515,
+       53.3471202
+      ],
+      [
+       -6.2684954,
+       53.3470688
+      ],
+      [
+       -6.2683668,
+       53.3470863
+      ],
+      [
+       -6.2683865,
+       53.3471377
+      ],
+      [
+       -6.268515,
+       53.3471202
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_02.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 2,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "boarded window on the second floor",
+    "buddleia growing from the parapet"
+   ],
+   "separate_entrance": "yes",
+   "confidence": 0.8,
+   "evidence": "Boarded window on the second floor and buddleia growing from the parapet above an open shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "boarded window on the second floor",
+     "buddleia growing from the parapet"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 118,
+    "grocery_m": 36,
+    "school_m": 493,
+    "gp_or_pharmacy_m": 81,
+    "park_m": 157,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 2,
+   "height_m": 9.6,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": {
+    "outcome": "confirmed_candidate",
+    "note": "Site visit with the owner; two floors empty.",
+    "at": "2026-10-04T10:30:00Z"
+   },
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:06:13Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "confirmed"
+  },
+  {
+   "id": "talbot_09",
+   "label": "Talbot St · facade 9",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2506352,
+     53.3512231
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2506059,
+       53.3512769
+      ],
+      [
+       -6.250557,
+       53.3511861
+      ],
+      [
+       -6.2507096,
+       53.3511604
+      ],
+      [
+       -6.2506841,
+       53.3512601
+      ],
+      [
+       -6.2506059,
+       53.3512769
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_09.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 3,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "no curtains or blinds on any upper window",
+    "faded, peeling window frames"
+   ],
+   "separate_entrance": "yes",
+   "confidence": 0.74,
+   "evidence": "No curtains or blinds on any upper window and faded, peeling window frames above an open shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "no curtains or blinds on any upper window",
+     "faded, peeling window frames"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 43,
+    "grocery_m": 48,
+    "school_m": 364,
+    "gp_or_pharmacy_m": 81,
+    "park_m": 137,
+    "score": 5
+   },
+   "registers": {
+    "derelict": true,
+    "protected": false
+   },
+   "rank": 3,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": "Nobody's lived up there for years, it's only used for storage.",
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T12:05:16Z",
+   "walk_id": "walk_talbot_0410_lunch",
+   "phash": null,
+   "display_status": "likely_underused"
+  },
+  {
+   "id": "talbot_02",
+   "label": "Talbot St · facade 2",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2578536,
+     53.3502871
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2579077,
+       53.3502497
+      ],
+      [
+       -6.2577808,
+       53.3502773
+      ],
+      [
+       -6.2577971,
+       53.3503193
+      ],
+      [
+       -6.2579266,
+       53.3502969
+      ],
+      [
+       -6.2579077,
+       53.3502497
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_02.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 2,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "buddleia growing from the parapet",
+    "no curtains or blinds on any upper window"
+   ],
+   "separate_entrance": "unclear",
+   "confidence": 0.77,
+   "evidence": "Buddleia growing from the parapet and no curtains or blinds on any upper window above a shuttered shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "buddleia growing from the parapet",
+     "no curtains or blinds on any upper window"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 106,
+    "grocery_m": 95,
+    "school_m": 161,
+    "gp_or_pharmacy_m": 111,
+    "park_m": 389,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 4,
+   "height_m": 9.6,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:15:19Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_underused"
+  },
+  {
+   "id": "capel_08",
+   "label": "Capel St · facade 8",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2697641,
+     53.3501685
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.269676,
+       53.35021
+      ],
+      [
+       -6.2696548,
+       53.350153
+      ],
+      [
+       -6.2698522,
+       53.350127
+      ],
+      [
+       -6.2698733,
+       53.350184
+      ],
+      [
+       -6.269676,
+       53.35021
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_08.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 4,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "grimy, unwashed glass on the upper floors",
+    "no curtains or blinds on any upper window"
+   ],
+   "separate_entrance": "unclear",
+   "confidence": 0.76,
+   "evidence": "Grimy, unwashed glass on the upper floors and no curtains or blinds on any upper window above an open shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "grimy, unwashed glass on the upper floors",
+     "no curtains or blinds on any upper window"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 286,
+    "grocery_m": 78,
+    "school_m": 237,
+    "gp_or_pharmacy_m": 166,
+    "park_m": 118,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 5,
+   "height_m": 16.0,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:12:10Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "likely_underused"
+  },
+  {
+   "id": "nearl_03",
+   "label": "North Earl St · facade 3",
+   "street": "North Earl Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.25944,
+     53.3500744
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2594628,
+       53.3500162
+      ],
+      [
+       -6.2593697,
+       53.3500316
+      ],
+      [
+       -6.2594097,
+       53.3501174
+      ],
+      [
+       -6.2594241,
+       53.3501476
+      ],
+      [
+       -6.2595175,
+       53.350132
+      ],
+      [
+       -6.2595105,
+       53.3501172
+      ],
+      [
+       -6.2594628,
+       53.3500162
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/nearl_03.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "grimy, unwashed glass on the upper floors"
+   ],
+   "separate_entrance": "unclear",
+   "confidence": 0.72,
+   "evidence": "Grimy, unwashed glass on the upper floors above a shuttered shopfront.",
+   "verifier": {
+    "agree": false,
+    "for_use": [],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": true,
+   "services": {
+    "bus_m": 51,
+    "grocery_m": 26,
+    "school_m": 259,
+    "gp_or_pharmacy_m": 49,
+    "park_m": 458,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 6,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:13:14Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "review"
+  },
+  {
+   "id": "capel_05",
+   "label": "Capel St · facade 5",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2690549,
+     53.3486848
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2689589,
+       53.3486653
+      ],
+      [
+       -6.269131,
+       53.3486498
+      ],
+      [
+       -6.2691509,
+       53.3487044
+      ],
+      [
+       -6.2689813,
+       53.3487265
+      ],
+      [
+       -6.2689589,
+       53.3486653
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_05.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "no curtains or blinds on any upper window",
+    "to-let sign on the first floor"
+   ],
+   "separate_entrance": "unclear",
+   "confidence": 0.71,
+   "evidence": "No curtains or blinds on any upper window and to-let sign on the first floor above a shuttered shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "no curtains or blinds on any upper window",
+     "to-let sign on the first floor"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 295,
+    "grocery_m": 54,
+    "school_m": 381,
+    "gp_or_pharmacy_m": 93,
+    "park_m": 151,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": true
+   },
+   "rank": 7,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:09:14Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "likely_underused"
+  },
+  {
+   "id": "talbot_05",
+   "label": "Talbot St · facade 5",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2542303,
+     53.3509129
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2544325,
+       53.3509836
+      ],
+      [
+       -6.2543552,
+       53.3508745
+      ],
+      [
+       -6.2542841,
+       53.3508521
+      ],
+      [
+       -6.2540669,
+       53.3508889
+      ],
+      [
+       -6.2541017,
+       53.3509633
+      ],
+      [
+       -6.2542372,
+       53.3509369
+      ],
+      [
+       -6.2542816,
+       53.3510217
+      ],
+      [
+       -6.2544325,
+       53.3509836
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_05.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "to-let sign on the first floor"
+   ],
+   "separate_entrance": "no",
+   "confidence": 0.69,
+   "evidence": "To-let sign on the first floor above a shuttered shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "to-let sign on the first floor"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 28,
+    "grocery_m": 37,
+    "school_m": 132,
+    "gp_or_pharmacy_m": 18,
+    "park_m": 182,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 8,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:19:14Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_underused"
+  },
+  {
+   "id": "capel_04",
+   "label": "Capel St · facade 4",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2688807,
+     53.3481014
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2687865,
+       53.3480908
+      ],
+      [
+       -6.2689607,
+       53.3480698
+      ],
+      [
+       -6.268975,
+       53.3481119
+      ],
+      [
+       -6.2689483,
+       53.3481152
+      ],
+      [
+       -6.2688007,
+       53.348133
+      ],
+      [
+       -6.2687865,
+       53.3480908
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_04.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 4,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "grimy, unwashed glass on the upper floors"
+   ],
+   "separate_entrance": "unclear",
+   "confidence": 0.66,
+   "evidence": "Grimy, unwashed glass on the upper floors above an open shopfront.",
+   "verifier": {
+    "agree": false,
+    "for_use": [],
+    "against_use": [
+     "grimy, unwashed glass on the upper floors"
+    ],
+    "status": "unclear",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": true,
+   "services": {
+    "bus_m": 229,
+    "grocery_m": 25,
+    "school_m": 444,
+    "gp_or_pharmacy_m": 27,
+    "park_m": 136,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 9,
+   "height_m": 16.0,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:08:09Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "review"
+  },
+  {
+   "id": "talbot_07",
+   "label": "Talbot St · facade 7",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2538592,
+     53.3510518
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2538407,
+       53.3509265
+      ],
+      [
+       -6.2537381,
+       53.3509435
+      ],
+      [
+       -6.2538429,
+       53.3511203
+      ],
+      [
+       -6.2539451,
+       53.3511002
+      ],
+      [
+       -6.2538869,
+       53.3510035
+      ],
+      [
+       -6.2538407,
+       53.3509265
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_07.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 4,
+   "upper_status": "likely_underused",
+   "upper_signals": [
+    "broken pane on the third floor",
+    "no curtains or blinds on any upper window"
+   ],
+   "separate_entrance": "unclear",
+   "confidence": 0.63,
+   "evidence": "Broken pane on the third floor and no curtains or blinds on any upper window above a shuttered shopfront.",
+   "verifier": {
+    "agree": true,
+    "for_use": [],
+    "against_use": [
+     "broken pane on the third floor",
+     "no curtains or blinds on any upper window"
+    ],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 32,
+    "grocery_m": 34,
+    "school_m": 152,
+    "gp_or_pharmacy_m": 15,
+    "park_m": 154,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 10,
+   "height_m": 16.0,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:20:02Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_underused"
+  },
+  {
+   "id": "nearl_04",
+   "label": "North Earl St · facade 4",
+   "street": "North Earl Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2586767,
+     53.3501911
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.258713,
+       53.350135
+      ],
+      [
+       -6.2585968,
+       53.3501541
+      ],
+      [
+       -6.2586397,
+       53.3502475
+      ],
+      [
+       -6.258757,
+       53.3502281
+      ],
+      [
+       -6.258713,
+       53.350135
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/nearl_04.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "unclear",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.64,
+   "evidence": "Upper floors are partly hidden by a shop sign and glare; no clear signals either way.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "blinds half drawn",
+     "plants on the window sills"
+    ],
+    "against_use": [],
+    "status": "unclear",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 103,
+    "grocery_m": 42,
+    "school_m": 210,
+    "gp_or_pharmacy_m": 67,
+    "park_m": 421,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 11,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:14:08Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "unclear"
+  },
+  {
+   "id": "capel_06",
+   "label": "Capel St · facade 6",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2692191,
+     53.3491166
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.269104,
+       53.3490621
+      ],
+      [
+       -6.2692856,
+       53.3490385
+      ],
+      [
+       -6.2693341,
+       53.3491711
+      ],
+      [
+       -6.2691525,
+       53.3491947
+      ],
+      [
+       -6.269104,
+       53.3490621
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_06.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 2,
+   "upper_status": "unclear",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.61,
+   "evidence": "Upper floors are partly hidden by a shop sign and glare; no clear signals either way.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "a light on in a second-floor room",
+     "blinds half drawn"
+    ],
+    "against_use": [],
+    "status": "unclear",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 344,
+    "grocery_m": 35,
+    "school_m": 336,
+    "gp_or_pharmacy_m": 143,
+    "park_m": 122,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 12,
+   "height_m": 9.6,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:10:06Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "unclear"
+  },
+  {
+   "id": "talbot_11",
+   "label": "Talbot St · facade 11",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2540331,
+     53.3505717
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2540941,
+       53.3505218
+      ],
+      [
+       -6.2541357,
+       53.3505795
+      ],
+      [
+       -6.253972,
+       53.3506215
+      ],
+      [
+       -6.2539305,
+       53.3505638
+      ],
+      [
+       -6.2540941,
+       53.3505218
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_11.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "unclear",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.58,
+   "evidence": "Upper floors are partly hidden by a shop sign and glare; no clear signals either way.",
+   "verifier": {
+    "agree": false,
+    "for_use": [
+     "curtains on every upper window",
+     "a satellite dish in use"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": true,
+   "services": {
+    "bus_m": 24,
+    "grocery_m": 28,
+    "school_m": 160,
+    "gp_or_pharmacy_m": 14,
+    "park_m": 202,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 13,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T12:08:44Z",
+   "walk_id": "walk_talbot_0410_lunch",
+   "phash": null,
+   "display_status": "review"
+  },
+  {
+   "id": "talbot_04",
+   "label": "Talbot St · facade 4",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2564473,
+     53.3505424
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2564715,
+       53.3504838
+      ],
+      [
+       -6.256377,
+       53.3505002
+      ],
+      [
+       -6.2564253,
+       53.350601
+      ],
+      [
+       -6.2565159,
+       53.3505847
+      ],
+      [
+       -6.2564715,
+       53.3504838
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_04.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "unclear",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.48,
+   "evidence": "Upper floors are partly hidden by a shop sign and glare; no clear signals either way.",
+   "verifier": {
+    "agree": false,
+    "for_use": [],
+    "against_use": [],
+    "status": "likely_underused",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": true,
+   "services": {
+    "bus_m": 16,
+    "grocery_m": 24,
+    "school_m": 87,
+    "gp_or_pharmacy_m": 166,
+    "park_m": 322,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 14,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:17:02Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "review"
+  },
+  {
+   "id": "capel_07",
+   "label": "Capel St · facade 7",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2695592,
+     53.3497804
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2696406,
+       53.3497349
+      ],
+      [
+       -6.2696652,
+       53.3498013
+      ],
+      [
+       -6.2694778,
+       53.349826
+      ],
+      [
+       -6.2694532,
+       53.3497596
+      ],
+      [
+       -6.2696406,
+       53.3497349
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_07.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 4,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "yes",
+   "confidence": 0.84,
+   "evidence": "Plants on the window sills and window boxes kept up on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "plants on the window sills",
+     "window boxes kept up"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 317,
+    "grocery_m": 38,
+    "school_m": 271,
+    "gp_or_pharmacy_m": 153,
+    "park_m": 104,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 15,
+   "height_m": 16.0,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:11:19Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "talbot_01",
+   "label": "Talbot St · facade 1",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2580152,
+     53.3502733
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2581324,
+       53.3503196
+      ],
+      [
+       -6.2580899,
+       53.3502168
+      ],
+      [
+       -6.2579051,
+       53.3502432
+      ],
+      [
+       -6.2579077,
+       53.3502497
+      ],
+      [
+       -6.2579266,
+       53.3502969
+      ],
+      [
+       -6.2579498,
+       53.350348
+      ],
+      [
+       -6.2581324,
+       53.3503196
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_01.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "yes",
+   "confidence": 0.81,
+   "evidence": "A satellite dish in use and window boxes kept up on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "a satellite dish in use",
+     "window boxes kept up"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 116,
+    "grocery_m": 84,
+    "school_m": 170,
+    "gp_or_pharmacy_m": 102,
+    "park_m": 395,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 16,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:14:57Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "capel_03",
+   "label": "Capel St · facade 3",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2687187,
+     53.347682
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.268788,
+       53.3476504
+      ],
+      [
+       -6.2688055,
+       53.347692
+      ],
+      [
+       -6.268648,
+       53.3477129
+      ],
+      [
+       -6.2686323,
+       53.347672
+      ],
+      [
+       -6.268788,
+       53.3476504
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_03.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.9,
+   "evidence": "A satellite dish in use and window boxes kept up on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "a satellite dish in use",
+     "window boxes kept up"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 182,
+    "grocery_m": 24,
+    "school_m": 489,
+    "gp_or_pharmacy_m": 14,
+    "park_m": 135,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 17,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:07:19Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "talbot_03",
+   "label": "Talbot St · facade 3",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2576265,
+     53.3503221
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.257708,
+       53.3503323
+      ],
+      [
+       -6.2575636,
+       53.3503528
+      ],
+      [
+       -6.2575443,
+       53.350312
+      ],
+      [
+       -6.2576909,
+       53.3502893
+      ],
+      [
+       -6.257708,
+       53.3503323
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_03.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.9,
+   "evidence": "A satellite dish in use and plants on the window sills on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "a satellite dish in use",
+     "plants on the window sills"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 90,
+    "grocery_m": 105,
+    "school_m": 148,
+    "gp_or_pharmacy_m": 126,
+    "park_m": 380,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 18,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:15:45Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "nearl_01",
+   "label": "North Earl St · facade 1",
+   "street": "North Earl Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2599778,
+     53.3500884
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2600525,
+       53.3500397
+      ],
+      [
+       -6.2600659,
+       53.3500702
+      ],
+      [
+       -6.2600817,
+       53.3501065
+      ],
+      [
+       -6.259902,
+       53.3501346
+      ],
+      [
+       -6.2598727,
+       53.3500678
+      ],
+      [
+       -6.259973,
+       53.3500522
+      ],
+      [
+       -6.2600525,
+       53.3500397
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/nearl_01.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 4,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.88,
+   "evidence": "Blinds half drawn and a light on in a second-floor room on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "blinds half drawn",
+     "a light on in a second-floor room"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 16,
+    "grocery_m": 31,
+    "school_m": 290,
+    "gp_or_pharmacy_m": 71,
+    "park_m": 476,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 19,
+   "height_m": 16.0,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:12:20Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "capel_01",
+   "label": "Capel St · facade 1",
+   "street": "Capel Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2685271,
+     53.3466692
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2684039,
+       53.3467142
+      ],
+      [
+       -6.2683834,
+       53.3466606
+      ],
+      [
+       -6.2684992,
+       53.3466448
+      ],
+      [
+       -6.2686502,
+       53.3466242
+      ],
+      [
+       -6.2686707,
+       53.3466778
+      ],
+      [
+       -6.2684039,
+       53.3467142
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/capel_01.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 2,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.87,
+   "evidence": "Blinds half drawn and curtains on every upper window on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "blinds half drawn",
+     "curtains on every upper window"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 69,
+    "grocery_m": 55,
+    "school_m": 460,
+    "gp_or_pharmacy_m": 127,
+    "park_m": 189,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 20,
+   "height_m": 9.6,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-03T17:05:24Z",
+   "walk_id": "walk_capel_0310",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "talbot_10",
+   "label": "Talbot St · facade 10",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2521431,
+     53.3509837
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2521953,
+       53.3510131
+      ],
+      [
+       -6.2521033,
+       53.3510281
+      ],
+      [
+       -6.2520916,
+       53.3509544
+      ],
+      [
+       -6.2521768,
+       53.3509105
+      ],
+      [
+       -6.2521953,
+       53.3510131
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_10.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 3,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.86,
+   "evidence": "A light on in a second-floor room and curtains on every upper window on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "a light on in a second-floor room",
+     "curtains on every upper window"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 35,
+    "grocery_m": 22,
+    "school_m": 266,
+    "gp_or_pharmacy_m": 32,
+    "park_m": 115,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 21,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": "Yes, the owner's family has the flat upstairs.",
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T12:06:51Z",
+   "walk_id": "walk_talbot_0410_lunch",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "talbot_06",
+   "label": "Talbot St · facade 6",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.254042,
+     53.3509332
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2539815,
+       53.3509031
+      ],
+      [
+       -6.254019,
+       53.3509788
+      ],
+      [
+       -6.2541017,
+       53.3509633
+      ],
+      [
+       -6.2540669,
+       53.3508889
+      ],
+      [
+       -6.2539815,
+       53.3509031
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_06.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 2,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.83,
+   "evidence": "A light on in a second-floor room and window boxes kept up on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "a light on in a second-floor room",
+     "window boxes kept up"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 21,
+    "grocery_m": 28,
+    "school_m": 144,
+    "gp_or_pharmacy_m": 6,
+    "park_m": 172,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": true
+   },
+   "rank": 22,
+   "height_m": 9.6,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:19:38Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "talbot_12",
+   "label": "Talbot St · facade 12",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2550944,
+     53.350482
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2549842,
+       53.3504997
+      ],
+      [
+       -6.255044,
+       53.3504901
+      ],
+      [
+       -6.2550313,
+       53.3504619
+      ],
+      [
+       -6.2549639,
+       53.3504728
+      ],
+      [
+       -6.2549402,
+       53.3504202
+      ],
+      [
+       -6.2551082,
+       53.3503932
+      ],
+      [
+       -6.2551446,
+       53.3504739
+      ],
+      [
+       -6.2551752,
+       53.350538
+      ],
+      [
+       -6.2550146,
+       53.3505651
+      ],
+      [
+       -6.2549842,
+       53.3504997
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_12.svg",
+   "source": "demo",
+   "ground_floor": "open",
+   "upper_floors": 4,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.8,
+   "evidence": "Plants on the window sills and window boxes kept up on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "plants on the window sills",
+     "window boxes kept up"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 35,
+    "grocery_m": 66,
+    "school_m": 114,
+    "gp_or_pharmacy_m": 76,
+    "park_m": 257,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 23,
+   "height_m": 16.0,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T12:09:52Z",
+   "walk_id": "walk_talbot_0410_lunch",
+   "phash": null,
+   "display_status": "likely_used"
+  },
+  {
+   "id": "talbot_08",
+   "label": "Talbot St · facade 8",
+   "street": "Talbot Street",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     -6.2517328,
+     53.3513346
+    ]
+   },
+   "footprint": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.2519525,
+       53.3513805
+      ],
+      [
+       -6.2518371,
+       53.3512484
+      ],
+      [
+       -6.2515274,
+       53.3513109
+      ],
+      [
+       -6.2515878,
+       53.3513664
+      ],
+      [
+       -6.2516314,
+       53.3513583
+      ],
+      [
+       -6.2516804,
+       53.3514
+      ],
+      [
+       -6.2517086,
+       53.351392
+      ],
+      [
+       -6.2517388,
+       53.3514236
+      ],
+      [
+       -6.2518371,
+       53.3513877
+      ],
+      [
+       -6.2518599,
+       53.3514133
+      ],
+      [
+       -6.2519525,
+       53.3513805
+      ]
+     ]
+    ]
+   },
+   "geo_method": "demo_osm_footprint",
+   "photo": "/demo/facades/talbot_08.svg",
+   "source": "demo",
+   "ground_floor": "unclear",
+   "upper_floors": 3,
+   "upper_status": "likely_used",
+   "upper_signals": [],
+   "separate_entrance": "unclear",
+   "confidence": 0.79,
+   "evidence": "Curtains on every upper window and window boxes kept up on the upper floors.",
+   "verifier": {
+    "agree": true,
+    "for_use": [
+     "curtains on every upper window",
+     "window boxes kept up"
+    ],
+    "against_use": [],
+    "status": "likely_used",
+    "model": "z-ai/glm-5.3-flash"
+   },
+   "needs_human": false,
+   "services": {
+    "bus_m": 22,
+    "grocery_m": 39,
+    "school_m": 291,
+    "gp_or_pharmacy_m": 19,
+    "park_m": 83,
+    "score": 5
+   },
+   "registers": {
+    "derelict": false,
+    "protected": false
+   },
+   "rank": 24,
+   "height_m": 12.8,
+   "models": {
+    "vision": "deepseek/deepseek-v4.1-flash",
+    "verifier": "z-ai/glm-5.3-flash"
+   },
+   "human_label": null,
+   "shop_staff_answer": null,
+   "inspection": null,
+   "captured_by": "w_rodion",
+   "captured_at": "2026-10-04T08:22:09Z",
+   "walk_id": "walk_talbot_0410_am",
+   "phash": null,
+   "display_status": "likely_used"
+  }
+ ],
+ "services": {
+  "capel_01": {
+   "services": {
+    "bus_m": 69,
+    "grocery_m": 55,
+    "school_m": 460,
+    "gp_or_pharmacy_m": 127,
+    "park_m": 189,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/228762043",
+     "kind": "grocery",
+     "name": "Real Brazil Foods",
+     "lat": 53.3464514,
+     "lon": -6.2677817,
+     "dist_m": 55
+    },
+    {
+     "id": "node/10544263377",
+     "kind": "bus",
+     "name": "Ormond Quay",
+     "lat": 53.3460489,
+     "lon": -6.2686088,
+     "dist_m": 69
+    },
+    {
+     "id": "way/229061156",
+     "kind": "gp_or_pharmacy",
+     "name": "Medical Centre",
+     "lat": 53.3478049,
+     "lon": -6.268768,
+     "dist_m": 127
+    },
+    {
+     "id": "way/45415942",
+     "kind": "park",
+     "name": "Park",
+     "lat": 53.3450744,
+     "lon": -6.269522,
+     "dist_m": 189
+    },
+    {
+     "id": "way/746745217",
+     "kind": "school",
+     "name": "St Audoen's National School",
+     "lat": 53.3444365,
+     "lon": -6.2743692,
+     "dist_m": 460
+    }
+   ]
+  },
+  "capel_02": {
+   "services": {
+    "bus_m": 118,
+    "grocery_m": 36,
+    "school_m": 493,
+    "gp_or_pharmacy_m": 81,
+    "park_m": 157,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/768516994",
+     "kind": "grocery",
+     "name": "Spar",
+     "lat": 53.3473973,
+     "lon": -6.2682315,
+     "dist_m": 36
+    },
+    {
+     "id": "way/229061156",
+     "kind": "gp_or_pharmacy",
+     "name": "Medical Centre",
+     "lat": 53.3478049,
+     "lon": -6.268768,
+     "dist_m": 81
+    },
+    {
+     "id": "node/10544263377",
+     "kind": "bus",
+     "name": "Ormond Quay",
+     "lat": 53.3460489,
+     "lon": -6.2686088,
+     "dist_m": 118
+    },
+    {
+     "id": "way/42002768",
+     "kind": "park",
+     "name": "Wolfe Tone Square",
+     "lat": 53.3481324,
+     "lon": -6.2668326,
+     "dist_m": 157
+    },
+    {
+     "id": "way/746745217",
+     "kind": "school",
+     "name": "St Audoen's National School",
+     "lat": 53.3444365,
+     "lon": -6.2743692,
+     "dist_m": 493
+    }
+   ]
+  },
+  "capel_03": {
+   "services": {
+    "bus_m": 182,
+    "grocery_m": 24,
+    "school_m": 489,
+    "gp_or_pharmacy_m": 14,
+    "park_m": 135,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/229061156",
+     "kind": "gp_or_pharmacy",
+     "name": "Medical Centre",
+     "lat": 53.3478049,
+     "lon": -6.268768,
+     "dist_m": 14
+    },
+    {
+     "id": "node/12018266758",
+     "kind": "grocery",
+     "name": "Super Asian Foods",
+     "lat": 53.3476635,
+     "lon": -6.2683573,
+     "dist_m": 24
+    },
+    {
+     "id": "way/42002768",
+     "kind": "park",
+     "name": "Wolfe Tone Square",
+     "lat": 53.3481324,
+     "lon": -6.2668326,
+     "dist_m": 135
+    },
+    {
+     "id": "node/10544263377",
+     "kind": "bus",
+     "name": "Ormond Quay",
+     "lat": 53.3460489,
+     "lon": -6.2686088,
+     "dist_m": 182
+    },
+    {
+     "id": "way/295383496",
+     "kind": "school",
+     "name": "Mount Carmel Secondary School",
+     "lat": 53.3520695,
+     "lon": -6.2681505,
+     "dist_m": 489
+    }
+   ]
+  },
+  "capel_04": {
+   "services": {
+    "bus_m": 229,
+    "grocery_m": 25,
+    "school_m": 444,
+    "gp_or_pharmacy_m": 27,
+    "park_m": 136,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/12018247432",
+     "kind": "grocery",
+     "name": "Moldova",
+     "lat": 53.3482089,
+     "lon": -6.268555,
+     "dist_m": 25
+    },
+    {
+     "id": "way/229061155",
+     "kind": "gp_or_pharmacy",
+     "name": "Capel Street Pharmacy",
+     "lat": 53.3478619,
+     "lon": -6.2687806,
+     "dist_m": 27
+    },
+    {
+     "id": "way/42002768",
+     "kind": "park",
+     "name": "Wolfe Tone Square",
+     "lat": 53.3481324,
+     "lon": -6.2668326,
+     "dist_m": 136
+    },
+    {
+     "id": "node/10544263377",
+     "kind": "bus",
+     "name": "Ormond Quay",
+     "lat": 53.3460489,
+     "lon": -6.2686088,
+     "dist_m": 229
+    },
+    {
+     "id": "way/295383496",
+     "kind": "school",
+     "name": "Mount Carmel Secondary School",
+     "lat": 53.3520695,
+     "lon": -6.2681505,
+     "dist_m": 444
+    }
+   ]
+  },
+  "capel_05": {
+   "services": {
+    "bus_m": 295,
+    "grocery_m": 54,
+    "school_m": 381,
+    "gp_or_pharmacy_m": 93,
+    "park_m": 151,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/5857257616",
+     "kind": "grocery",
+     "name": "Pinoy Sari Sari Store Ltd",
+     "lat": 53.3482561,
+     "lon": -6.2694298,
+     "dist_m": 54
+    },
+    {
+     "id": "way/229061155",
+     "kind": "gp_or_pharmacy",
+     "name": "Capel Street Pharmacy",
+     "lat": 53.3478619,
+     "lon": -6.2687806,
+     "dist_m": 93
+    },
+    {
+     "id": "way/49796504",
+     "kind": "park",
+     "name": "Park",
+     "lat": 53.349401,
+     "lon": -6.2709941,
+     "dist_m": 151
+    },
+    {
+     "id": "node/10544263377",
+     "kind": "bus",
+     "name": "Ormond Quay",
+     "lat": 53.3460489,
+     "lon": -6.2686088,
+     "dist_m": 295
+    },
+    {
+     "id": "way/295383496",
+     "kind": "school",
+     "name": "Mount Carmel Secondary School",
+     "lat": 53.3520695,
+     "lon": -6.2681505,
+     "dist_m": 381
+    }
+   ]
+  },
+  "capel_06": {
+   "services": {
+    "bus_m": 344,
+    "grocery_m": 35,
+    "school_m": 336,
+    "gp_or_pharmacy_m": 143,
+    "park_m": 122,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/13432362902",
+     "kind": "grocery",
+     "name": "Coreana Supermarket",
+     "lat": 53.3492715,
+     "lon": -6.2696729,
+     "dist_m": 35
+    },
+    {
+     "id": "way/49796504",
+     "kind": "park",
+     "name": "Park",
+     "lat": 53.349401,
+     "lon": -6.2709941,
+     "dist_m": 122
+    },
+    {
+     "id": "way/229061155",
+     "kind": "gp_or_pharmacy",
+     "name": "Capel Street Pharmacy",
+     "lat": 53.3478619,
+     "lon": -6.2687806,
+     "dist_m": 143
+    },
+    {
+     "id": "way/295383496",
+     "kind": "school",
+     "name": "Mount Carmel Secondary School",
+     "lat": 53.3520695,
+     "lon": -6.2681505,
+     "dist_m": 336
+    },
+    {
+     "id": "node/10544263377",
+     "kind": "bus",
+     "name": "Ormond Quay",
+     "lat": 53.3460489,
+     "lon": -6.2686088,
+     "dist_m": 344
+    }
+   ]
+  },
+  "capel_07": {
+   "services": {
+    "bus_m": 317,
+    "grocery_m": 38,
+    "school_m": 271,
+    "gp_or_pharmacy_m": 153,
+    "park_m": 104,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/11243847832",
+     "kind": "grocery",
+     "name": "Brasiliero",
+     "lat": 53.3495872,
+     "lon": -6.2690936,
+     "dist_m": 38
+    },
+    {
+     "id": "way/49796504",
+     "kind": "park",
+     "name": "Park",
+     "lat": 53.349401,
+     "lon": -6.2709941,
+     "dist_m": 104
+    },
+    {
+     "id": "node/768516996",
+     "kind": "gp_or_pharmacy",
+     "name": "Jervis Medical Centre",
+     "lat": 53.3499693,
+     "lon": -6.2672833,
+     "dist_m": 153
+    },
+    {
+     "id": "way/295383496",
+     "kind": "school",
+     "name": "Mount Carmel Secondary School",
+     "lat": 53.3520695,
+     "lon": -6.2681505,
+     "dist_m": 271
+    },
+    {
+     "id": "node/5306049784",
+     "kind": "bus",
+     "name": "Church Street Upper",
+     "lat": 53.3511719,
+     "lon": -6.2737291,
+     "dist_m": 317
+    }
+   ]
+  },
+  "capel_08": {
+   "services": {
+    "bus_m": 286,
+    "grocery_m": 78,
+    "school_m": 237,
+    "gp_or_pharmacy_m": 166,
+    "park_m": 118,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/11243847832",
+     "kind": "grocery",
+     "name": "Brasiliero",
+     "lat": 53.3495872,
+     "lon": -6.2690936,
+     "dist_m": 78
+    },
+    {
+     "id": "way/49796504",
+     "kind": "park",
+     "name": "Park",
+     "lat": 53.349401,
+     "lon": -6.2709941,
+     "dist_m": 118
+    },
+    {
+     "id": "node/768516996",
+     "kind": "gp_or_pharmacy",
+     "name": "Jervis Medical Centre",
+     "lat": 53.3499693,
+     "lon": -6.2672833,
+     "dist_m": 166
+    },
+    {
+     "id": "way/295383496",
+     "kind": "school",
+     "name": "Mount Carmel Secondary School",
+     "lat": 53.3520695,
+     "lon": -6.2681505,
+     "dist_m": 237
+    },
+    {
+     "id": "node/5306049784",
+     "kind": "bus",
+     "name": "Church Street Upper",
+     "lat": 53.3511719,
+     "lon": -6.2737291,
+     "dist_m": 286
+    }
+   ]
+  },
+  "nearl_01": {
+   "services": {
+    "bus_m": 16,
+    "grocery_m": 31,
+    "school_m": 290,
+    "gp_or_pharmacy_m": 71,
+    "park_m": 476,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/12656809849",
+     "kind": "bus",
+     "name": "Bus stop (City Sightseeing)",
+     "lat": 53.3500614,
+     "lon": -6.2602115,
+     "dist_m": 16
+    },
+    {
+     "id": "way/696901402",
+     "kind": "grocery",
+     "name": "Spar",
+     "lat": 53.3503561,
+     "lon": -6.2601021,
+     "dist_m": 31
+    },
+    {
+     "id": "way/1222688191",
+     "kind": "gp_or_pharmacy",
+     "name": "The Rotunda Hampson House",
+     "lat": 53.3496656,
+     "lon": -6.2591668,
+     "dist_m": 71
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 290
+    },
+    {
+     "id": "way/13904692",
+     "kind": "park",
+     "name": "Diamond Park",
+     "lat": 53.3535558,
+     "lon": -6.2557598,
+     "dist_m": 476
+    }
+   ]
+  },
+  "nearl_02": {
+   "services": {
+    "bus_m": 37,
+    "grocery_m": 36,
+    "school_m": 273,
+    "gp_or_pharmacy_m": 53,
+    "park_m": 468,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/696901396",
+     "kind": "grocery",
+     "name": "Dunnes Stores",
+     "lat": 53.3502851,
+     "lon": -6.2592881,
+     "dist_m": 36
+    },
+    {
+     "id": "node/12656809849",
+     "kind": "bus",
+     "name": "Bus stop (City Sightseeing)",
+     "lat": 53.3500614,
+     "lon": -6.2602115,
+     "dist_m": 37
+    },
+    {
+     "id": "way/1222688191",
+     "kind": "gp_or_pharmacy",
+     "name": "The Rotunda Hampson House",
+     "lat": 53.3496656,
+     "lon": -6.2591668,
+     "dist_m": 53
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 273
+    },
+    {
+     "id": "way/13904692",
+     "kind": "park",
+     "name": "Diamond Park",
+     "lat": 53.3535558,
+     "lon": -6.2557598,
+     "dist_m": 468
+    }
+   ]
+  },
+  "nearl_03": {
+   "services": {
+    "bus_m": 51,
+    "grocery_m": 26,
+    "school_m": 259,
+    "gp_or_pharmacy_m": 49,
+    "park_m": 458,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/696901396",
+     "kind": "grocery",
+     "name": "Dunnes Stores",
+     "lat": 53.3502851,
+     "lon": -6.2592881,
+     "dist_m": 26
+    },
+    {
+     "id": "way/1222688191",
+     "kind": "gp_or_pharmacy",
+     "name": "The Rotunda Hampson House",
+     "lat": 53.3496656,
+     "lon": -6.2591668,
+     "dist_m": 49
+    },
+    {
+     "id": "node/12656809849",
+     "kind": "bus",
+     "name": "Bus stop (City Sightseeing)",
+     "lat": 53.3500614,
+     "lon": -6.2602115,
+     "dist_m": 51
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 259
+    },
+    {
+     "id": "way/13904692",
+     "kind": "park",
+     "name": "Diamond Park",
+     "lat": 53.3535558,
+     "lon": -6.2557598,
+     "dist_m": 458
+    }
+   ]
+  },
+  "nearl_04": {
+   "services": {
+    "bus_m": 103,
+    "grocery_m": 42,
+    "school_m": 210,
+    "gp_or_pharmacy_m": 67,
+    "park_m": 421,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/696901396",
+     "kind": "grocery",
+     "name": "Dunnes Stores",
+     "lat": 53.3502851,
+     "lon": -6.2592881,
+     "dist_m": 42
+    },
+    {
+     "id": "way/1222688191",
+     "kind": "gp_or_pharmacy",
+     "name": "The Rotunda Hampson House",
+     "lat": 53.3496656,
+     "lon": -6.2591668,
+     "dist_m": 67
+    },
+    {
+     "id": "node/12656809849",
+     "kind": "bus",
+     "name": "Bus stop (City Sightseeing)",
+     "lat": 53.3500614,
+     "lon": -6.2602115,
+     "dist_m": 103
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 210
+    },
+    {
+     "id": "way/13904692",
+     "kind": "park",
+     "name": "Diamond Park",
+     "lat": 53.3535558,
+     "lon": -6.2557598,
+     "dist_m": 421
+    }
+   ]
+  },
+  "talbot_01": {
+   "services": {
+    "bus_m": 116,
+    "grocery_m": 84,
+    "school_m": 170,
+    "gp_or_pharmacy_m": 102,
+    "park_m": 395,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/696901396",
+     "kind": "grocery",
+     "name": "Dunnes Stores",
+     "lat": 53.3502851,
+     "lon": -6.2592881,
+     "dist_m": 84
+    },
+    {
+     "id": "way/1222688191",
+     "kind": "gp_or_pharmacy",
+     "name": "The Rotunda Hampson House",
+     "lat": 53.3496656,
+     "lon": -6.2591668,
+     "dist_m": 102
+    },
+    {
+     "id": "node/4684511726",
+     "kind": "bus",
+     "name": "Talbot Street",
+     "lat": 53.3504395,
+     "lon": -6.2562826,
+     "dist_m": 116
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 170
+    },
+    {
+     "id": "way/13904692",
+     "kind": "park",
+     "name": "Diamond Park",
+     "lat": 53.3535558,
+     "lon": -6.2557598,
+     "dist_m": 395
+    }
+   ]
+  },
+  "talbot_02": {
+   "services": {
+    "bus_m": 106,
+    "grocery_m": 95,
+    "school_m": 161,
+    "gp_or_pharmacy_m": 111,
+    "park_m": 389,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/696901396",
+     "kind": "grocery",
+     "name": "Dunnes Stores",
+     "lat": 53.3502851,
+     "lon": -6.2592881,
+     "dist_m": 95
+    },
+    {
+     "id": "node/4684511726",
+     "kind": "bus",
+     "name": "Talbot Street",
+     "lat": 53.3504395,
+     "lon": -6.2562826,
+     "dist_m": 106
+    },
+    {
+     "id": "way/1222688191",
+     "kind": "gp_or_pharmacy",
+     "name": "The Rotunda Hampson House",
+     "lat": 53.3496656,
+     "lon": -6.2591668,
+     "dist_m": 111
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 161
+    },
+    {
+     "id": "way/13904692",
+     "kind": "park",
+     "name": "Diamond Park",
+     "lat": 53.3535558,
+     "lon": -6.2557598,
+     "dist_m": 389
+    }
+   ]
+  },
+  "talbot_03": {
+   "services": {
+    "bus_m": 90,
+    "grocery_m": 105,
+    "school_m": 148,
+    "gp_or_pharmacy_m": 126,
+    "park_m": 380,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/4684511726",
+     "kind": "bus",
+     "name": "Talbot Street",
+     "lat": 53.3504395,
+     "lon": -6.2562826,
+     "dist_m": 90
+    },
+    {
+     "id": "node/9892726954",
+     "kind": "grocery",
+     "name": "Lidl",
+     "lat": 53.3503285,
+     "lon": -6.2560503,
+     "dist_m": 105
+    },
+    {
+     "id": "way/1222688191",
+     "kind": "gp_or_pharmacy",
+     "name": "The Rotunda Hampson House",
+     "lat": 53.3496656,
+     "lon": -6.2591668,
+     "dist_m": 126
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 148
+    },
+    {
+     "id": "way/13904692",
+     "kind": "park",
+     "name": "Diamond Park",
+     "lat": 53.3535558,
+     "lon": -6.2557598,
+     "dist_m": 380
+    }
+   ]
+  },
+  "talbot_04": {
+   "services": {
+    "bus_m": 16,
+    "grocery_m": 24,
+    "school_m": 87,
+    "gp_or_pharmacy_m": 166,
+    "park_m": 322,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/4684511726",
+     "kind": "bus",
+     "name": "Talbot Street",
+     "lat": 53.3504395,
+     "lon": -6.2562826,
+     "dist_m": 16
+    },
+    {
+     "id": "node/6303724410",
+     "kind": "grocery",
+     "name": "Tesco Express",
+     "lat": 53.3505843,
+     "lon": -6.256093,
+     "dist_m": 24
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 87
+    },
+    {
+     "id": "way/233487790",
+     "kind": "gp_or_pharmacy",
+     "name": "PW Medical",
+     "lat": 53.3504563,
+     "lon": -6.2539501,
+     "dist_m": 166
+    },
+    {
+     "id": "way/295246524",
+     "kind": "park",
+     "name": "James Joyce Park",
+     "lat": 53.3530674,
+     "lon": -6.2540597,
+     "dist_m": 322
+    }
+   ]
+  },
+  "talbot_05": {
+   "services": {
+    "bus_m": 28,
+    "grocery_m": 37,
+    "school_m": 132,
+    "gp_or_pharmacy_m": 18,
+    "park_m": 182,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/5585403342",
+     "kind": "gp_or_pharmacy",
+     "name": "Murrays",
+     "lat": 53.3509298,
+     "lon": -6.2539588,
+     "dist_m": 18
+    },
+    {
+     "id": "node/4989754522",
+     "kind": "bus",
+     "name": "Talbot Street, Gardiner Street",
+     "lat": 53.350769,
+     "lon": -6.25389,
+     "dist_m": 28
+    },
+    {
+     "id": "node/5585403357",
+     "kind": "grocery",
+     "name": "Mobile Expert",
+     "lat": 53.3507553,
+     "lon": -6.2537469,
+     "dist_m": 37
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 132
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 182
+    }
+   ]
+  },
+  "talbot_06": {
+   "services": {
+    "bus_m": 21,
+    "grocery_m": 28,
+    "school_m": 144,
+    "gp_or_pharmacy_m": 6,
+    "park_m": 172,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/5585403342",
+     "kind": "gp_or_pharmacy",
+     "name": "Murrays",
+     "lat": 53.3509298,
+     "lon": -6.2539588,
+     "dist_m": 6
+    },
+    {
+     "id": "node/4989754522",
+     "kind": "bus",
+     "name": "Talbot Street, Gardiner Street",
+     "lat": 53.350769,
+     "lon": -6.25389,
+     "dist_m": 21
+    },
+    {
+     "id": "node/5585403357",
+     "kind": "grocery",
+     "name": "Mobile Expert",
+     "lat": 53.3507553,
+     "lon": -6.2537469,
+     "dist_m": 28
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 144
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 172
+    }
+   ]
+  },
+  "talbot_07": {
+   "services": {
+    "bus_m": 32,
+    "grocery_m": 34,
+    "school_m": 152,
+    "gp_or_pharmacy_m": 15,
+    "park_m": 154,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/5585403342",
+     "kind": "gp_or_pharmacy",
+     "name": "Murrays",
+     "lat": 53.3509298,
+     "lon": -6.2539588,
+     "dist_m": 15
+    },
+    {
+     "id": "node/4989754522",
+     "kind": "bus",
+     "name": "Talbot Street, Gardiner Street",
+     "lat": 53.350769,
+     "lon": -6.25389,
+     "dist_m": 32
+    },
+    {
+     "id": "node/5585403357",
+     "kind": "grocery",
+     "name": "Mobile Expert",
+     "lat": 53.3507553,
+     "lon": -6.2537469,
+     "dist_m": 34
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 152
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 154
+    }
+   ]
+  },
+  "talbot_08": {
+   "services": {
+    "bus_m": 22,
+    "grocery_m": 39,
+    "school_m": 291,
+    "gp_or_pharmacy_m": 19,
+    "park_m": 83,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/5585403330",
+     "kind": "gp_or_pharmacy",
+     "name": "O'Regan",
+     "lat": 53.351254,
+     "lon": -6.251978,
+     "dist_m": 19
+    },
+    {
+     "id": "node/5596905071",
+     "kind": "bus",
+     "name": "Talbot Street",
+     "lat": 53.3511379,
+     "lon": -6.2516791,
+     "dist_m": 22
+    },
+    {
+     "id": "node/12144126816",
+     "kind": "grocery",
+     "name": "Eurasia Supermarket",
+     "lat": 53.3512012,
+     "lon": -6.252275,
+     "dist_m": 39
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 83
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 291
+    }
+   ]
+  },
+  "talbot_09": {
+   "services": {
+    "bus_m": 43,
+    "grocery_m": 48,
+    "school_m": 364,
+    "gp_or_pharmacy_m": 81,
+    "park_m": 137,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/3199858791",
+     "kind": "bus",
+     "name": "Amiens Street, Railway Station",
+     "lat": 53.3509966,
+     "lon": -6.2501159,
+     "dist_m": 43
+    },
+    {
+     "id": "way/307149427",
+     "kind": "grocery",
+     "name": "Spar",
+     "lat": 53.3515697,
+     "lon": -6.2502037,
+     "dist_m": 48
+    },
+    {
+     "id": "node/3708514258",
+     "kind": "gp_or_pharmacy",
+     "name": "Pharmacy Express",
+     "lat": 53.3512975,
+     "lon": -6.2494148,
+     "dist_m": 81
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 137
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 364
+    }
+   ]
+  },
+  "talbot_10": {
+   "services": {
+    "bus_m": 35,
+    "grocery_m": 22,
+    "school_m": 266,
+    "gp_or_pharmacy_m": 32,
+    "park_m": 115,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/5585403335",
+     "kind": "grocery",
+     "name": "Spar",
+     "lat": 53.3509506,
+     "lon": -6.2524742,
+     "dist_m": 22
+    },
+    {
+     "id": "node/5585403330",
+     "kind": "gp_or_pharmacy",
+     "name": "O'Regan",
+     "lat": 53.351254,
+     "lon": -6.251978,
+     "dist_m": 32
+    },
+    {
+     "id": "node/5596905071",
+     "kind": "bus",
+     "name": "Talbot Street",
+     "lat": 53.3511379,
+     "lon": -6.2516791,
+     "dist_m": 35
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 115
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 266
+    }
+   ]
+  },
+  "talbot_11": {
+   "services": {
+    "bus_m": 24,
+    "grocery_m": 28,
+    "school_m": 160,
+    "gp_or_pharmacy_m": 14,
+    "park_m": 202,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "way/233487790",
+     "kind": "gp_or_pharmacy",
+     "name": "PW Medical",
+     "lat": 53.3504563,
+     "lon": -6.2539501,
+     "dist_m": 14
+    },
+    {
+     "id": "node/4989754522",
+     "kind": "bus",
+     "name": "Talbot Street, Gardiner Street",
+     "lat": 53.350769,
+     "lon": -6.25389,
+     "dist_m": 24
+    },
+    {
+     "id": "node/5585403357",
+     "kind": "grocery",
+     "name": "Mobile Expert",
+     "lat": 53.3507553,
+     "lon": -6.2537469,
+     "dist_m": 28
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 160
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 202
+    }
+   ]
+  },
+  "talbot_12": {
+   "services": {
+    "bus_m": 35,
+    "grocery_m": 66,
+    "school_m": 114,
+    "gp_or_pharmacy_m": 76,
+    "park_m": 257,
+    "score": 5
+   },
+   "pois": [
+    {
+     "id": "node/3248525114",
+     "kind": "bus",
+     "name": "Gardiner Street",
+     "lat": 53.3504927,
+     "lon": -6.2556233,
+     "dist_m": 35
+    },
+    {
+     "id": "node/9892726954",
+     "kind": "grocery",
+     "name": "Lidl",
+     "lat": 53.3503285,
+     "lon": -6.2560503,
+     "dist_m": 66
+    },
+    {
+     "id": "way/233487790",
+     "kind": "gp_or_pharmacy",
+     "name": "PW Medical",
+     "lat": 53.3504563,
+     "lon": -6.2539501,
+     "dist_m": 76
+    },
+    {
+     "id": "way/292900330",
+     "kind": "school",
+     "name": "The Model School",
+     "lat": 53.351301,
+     "lon": -6.2561165,
+     "dist_m": 114
+    },
+    {
+     "id": "way/13904710",
+     "kind": "park",
+     "name": "Liberty Park",
+     "lat": 53.3520216,
+     "lon": -6.252204,
+     "dist_m": 257
+    }
+   ]
+  }
+ },
+ "similar": {
+  "capel_01": [
+   {
+    "id": "talbot_08",
+    "label": "Talbot St · facade 8",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_08.svg"
+   },
+   {
+    "id": "talbot_10",
+    "label": "Talbot St · facade 10",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_10.svg"
+   },
+   {
+    "id": "nearl_04",
+    "label": "North Earl St · facade 4",
+    "score": 0.825,
+    "display_status": "unclear",
+    "photo": "/demo/facades/nearl_04.svg"
+   },
+   {
+    "id": "nearl_01",
+    "label": "North Earl St · facade 1",
+    "score": 0.813,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/nearl_01.svg"
+   },
+   {
+    "id": "talbot_11",
+    "label": "Talbot St · facade 11",
+    "score": 0.813,
+    "display_status": "review",
+    "photo": "/demo/facades/talbot_11.svg"
+   }
+  ],
+  "capel_02": [
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.844,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   },
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.831,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "talbot_05",
+    "label": "Talbot St · facade 5",
+    "score": 0.799,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_05.svg"
+   },
+   {
+    "id": "talbot_07",
+    "label": "Talbot St · facade 7",
+    "score": 0.795,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_07.svg"
+   },
+   {
+    "id": "capel_05",
+    "label": "Capel St · facade 5",
+    "score": 0.792,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_05.svg"
+   }
+  ],
+  "capel_03": [
+   {
+    "id": "talbot_01",
+    "label": "Talbot St · facade 1",
+    "score": 0.96,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_01.svg"
+   },
+   {
+    "id": "talbot_03",
+    "label": "Talbot St · facade 3",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_03.svg"
+   },
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.843,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "talbot_11",
+    "label": "Talbot St · facade 11",
+    "score": 0.828,
+    "display_status": "review",
+    "photo": "/demo/facades/talbot_11.svg"
+   },
+   {
+    "id": "capel_07",
+    "label": "Capel St · facade 7",
+    "score": 0.819,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_07.svg"
+   }
+  ],
+  "capel_04": [
+   {
+    "id": "nearl_03",
+    "label": "North Earl St · facade 3",
+    "score": 0.96,
+    "display_status": "review",
+    "photo": "/demo/facades/nearl_03.svg"
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "score": 0.866,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_08.svg"
+   },
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.792,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "talbot_05",
+    "label": "Talbot St · facade 5",
+    "score": 0.791,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_05.svg"
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.789,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   }
+  ],
+  "capel_05": [
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.882,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "talbot_07",
+    "label": "Talbot St · facade 7",
+    "score": 0.874,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_07.svg"
+   },
+   {
+    "id": "talbot_05",
+    "label": "Talbot St · facade 5",
+    "score": 0.857,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_05.svg"
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_08.svg"
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   }
+  ],
+  "capel_06": [
+   {
+    "id": "nearl_01",
+    "label": "North Earl St · facade 1",
+    "score": 0.923,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/nearl_01.svg"
+   },
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.836,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "talbot_10",
+    "label": "Talbot St · facade 10",
+    "score": 0.836,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_10.svg"
+   },
+   {
+    "id": "nearl_04",
+    "label": "North Earl St · facade 4",
+    "score": 0.813,
+    "display_status": "unclear",
+    "photo": "/demo/facades/nearl_04.svg"
+   },
+   {
+    "id": "capel_01",
+    "label": "Capel St · facade 1",
+    "score": 0.795,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_01.svg"
+   }
+  ],
+  "capel_07": [
+   {
+    "id": "talbot_12",
+    "label": "Talbot St · facade 12",
+    "score": 0.96,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_12.svg"
+   },
+   {
+    "id": "talbot_08",
+    "label": "Talbot St · facade 8",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_08.svg"
+   },
+   {
+    "id": "talbot_03",
+    "label": "Talbot St · facade 3",
+    "score": 0.834,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_03.svg"
+   },
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "nearl_04",
+    "label": "North Earl St · facade 4",
+    "score": 0.825,
+    "display_status": "unclear",
+    "photo": "/demo/facades/nearl_04.svg"
+   }
+  ],
+  "capel_08": [
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.869,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "capel_04",
+    "label": "Capel St · facade 4",
+    "score": 0.866,
+    "display_status": "review",
+    "photo": "/demo/facades/capel_04.svg"
+   },
+   {
+    "id": "nearl_03",
+    "label": "North Earl St · facade 3",
+    "score": 0.866,
+    "display_status": "review",
+    "photo": "/demo/facades/nearl_03.svg"
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.862,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   },
+   {
+    "id": "talbot_07",
+    "label": "Talbot St · facade 7",
+    "score": 0.862,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_07.svg"
+   }
+  ],
+  "nearl_01": [
+   {
+    "id": "capel_06",
+    "label": "Capel St · facade 6",
+    "score": 0.923,
+    "display_status": "unclear",
+    "photo": "/demo/facades/capel_06.svg"
+   },
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.857,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "talbot_10",
+    "label": "Talbot St · facade 10",
+    "score": 0.857,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_10.svg"
+   },
+   {
+    "id": "capel_01",
+    "label": "Capel St · facade 1",
+    "score": 0.813,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_01.svg"
+   },
+   {
+    "id": "nearl_04",
+    "label": "North Earl St · facade 4",
+    "score": 0.795,
+    "display_status": "unclear",
+    "photo": "/demo/facades/nearl_04.svg"
+   }
+  ],
+  "nearl_02": [
+   {
+    "id": "talbot_07",
+    "label": "Talbot St · facade 7",
+    "score": 0.891,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_07.svg"
+   },
+   {
+    "id": "capel_05",
+    "label": "Capel St · facade 5",
+    "score": 0.882,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_05.svg"
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "score": 0.869,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_08.svg"
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.869,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   },
+   {
+    "id": "talbot_09",
+    "label": "Talbot St · facade 9",
+    "score": 0.864,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_09.svg"
+   }
+  ],
+  "nearl_03": [
+   {
+    "id": "capel_04",
+    "label": "Capel St · facade 4",
+    "score": 0.96,
+    "display_status": "review",
+    "photo": "/demo/facades/capel_04.svg"
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "score": 0.866,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_08.svg"
+   },
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.792,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "talbot_05",
+    "label": "Talbot St · facade 5",
+    "score": 0.791,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_05.svg"
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.789,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   }
+  ],
+  "nearl_04": [
+   {
+    "id": "capel_01",
+    "label": "Capel St · facade 1",
+    "score": 0.825,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_01.svg"
+   },
+   {
+    "id": "capel_07",
+    "label": "Capel St · facade 7",
+    "score": 0.825,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_07.svg"
+   },
+   {
+    "id": "talbot_12",
+    "label": "Talbot St · facade 12",
+    "score": 0.825,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_12.svg"
+   },
+   {
+    "id": "capel_06",
+    "label": "Capel St · facade 6",
+    "score": 0.813,
+    "display_status": "unclear",
+    "photo": "/demo/facades/capel_06.svg"
+   },
+   {
+    "id": "talbot_03",
+    "label": "Talbot St · facade 3",
+    "score": 0.813,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_03.svg"
+   }
+  ],
+  "talbot_01": [
+   {
+    "id": "capel_03",
+    "label": "Capel St · facade 3",
+    "score": 0.96,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_03.svg"
+   },
+   {
+    "id": "talbot_03",
+    "label": "Talbot St · facade 3",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_03.svg"
+   },
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.843,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "talbot_11",
+    "label": "Talbot St · facade 11",
+    "score": 0.828,
+    "display_status": "review",
+    "photo": "/demo/facades/talbot_11.svg"
+   },
+   {
+    "id": "capel_07",
+    "label": "Capel St · facade 7",
+    "score": 0.819,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_07.svg"
+   }
+  ],
+  "talbot_02": [
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.869,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "score": 0.862,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_08.svg"
+   },
+   {
+    "id": "talbot_07",
+    "label": "Talbot St · facade 7",
+    "score": 0.862,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_07.svg"
+   },
+   {
+    "id": "talbot_09",
+    "label": "Talbot St · facade 9",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_09.svg"
+   },
+   {
+    "id": "capel_05",
+    "label": "Capel St · facade 5",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_05.svg"
+   }
+  ],
+  "talbot_03": [
+   {
+    "id": "capel_03",
+    "label": "Capel St · facade 3",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_03.svg"
+   },
+   {
+    "id": "talbot_01",
+    "label": "Talbot St · facade 1",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_01.svg"
+   },
+   {
+    "id": "talbot_11",
+    "label": "Talbot St · facade 11",
+    "score": 0.843,
+    "display_status": "review",
+    "photo": "/demo/facades/talbot_11.svg"
+   },
+   {
+    "id": "capel_07",
+    "label": "Capel St · facade 7",
+    "score": 0.834,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_07.svg"
+   },
+   {
+    "id": "talbot_12",
+    "label": "Talbot St · facade 12",
+    "score": 0.834,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_12.svg"
+   }
+  ],
+  "talbot_04": [
+   {
+    "id": "nearl_04",
+    "label": "North Earl St · facade 4",
+    "score": 0.764,
+    "display_status": "unclear",
+    "photo": "/demo/facades/nearl_04.svg"
+   },
+   {
+    "id": "capel_06",
+    "label": "Capel St · facade 6",
+    "score": 0.76,
+    "display_status": "unclear",
+    "photo": "/demo/facades/capel_06.svg"
+   },
+   {
+    "id": "talbot_11",
+    "label": "Talbot St · facade 11",
+    "score": 0.76,
+    "display_status": "review",
+    "photo": "/demo/facades/talbot_11.svg"
+   },
+   {
+    "id": "capel_01",
+    "label": "Capel St · facade 1",
+    "score": 0.74,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_01.svg"
+   },
+   {
+    "id": "capel_02",
+    "label": "Capel St · facade 2",
+    "score": 0.74,
+    "display_status": "confirmed",
+    "photo": "/demo/facades/capel_02.svg"
+   }
+  ],
+  "talbot_05": [
+   {
+    "id": "capel_05",
+    "label": "Capel St · facade 5",
+    "score": 0.857,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_05.svg"
+   },
+   {
+    "id": "capel_02",
+    "label": "Capel St · facade 2",
+    "score": 0.799,
+    "display_status": "confirmed",
+    "photo": "/demo/facades/capel_02.svg"
+   },
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.792,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "capel_04",
+    "label": "Capel St · facade 4",
+    "score": 0.791,
+    "display_status": "review",
+    "photo": "/demo/facades/capel_04.svg"
+   },
+   {
+    "id": "nearl_03",
+    "label": "North Earl St · facade 3",
+    "score": 0.791,
+    "display_status": "review",
+    "photo": "/demo/facades/nearl_03.svg"
+   }
+  ],
+  "talbot_06": [
+   {
+    "id": "talbot_10",
+    "label": "Talbot St · facade 10",
+    "score": 0.872,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_10.svg"
+   },
+   {
+    "id": "nearl_01",
+    "label": "North Earl St · facade 1",
+    "score": 0.857,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/nearl_01.svg"
+   },
+   {
+    "id": "capel_03",
+    "label": "Capel St · facade 3",
+    "score": 0.843,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_03.svg"
+   },
+   {
+    "id": "talbot_01",
+    "label": "Talbot St · facade 1",
+    "score": 0.843,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_01.svg"
+   },
+   {
+    "id": "capel_06",
+    "label": "Capel St · facade 6",
+    "score": 0.836,
+    "display_status": "unclear",
+    "photo": "/demo/facades/capel_06.svg"
+   }
+  ],
+  "talbot_07": [
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.891,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "capel_05",
+    "label": "Capel St · facade 5",
+    "score": 0.874,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_05.svg"
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "score": 0.862,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_08.svg"
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.862,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   },
+   {
+    "id": "talbot_09",
+    "label": "Talbot St · facade 9",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_09.svg"
+   }
+  ],
+  "talbot_08": [
+   {
+    "id": "capel_01",
+    "label": "Capel St · facade 1",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_01.svg"
+   },
+   {
+    "id": "capel_07",
+    "label": "Capel St · facade 7",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_07.svg"
+   },
+   {
+    "id": "talbot_12",
+    "label": "Talbot St · facade 12",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_12.svg"
+   },
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "talbot_10",
+    "label": "Talbot St · facade 10",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_10.svg"
+   }
+  ],
+  "talbot_09": [
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "score": 0.864,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/nearl_02.svg"
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_08.svg"
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_02.svg"
+   },
+   {
+    "id": "talbot_07",
+    "label": "Talbot St · facade 7",
+    "score": 0.856,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/talbot_07.svg"
+   },
+   {
+    "id": "capel_05",
+    "label": "Capel St · facade 5",
+    "score": 0.85,
+    "display_status": "likely_underused",
+    "photo": "/demo/facades/capel_05.svg"
+   }
+  ],
+  "talbot_10": [
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.872,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "nearl_01",
+    "label": "North Earl St · facade 1",
+    "score": 0.857,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/nearl_01.svg"
+   },
+   {
+    "id": "capel_06",
+    "label": "Capel St · facade 6",
+    "score": 0.836,
+    "display_status": "unclear",
+    "photo": "/demo/facades/capel_06.svg"
+   },
+   {
+    "id": "talbot_11",
+    "label": "Talbot St · facade 11",
+    "score": 0.836,
+    "display_status": "review",
+    "photo": "/demo/facades/talbot_11.svg"
+   },
+   {
+    "id": "capel_01",
+    "label": "Capel St · facade 1",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_01.svg"
+   }
+  ],
+  "talbot_11": [
+   {
+    "id": "talbot_03",
+    "label": "Talbot St · facade 3",
+    "score": 0.843,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_03.svg"
+   },
+   {
+    "id": "talbot_10",
+    "label": "Talbot St · facade 10",
+    "score": 0.836,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_10.svg"
+   },
+   {
+    "id": "capel_03",
+    "label": "Capel St · facade 3",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_03.svg"
+   },
+   {
+    "id": "talbot_01",
+    "label": "Talbot St · facade 1",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_01.svg"
+   },
+   {
+    "id": "capel_01",
+    "label": "Capel St · facade 1",
+    "score": 0.813,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_01.svg"
+   }
+  ],
+  "talbot_12": [
+   {
+    "id": "capel_07",
+    "label": "Capel St · facade 7",
+    "score": 0.96,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/capel_07.svg"
+   },
+   {
+    "id": "talbot_08",
+    "label": "Talbot St · facade 8",
+    "score": 0.85,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_08.svg"
+   },
+   {
+    "id": "talbot_03",
+    "label": "Talbot St · facade 3",
+    "score": 0.834,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_03.svg"
+   },
+   {
+    "id": "talbot_06",
+    "label": "Talbot St · facade 6",
+    "score": 0.828,
+    "display_status": "likely_used",
+    "photo": "/demo/facades/talbot_06.svg"
+   },
+   {
+    "id": "nearl_04",
+    "label": "North Earl St · facade 4",
+    "score": 0.825,
+    "display_status": "unclear",
+    "photo": "/demo/facades/nearl_04.svg"
+   }
+  ]
+ },
+ "walks": [
+  {
+   "id": "walk_capel_0310",
+   "walker_id": "w_rodion",
+   "started_at": "2026-10-03T17:05:00Z",
+   "ended_at": "2026-10-03T17:13:17Z",
+   "path": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -6.267954,
+      53.3465391
+     ],
+     [
+      -6.2679674,
+      53.3465745
+     ],
+     [
+      -6.2679808,
+      53.3466099
+     ],
+     [
+      -6.2679941,
+      53.3466453
+     ],
+     [
+      -6.2680075,
+      53.3466808
+     ],
+     [
+      -6.2680209,
+      53.3467162
+     ],
+     [
+      -6.2680342,
+      53.3467516
+     ],
+     [
+      -6.2680476,
+      53.346787
+     ],
+     [
+      -6.268061,
+      53.3468225
+     ],
+     [
+      -6.2680743,
+      53.3468579
+     ],
+     [
+      -6.2680877,
+      53.3468933
+     ],
+     [
+      -6.2681011,
+      53.3469287
+     ],
+     [
+      -6.2681144,
+      53.3469641
+     ],
+     [
+      -6.2681278,
+      53.3469996
+     ],
+     [
+      -6.2681412,
+      53.347035
+     ],
+     [
+      -6.2681545,
+      53.3470704
+     ],
+     [
+      -6.2681679,
+      53.3471058
+     ],
+     [
+      -6.2681813,
+      53.3471413
+     ],
+     [
+      -6.2681947,
+      53.3471767
+     ],
+     [
+      -6.268208,
+      53.3472121
+     ],
+     [
+      -6.2682214,
+      53.3472475
+     ],
+     [
+      -6.2682348,
+      53.347283
+     ],
+     [
+      -6.2682481,
+      53.3473184
+     ],
+     [
+      -6.2682615,
+      53.3473538
+     ],
+     [
+      -6.2682749,
+      53.3473892
+     ],
+     [
+      -6.2682882,
+      53.3474246
+     ],
+     [
+      -6.2683016,
+      53.3474601
+     ],
+     [
+      -6.268315,
+      53.3474955
+     ],
+     [
+      -6.2683283,
+      53.3475309
+     ],
+     [
+      -6.2683417,
+      53.3475663
+     ],
+     [
+      -6.2683551,
+      53.3476018
+     ],
+     [
+      -6.2683684,
+      53.3476372
+     ],
+     [
+      -6.2683818,
+      53.3476726
+     ],
+     [
+      -6.2683952,
+      53.347708
+     ],
+     [
+      -6.2684086,
+      53.3477435
+     ],
+     [
+      -6.2684219,
+      53.3477789
+     ],
+     [
+      -6.2684353,
+      53.3478143
+     ],
+     [
+      -6.2684487,
+      53.3478497
+     ],
+     [
+      -6.268462,
+      53.3478851
+     ],
+     [
+      -6.2684754,
+      53.3479206
+     ],
+     [
+      -6.2684888,
+      53.347956
+     ],
+     [
+      -6.2685021,
+      53.3479914
+     ],
+     [
+      -6.2685155,
+      53.3480268
+     ],
+     [
+      -6.2685289,
+      53.3480623
+     ],
+     [
+      -6.2685422,
+      53.3480977
+     ],
+     [
+      -6.2685556,
+      53.3481331
+     ],
+     [
+      -6.268569,
+      53.3481685
+     ],
+     [
+      -6.2685824,
+      53.348204
+     ],
+     [
+      -6.2685957,
+      53.3482394
+     ],
+     [
+      -6.2686091,
+      53.3482748
+     ],
+     [
+      -6.2686225,
+      53.3483102
+     ],
+     [
+      -6.2686358,
+      53.3483456
+     ],
+     [
+      -6.2686492,
+      53.3483811
+     ],
+     [
+      -6.2686626,
+      53.3484165
+     ],
+     [
+      -6.2686759,
+      53.3484519
+     ],
+     [
+      -6.2686893,
+      53.3484873
+     ],
+     [
+      -6.2687027,
+      53.3485228
+     ],
+     [
+      -6.268716,
+      53.3485582
+     ],
+     [
+      -6.2687294,
+      53.3485936
+     ],
+     [
+      -6.2687428,
+      53.348629
+     ],
+     [
+      -6.2687561,
+      53.3486645
+     ],
+     [
+      -6.2687695,
+      53.3486999
+     ],
+     [
+      -6.2687829,
+      53.3487353
+     ],
+     [
+      -6.2687963,
+      53.3487707
+     ],
+     [
+      -6.2688096,
+      53.3488061
+     ],
+     [
+      -6.268823,
+      53.3488416
+     ],
+     [
+      -6.2688364,
+      53.348877
+     ],
+     [
+      -6.2688497,
+      53.3489124
+     ],
+     [
+      -6.2688631,
+      53.3489478
+     ],
+     [
+      -6.2688765,
+      53.3489833
+     ],
+     [
+      -6.2688898,
+      53.3490187
+     ],
+     [
+      -6.2689032,
+      53.3490541
+     ],
+     [
+      -6.2689166,
+      53.3490895
+     ],
+     [
+      -6.2689299,
+      53.349125
+     ],
+     [
+      -6.2689433,
+      53.3491604
+     ],
+     [
+      -6.2689567,
+      53.3491958
+     ],
+     [
+      -6.26897,
+      53.3492312
+     ],
+     [
+      -6.2689834,
+      53.3492667
+     ],
+     [
+      -6.2689968,
+      53.3493021
+     ],
+     [
+      -6.2690102,
+      53.3493375
+     ],
+     [
+      -6.2690235,
+      53.3493729
+     ],
+     [
+      -6.2690369,
+      53.3494083
+     ],
+     [
+      -6.2690503,
+      53.3494438
+     ],
+     [
+      -6.2690636,
+      53.3494792
+     ],
+     [
+      -6.269077,
+      53.3495146
+     ],
+     [
+      -6.2690904,
+      53.34955
+     ],
+     [
+      -6.2691037,
+      53.3495855
+     ],
+     [
+      -6.2691171,
+      53.3496209
+     ],
+     [
+      -6.2691305,
+      53.3496563
+     ],
+     [
+      -6.2691438,
+      53.3496917
+     ],
+     [
+      -6.2691572,
+      53.3497272
+     ],
+     [
+      -6.2691706,
+      53.3497626
+     ],
+     [
+      -6.269184,
+      53.349798
+     ],
+     [
+      -6.2691973,
+      53.3498334
+     ],
+     [
+      -6.2692107,
+      53.3498688
+     ],
+     [
+      -6.2692241,
+      53.3499043
+     ],
+     [
+      -6.2692374,
+      53.3499397
+     ],
+     [
+      -6.2692508,
+      53.3499751
+     ],
+     [
+      -6.2692642,
+      53.3500105
+     ],
+     [
+      -6.2692775,
+      53.350046
+     ],
+     [
+      -6.2692909,
+      53.3500814
+     ],
+     [
+      -6.2693043,
+      53.3501168
+     ],
+     [
+      -6.2693176,
+      53.3501522
+     ],
+     [
+      -6.269331,
+      53.3501877
+     ],
+     [
+      -6.2693444,
+      53.3502231
+     ],
+     [
+      -6.2693611,
+      53.350258
+     ],
+     [
+      -6.2693848,
+      53.3502912
+     ],
+     [
+      -6.2694139,
+      53.3503231
+     ],
+     [
+      -6.269443,
+      53.350355
+     ],
+     [
+      -6.2694721,
+      53.3503869
+     ],
+     [
+      -6.2695012,
+      53.3504188
+     ],
+     [
+      -6.2695302,
+      53.3504507
+     ],
+     [
+      -6.2695593,
+      53.3504826
+     ],
+     [
+      -6.2695884,
+      53.3505144
+     ],
+     [
+      -6.2696168,
+      53.3505465
+     ],
+     [
+      -6.2696401,
+      53.35058
+     ],
+     [
+      -6.2696597,
+      53.3506144
+     ],
+     [
+      -6.2696792,
+      53.3506488
+     ],
+     [
+      -6.2696935,
+      53.350684
+     ],
+     [
+      -6.269701,
+      53.35072
+     ],
+     [
+      -6.269708,
+      53.3507561
+     ],
+     [
+      -6.2697151,
+      53.3507922
+     ],
+     [
+      -6.2697221,
+      53.3508282
+     ],
+     [
+      -6.2697292,
+      53.3508643
+     ],
+     [
+      -6.2697362,
+      53.3509004
+     ]
+    ]
+   },
+   "times": [
+    "2026-10-03T17:05:00Z",
+    "2026-10-03T17:05:03Z",
+    "2026-10-03T17:05:06Z",
+    "2026-10-03T17:05:09Z",
+    "2026-10-03T17:05:12Z",
+    "2026-10-03T17:05:15Z",
+    "2026-10-03T17:05:32Z",
+    "2026-10-03T17:05:35Z",
+    "2026-10-03T17:05:38Z",
+    "2026-10-03T17:05:41Z",
+    "2026-10-03T17:05:45Z",
+    "2026-10-03T17:05:48Z",
+    "2026-10-03T17:05:51Z",
+    "2026-10-03T17:05:54Z",
+    "2026-10-03T17:05:57Z",
+    "2026-10-03T17:06:00Z",
+    "2026-10-03T17:06:03Z",
+    "2026-10-03T17:06:20Z",
+    "2026-10-03T17:06:23Z",
+    "2026-10-03T17:06:27Z",
+    "2026-10-03T17:06:30Z",
+    "2026-10-03T17:06:33Z",
+    "2026-10-03T17:06:36Z",
+    "2026-10-03T17:06:39Z",
+    "2026-10-03T17:06:42Z",
+    "2026-10-03T17:06:45Z",
+    "2026-10-03T17:06:48Z",
+    "2026-10-03T17:06:51Z",
+    "2026-10-03T17:06:55Z",
+    "2026-10-03T17:06:58Z",
+    "2026-10-03T17:07:01Z",
+    "2026-10-03T17:07:04Z",
+    "2026-10-03T17:07:07Z",
+    "2026-10-03T17:07:10Z",
+    "2026-10-03T17:07:27Z",
+    "2026-10-03T17:07:30Z",
+    "2026-10-03T17:07:33Z",
+    "2026-10-03T17:07:37Z",
+    "2026-10-03T17:07:40Z",
+    "2026-10-03T17:07:43Z",
+    "2026-10-03T17:07:46Z",
+    "2026-10-03T17:07:49Z",
+    "2026-10-03T17:07:52Z",
+    "2026-10-03T17:07:55Z",
+    "2026-10-03T17:07:58Z",
+    "2026-10-03T17:08:01Z",
+    "2026-10-03T17:08:19Z",
+    "2026-10-03T17:08:22Z",
+    "2026-10-03T17:08:25Z",
+    "2026-10-03T17:08:28Z",
+    "2026-10-03T17:08:31Z",
+    "2026-10-03T17:08:34Z",
+    "2026-10-03T17:08:37Z",
+    "2026-10-03T17:08:40Z",
+    "2026-10-03T17:08:43Z",
+    "2026-10-03T17:08:47Z",
+    "2026-10-03T17:08:50Z",
+    "2026-10-03T17:08:53Z",
+    "2026-10-03T17:08:56Z",
+    "2026-10-03T17:08:59Z",
+    "2026-10-03T17:09:02Z",
+    "2026-10-03T17:09:05Z",
+    "2026-10-03T17:09:22Z",
+    "2026-10-03T17:09:25Z",
+    "2026-10-03T17:09:28Z",
+    "2026-10-03T17:09:32Z",
+    "2026-10-03T17:09:35Z",
+    "2026-10-03T17:09:38Z",
+    "2026-10-03T17:09:41Z",
+    "2026-10-03T17:09:44Z",
+    "2026-10-03T17:09:47Z",
+    "2026-10-03T17:09:50Z",
+    "2026-10-03T17:09:53Z",
+    "2026-10-03T17:09:56Z",
+    "2026-10-03T17:10:14Z",
+    "2026-10-03T17:10:17Z",
+    "2026-10-03T17:10:20Z",
+    "2026-10-03T17:10:23Z",
+    "2026-10-03T17:10:26Z",
+    "2026-10-03T17:10:29Z",
+    "2026-10-03T17:10:32Z",
+    "2026-10-03T17:10:35Z",
+    "2026-10-03T17:10:38Z",
+    "2026-10-03T17:10:42Z",
+    "2026-10-03T17:10:45Z",
+    "2026-10-03T17:10:48Z",
+    "2026-10-03T17:10:51Z",
+    "2026-10-03T17:10:54Z",
+    "2026-10-03T17:10:57Z",
+    "2026-10-03T17:11:00Z",
+    "2026-10-03T17:11:03Z",
+    "2026-10-03T17:11:06Z",
+    "2026-10-03T17:11:10Z",
+    "2026-10-03T17:11:27Z",
+    "2026-10-03T17:11:30Z",
+    "2026-10-03T17:11:33Z",
+    "2026-10-03T17:11:36Z",
+    "2026-10-03T17:11:39Z",
+    "2026-10-03T17:11:42Z",
+    "2026-10-03T17:11:45Z",
+    "2026-10-03T17:11:48Z",
+    "2026-10-03T17:11:52Z",
+    "2026-10-03T17:11:55Z",
+    "2026-10-03T17:11:58Z",
+    "2026-10-03T17:12:01Z",
+    "2026-10-03T17:12:18Z",
+    "2026-10-03T17:12:21Z",
+    "2026-10-03T17:12:24Z",
+    "2026-10-03T17:12:27Z",
+    "2026-10-03T17:12:30Z",
+    "2026-10-03T17:12:34Z",
+    "2026-10-03T17:12:37Z",
+    "2026-10-03T17:12:40Z",
+    "2026-10-03T17:12:43Z",
+    "2026-10-03T17:12:46Z",
+    "2026-10-03T17:12:49Z",
+    "2026-10-03T17:12:52Z",
+    "2026-10-03T17:12:55Z",
+    "2026-10-03T17:12:58Z",
+    "2026-10-03T17:13:01Z",
+    "2026-10-03T17:13:05Z",
+    "2026-10-03T17:13:08Z",
+    "2026-10-03T17:13:11Z",
+    "2026-10-03T17:13:14Z",
+    "2026-10-03T17:13:17Z"
+   ],
+   "distance_m": 501,
+   "building_ids": [
+    "capel_01",
+    "capel_02",
+    "capel_03",
+    "capel_04",
+    "capel_05",
+    "capel_06",
+    "capel_07",
+    "capel_08"
+   ],
+   "captures": [
+    {
+     "building_id": "capel_01",
+     "lon": -6.2680284,
+     "lat": 53.3467363,
+     "t": "2026-10-03T17:05:24Z",
+     "thumb": "/demo/facades/capel_01.svg"
+    },
+    {
+     "building_id": "capel_02",
+     "lon": -6.2681802,
+     "lat": 53.3471383,
+     "t": "2026-10-03T17:06:13Z",
+     "thumb": "/demo/facades/capel_02.svg"
+    },
+    {
+     "building_id": "capel_03",
+     "lon": -6.2684015,
+     "lat": 53.3477247,
+     "t": "2026-10-03T17:07:19Z",
+     "thumb": "/demo/facades/capel_03.svg"
+    },
+    {
+     "building_id": "capel_04",
+     "lon": -6.2685599,
+     "lat": 53.3481445,
+     "t": "2026-10-03T17:08:09Z",
+     "thumb": "/demo/facades/capel_04.svg"
+    },
+    {
+     "building_id": "capel_05",
+     "lon": -6.2687779,
+     "lat": 53.3487221,
+     "t": "2026-10-03T17:09:14Z",
+     "thumb": "/demo/facades/capel_05.svg"
+    },
+    {
+     "building_id": "capel_06",
+     "lon": -6.2689409,
+     "lat": 53.349154,
+     "t": "2026-10-03T17:10:06Z",
+     "thumb": "/demo/facades/capel_06.svg"
+    },
+    {
+     "building_id": "capel_07",
+     "lon": -6.2691958,
+     "lat": 53.3498293,
+     "t": "2026-10-03T17:11:19Z",
+     "thumb": "/demo/facades/capel_07.svg"
+    },
+    {
+     "building_id": "capel_08",
+     "lon": -6.2693533,
+     "lat": 53.3502418,
+     "t": "2026-10-03T17:12:10Z",
+     "thumb": "/demo/facades/capel_08.svg"
+    }
+   ]
+  },
+  {
+   "id": "walk_talbot_0410_am",
+   "walker_id": "w_rodion",
+   "started_at": "2026-10-04T08:12:00Z",
+   "ended_at": "2026-10-04T08:23:21Z",
+   "path": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -6.2601001,
+      53.3497584
+     ],
+     [
+      -6.2600414,
+      53.349768
+     ],
+     [
+      -6.2599826,
+      53.3497776
+     ],
+     [
+      -6.2599239,
+      53.3497872
+     ],
+     [
+      -6.2598651,
+      53.3497968
+     ],
+     [
+      -6.2598064,
+      53.3498065
+     ],
+     [
+      -6.2597477,
+      53.3498161
+     ],
+     [
+      -6.2596889,
+      53.3498257
+     ],
+     [
+      -6.2596302,
+      53.3498353
+     ],
+     [
+      -6.2595714,
+      53.3498449
+     ],
+     [
+      -6.2595127,
+      53.3498546
+     ],
+     [
+      -6.2594539,
+      53.3498642
+     ],
+     [
+      -6.2593952,
+      53.3498738
+     ],
+     [
+      -6.2593364,
+      53.3498834
+     ],
+     [
+      -6.2592777,
+      53.349893
+     ],
+     [
+      -6.259219,
+      53.3499027
+     ],
+     [
+      -6.2591602,
+      53.3499123
+     ],
+     [
+      -6.2591015,
+      53.3499219
+     ],
+     [
+      -6.2590427,
+      53.3499315
+     ],
+     [
+      -6.258984,
+      53.3499412
+     ],
+     [
+      -6.2589252,
+      53.3499508
+     ],
+     [
+      -6.2588665,
+      53.3499604
+     ],
+     [
+      -6.2588077,
+      53.34997
+     ],
+     [
+      -6.258749,
+      53.3499796
+     ],
+     [
+      -6.2586903,
+      53.3499893
+     ],
+     [
+      -6.2586315,
+      53.3499989
+     ],
+     [
+      -6.2585728,
+      53.3500085
+     ],
+     [
+      -6.258514,
+      53.3500181
+     ],
+     [
+      -6.2584553,
+      53.3500277
+     ],
+     [
+      -6.2583965,
+      53.3500374
+     ],
+     [
+      -6.2583378,
+      53.350047
+     ],
+     [
+      -6.258279,
+      53.3500566
+     ],
+     [
+      -6.2582203,
+      53.3500662
+     ],
+     [
+      -6.2581615,
+      53.3500756
+     ],
+     [
+      -6.2581025,
+      53.3500847
+     ],
+     [
+      -6.2580435,
+      53.3500938
+     ],
+     [
+      -6.2579845,
+      53.3501029
+     ],
+     [
+      -6.2579255,
+      53.350112
+     ],
+     [
+      -6.2578665,
+      53.350121
+     ],
+     [
+      -6.2578076,
+      53.3501301
+     ],
+     [
+      -6.2577486,
+      53.3501392
+     ],
+     [
+      -6.2576896,
+      53.3501483
+     ],
+     [
+      -6.2576306,
+      53.3501574
+     ],
+     [
+      -6.2575716,
+      53.3501665
+     ],
+     [
+      -6.2575126,
+      53.3501755
+     ],
+     [
+      -6.2574536,
+      53.3501846
+     ],
+     [
+      -6.2573947,
+      53.3501937
+     ],
+     [
+      -6.2573357,
+      53.3502028
+     ],
+     [
+      -6.2572767,
+      53.3502119
+     ],
+     [
+      -6.2572177,
+      53.350221
+     ],
+     [
+      -6.2571587,
+      53.3502301
+     ],
+     [
+      -6.2570997,
+      53.3502391
+     ],
+     [
+      -6.2570408,
+      53.3502482
+     ],
+     [
+      -6.2569818,
+      53.3502573
+     ],
+     [
+      -6.2569228,
+      53.3502664
+     ],
+     [
+      -6.2568638,
+      53.3502755
+     ],
+     [
+      -6.2568048,
+      53.3502846
+     ],
+     [
+      -6.2567458,
+      53.3502936
+     ],
+     [
+      -6.2566869,
+      53.3503027
+     ],
+     [
+      -6.2566279,
+      53.3503118
+     ],
+     [
+      -6.2565689,
+      53.3503209
+     ],
+     [
+      -6.2565099,
+      53.35033
+     ],
+     [
+      -6.2564509,
+      53.3503391
+     ],
+     [
+      -6.2563919,
+      53.3503481
+     ],
+     [
+      -6.2563329,
+      53.3503572
+     ],
+     [
+      -6.256274,
+      53.3503663
+     ],
+     [
+      -6.256215,
+      53.3503754
+     ],
+     [
+      -6.256156,
+      53.3503845
+     ],
+     [
+      -6.256097,
+      53.3503936
+     ],
+     [
+      -6.256038,
+      53.3504026
+     ],
+     [
+      -6.255979,
+      53.3504117
+     ],
+     [
+      -6.2559201,
+      53.3504208
+     ],
+     [
+      -6.2558611,
+      53.3504299
+     ],
+     [
+      -6.2558021,
+      53.350439
+     ],
+     [
+      -6.2557431,
+      53.3504481
+     ],
+     [
+      -6.2556841,
+      53.3504571
+     ],
+     [
+      -6.2556251,
+      53.3504662
+     ],
+     [
+      -6.2555662,
+      53.3504753
+     ],
+     [
+      -6.2555072,
+      53.3504844
+     ],
+     [
+      -6.2554482,
+      53.3504935
+     ],
+     [
+      -6.2553892,
+      53.3505026
+     ],
+     [
+      -6.2553305,
+      53.3505122
+     ],
+     [
+      -6.2552721,
+      53.3505226
+     ],
+     [
+      -6.2552137,
+      53.350533
+     ],
+     [
+      -6.2551554,
+      53.3505434
+     ],
+     [
+      -6.255097,
+      53.3505538
+     ],
+     [
+      -6.2550386,
+      53.3505642
+     ],
+     [
+      -6.2549803,
+      53.3505746
+     ],
+     [
+      -6.2549219,
+      53.350585
+     ],
+     [
+      -6.2548635,
+      53.3505954
+     ],
+     [
+      -6.2548052,
+      53.3506058
+     ],
+     [
+      -6.2547468,
+      53.3506162
+     ],
+     [
+      -6.2546884,
+      53.3506267
+     ],
+     [
+      -6.2546301,
+      53.3506371
+     ],
+     [
+      -6.2545717,
+      53.3506475
+     ],
+     [
+      -6.2545133,
+      53.3506579
+     ],
+     [
+      -6.2544549,
+      53.3506683
+     ],
+     [
+      -6.2543966,
+      53.3506787
+     ],
+     [
+      -6.2543382,
+      53.3506891
+     ],
+     [
+      -6.2542798,
+      53.3506995
+     ],
+     [
+      -6.2542215,
+      53.3507099
+     ],
+     [
+      -6.2541631,
+      53.3507203
+     ],
+     [
+      -6.2541047,
+      53.3507307
+     ],
+     [
+      -6.2540464,
+      53.3507411
+     ],
+     [
+      -6.253988,
+      53.3507515
+     ],
+     [
+      -6.2539296,
+      53.3507619
+     ],
+     [
+      -6.2538709,
+      53.3507715
+     ],
+     [
+      -6.2538115,
+      53.3507796
+     ],
+     [
+      -6.2537521,
+      53.3507876
+     ],
+     [
+      -6.2536927,
+      53.3507957
+     ],
+     [
+      -6.2536333,
+      53.3508037
+     ],
+     [
+      -6.2535739,
+      53.3508118
+     ],
+     [
+      -6.2535145,
+      53.3508199
+     ],
+     [
+      -6.2534551,
+      53.3508279
+     ],
+     [
+      -6.2533957,
+      53.350836
+     ],
+     [
+      -6.2533363,
+      53.350844
+     ],
+     [
+      -6.2532769,
+      53.3508521
+     ],
+     [
+      -6.2532175,
+      53.3508601
+     ],
+     [
+      -6.2531581,
+      53.3508682
+     ],
+     [
+      -6.2530987,
+      53.3508763
+     ],
+     [
+      -6.2530393,
+      53.3508843
+     ],
+     [
+      -6.2529799,
+      53.3508924
+     ],
+     [
+      -6.2529205,
+      53.3509004
+     ],
+     [
+      -6.2528611,
+      53.3509085
+     ],
+     [
+      -6.2528017,
+      53.3509165
+     ],
+     [
+      -6.2527423,
+      53.3509246
+     ],
+     [
+      -6.2526829,
+      53.3509326
+     ],
+     [
+      -6.2526235,
+      53.3509407
+     ],
+     [
+      -6.2525641,
+      53.3509488
+     ],
+     [
+      -6.2525047,
+      53.3509568
+     ],
+     [
+      -6.2524453,
+      53.3509649
+     ],
+     [
+      -6.2523862,
+      53.3509736
+     ],
+     [
+      -6.2523278,
+      53.3509841
+     ],
+     [
+      -6.2522701,
+      53.3509956
+     ],
+     [
+      -6.2522161,
+      53.3510125
+     ],
+     [
+      -6.252168,
+      53.3510344
+     ],
+     [
+      -6.2521172,
+      53.3510539
+     ],
+     [
+      -6.2520584,
+      53.3510632
+     ],
+     [
+      -6.2519995,
+      53.3510726
+     ],
+     [
+      -6.2519406,
+      53.3510819
+     ],
+     [
+      -6.2518817,
+      53.3510912
+     ],
+     [
+      -6.2518229,
+      53.3511006
+     ],
+     [
+      -6.251764,
+      53.3511099
+     ],
+     [
+      -6.2517051,
+      53.3511192
+     ],
+     [
+      -6.2516462,
+      53.3511286
+     ],
+     [
+      -6.2515874,
+      53.3511379
+     ],
+     [
+      -6.2515285,
+      53.3511472
+     ],
+     [
+      -6.2514696,
+      53.3511566
+     ],
+     [
+      -6.2514107,
+      53.3511659
+     ],
+     [
+      -6.2513519,
+      53.3511752
+     ],
+     [
+      -6.251293,
+      53.3511846
+     ],
+     [
+      -6.2512341,
+      53.3511939
+     ],
+     [
+      -6.2511752,
+      53.3512032
+     ],
+     [
+      -6.2511164,
+      53.3512126
+     ],
+     [
+      -6.2510575,
+      53.3512219
+     ],
+     [
+      -6.2509986,
+      53.3512312
+     ],
+     [
+      -6.2509397,
+      53.3512406
+     ],
+     [
+      -6.2508809,
+      53.3512499
+     ],
+     [
+      -6.250822,
+      53.3512592
+     ],
+     [
+      -6.2507633,
+      53.3512689
+     ],
+     [
+      -6.2507053,
+      53.3512799
+     ],
+     [
+      -6.2506507,
+      53.3512961
+     ],
+     [
+      -6.2505962,
+      53.3513123
+     ],
+     [
+      -6.2505417,
+      53.3513285
+     ],
+     [
+      -6.250487,
+      53.3513445
+     ],
+     [
+      -6.250428,
+      53.3513473
+     ]
+    ]
+   },
+   "times": [
+    "2026-10-04T08:12:00Z",
+    "2026-10-04T08:12:03Z",
+    "2026-10-04T08:12:06Z",
+    "2026-10-04T08:12:09Z",
+    "2026-10-04T08:12:12Z",
+    "2026-10-04T08:12:29Z",
+    "2026-10-04T08:12:32Z",
+    "2026-10-04T08:12:35Z",
+    "2026-10-04T08:12:38Z",
+    "2026-10-04T08:12:42Z",
+    "2026-10-04T08:12:59Z",
+    "2026-10-04T08:13:02Z",
+    "2026-10-04T08:13:05Z",
+    "2026-10-04T08:13:22Z",
+    "2026-10-04T08:13:25Z",
+    "2026-10-04T08:13:28Z",
+    "2026-10-04T08:13:31Z",
+    "2026-10-04T08:13:34Z",
+    "2026-10-04T08:13:38Z",
+    "2026-10-04T08:13:41Z",
+    "2026-10-04T08:13:44Z",
+    "2026-10-04T08:13:47Z",
+    "2026-10-04T08:13:50Z",
+    "2026-10-04T08:13:53Z",
+    "2026-10-04T08:13:56Z",
+    "2026-10-04T08:13:59Z",
+    "2026-10-04T08:14:16Z",
+    "2026-10-04T08:14:20Z",
+    "2026-10-04T08:14:23Z",
+    "2026-10-04T08:14:26Z",
+    "2026-10-04T08:14:29Z",
+    "2026-10-04T08:14:32Z",
+    "2026-10-04T08:14:35Z",
+    "2026-10-04T08:14:38Z",
+    "2026-10-04T08:14:41Z",
+    "2026-10-04T08:14:44Z",
+    "2026-10-04T08:14:48Z",
+    "2026-10-04T08:15:05Z",
+    "2026-10-04T08:15:08Z",
+    "2026-10-04T08:15:11Z",
+    "2026-10-04T08:15:28Z",
+    "2026-10-04T08:15:31Z",
+    "2026-10-04T08:15:34Z",
+    "2026-10-04T08:15:37Z",
+    "2026-10-04T08:15:55Z",
+    "2026-10-04T08:15:58Z",
+    "2026-10-04T08:16:01Z",
+    "2026-10-04T08:16:04Z",
+    "2026-10-04T08:16:07Z",
+    "2026-10-04T08:16:10Z",
+    "2026-10-04T08:16:13Z",
+    "2026-10-04T08:16:16Z",
+    "2026-10-04T08:16:19Z",
+    "2026-10-04T08:16:23Z",
+    "2026-10-04T08:16:26Z",
+    "2026-10-04T08:16:29Z",
+    "2026-10-04T08:16:32Z",
+    "2026-10-04T08:16:35Z",
+    "2026-10-04T08:16:38Z",
+    "2026-10-04T08:16:41Z",
+    "2026-10-04T08:16:44Z",
+    "2026-10-04T08:16:47Z",
+    "2026-10-04T08:16:51Z",
+    "2026-10-04T08:16:54Z",
+    "2026-10-04T08:17:11Z",
+    "2026-10-04T08:17:14Z",
+    "2026-10-04T08:17:17Z",
+    "2026-10-04T08:17:20Z",
+    "2026-10-04T08:17:23Z",
+    "2026-10-04T08:17:26Z",
+    "2026-10-04T08:17:29Z",
+    "2026-10-04T08:17:33Z",
+    "2026-10-04T08:17:36Z",
+    "2026-10-04T08:17:39Z",
+    "2026-10-04T08:17:42Z",
+    "2026-10-04T08:17:45Z",
+    "2026-10-04T08:17:48Z",
+    "2026-10-04T08:17:51Z",
+    "2026-10-04T08:17:54Z",
+    "2026-10-04T08:17:57Z",
+    "2026-10-04T08:18:01Z",
+    "2026-10-04T08:18:04Z",
+    "2026-10-04T08:18:07Z",
+    "2026-10-04T08:18:10Z",
+    "2026-10-04T08:18:13Z",
+    "2026-10-04T08:18:16Z",
+    "2026-10-04T08:18:19Z",
+    "2026-10-04T08:18:22Z",
+    "2026-10-04T08:18:26Z",
+    "2026-10-04T08:18:29Z",
+    "2026-10-04T08:18:32Z",
+    "2026-10-04T08:18:35Z",
+    "2026-10-04T08:18:38Z",
+    "2026-10-04T08:18:41Z",
+    "2026-10-04T08:18:44Z",
+    "2026-10-04T08:18:47Z",
+    "2026-10-04T08:18:50Z",
+    "2026-10-04T08:18:54Z",
+    "2026-10-04T08:18:57Z",
+    "2026-10-04T08:19:00Z",
+    "2026-10-04T08:19:03Z",
+    "2026-10-04T08:19:06Z",
+    "2026-10-04T08:19:23Z",
+    "2026-10-04T08:19:26Z",
+    "2026-10-04T08:19:29Z",
+    "2026-10-04T08:19:46Z",
+    "2026-10-04T08:19:50Z",
+    "2026-10-04T08:19:53Z",
+    "2026-10-04T08:20:10Z",
+    "2026-10-04T08:20:13Z",
+    "2026-10-04T08:20:16Z",
+    "2026-10-04T08:20:19Z",
+    "2026-10-04T08:20:22Z",
+    "2026-10-04T08:20:25Z",
+    "2026-10-04T08:20:28Z",
+    "2026-10-04T08:20:32Z",
+    "2026-10-04T08:20:35Z",
+    "2026-10-04T08:20:38Z",
+    "2026-10-04T08:20:41Z",
+    "2026-10-04T08:20:44Z",
+    "2026-10-04T08:20:47Z",
+    "2026-10-04T08:20:50Z",
+    "2026-10-04T08:20:53Z",
+    "2026-10-04T08:20:56Z",
+    "2026-10-04T08:21:00Z",
+    "2026-10-04T08:21:03Z",
+    "2026-10-04T08:21:06Z",
+    "2026-10-04T08:21:09Z",
+    "2026-10-04T08:21:12Z",
+    "2026-10-04T08:21:15Z",
+    "2026-10-04T08:21:18Z",
+    "2026-10-04T08:21:21Z",
+    "2026-10-04T08:21:25Z",
+    "2026-10-04T08:21:28Z",
+    "2026-10-04T08:21:31Z",
+    "2026-10-04T08:21:34Z",
+    "2026-10-04T08:21:37Z",
+    "2026-10-04T08:21:40Z",
+    "2026-10-04T08:21:43Z",
+    "2026-10-04T08:21:46Z",
+    "2026-10-04T08:21:49Z",
+    "2026-10-04T08:21:52Z",
+    "2026-10-04T08:21:56Z",
+    "2026-10-04T08:21:59Z",
+    "2026-10-04T08:22:02Z",
+    "2026-10-04T08:22:19Z",
+    "2026-10-04T08:22:22Z",
+    "2026-10-04T08:22:25Z",
+    "2026-10-04T08:22:28Z",
+    "2026-10-04T08:22:31Z",
+    "2026-10-04T08:22:35Z",
+    "2026-10-04T08:22:38Z",
+    "2026-10-04T08:22:41Z",
+    "2026-10-04T08:22:44Z",
+    "2026-10-04T08:22:47Z",
+    "2026-10-04T08:22:50Z",
+    "2026-10-04T08:22:53Z",
+    "2026-10-04T08:22:56Z",
+    "2026-10-04T08:22:59Z",
+    "2026-10-04T08:23:03Z",
+    "2026-10-04T08:23:06Z",
+    "2026-10-04T08:23:09Z",
+    "2026-10-04T08:23:12Z",
+    "2026-10-04T08:23:15Z",
+    "2026-10-04T08:23:18Z",
+    "2026-10-04T08:23:21Z"
+   ],
+   "distance_m": 668,
+   "building_ids": [
+    "nearl_01",
+    "nearl_02",
+    "nearl_03",
+    "nearl_04",
+    "talbot_01",
+    "talbot_02",
+    "talbot_03",
+    "talbot_04",
+    "talbot_05",
+    "talbot_06",
+    "talbot_07",
+    "talbot_08"
+   ],
+   "captures": [
+    {
+     "building_id": "nearl_01",
+     "lon": -6.2598453,
+     "lat": 53.3498001,
+     "t": "2026-10-04T08:12:20Z",
+     "thumb": "/demo/facades/nearl_01.svg"
+    },
+    {
+     "building_id": "nearl_02",
+     "lon": -6.2595604,
+     "lat": 53.3498467,
+     "t": "2026-10-04T08:12:49Z",
+     "thumb": "/demo/facades/nearl_02.svg"
+    },
+    {
+     "building_id": "nearl_03",
+     "lon": -6.2593511,
+     "lat": 53.349881,
+     "t": "2026-10-04T08:13:14Z",
+     "thumb": "/demo/facades/nearl_03.svg"
+    },
+    {
+     "building_id": "nearl_04",
+     "lon": -6.2585913,
+     "lat": 53.3500055,
+     "t": "2026-10-04T08:14:08Z",
+     "thumb": "/demo/facades/nearl_04.svg"
+    },
+    {
+     "building_id": "talbot_01",
+     "lon": -6.2579442,
+     "lat": 53.3501091,
+     "t": "2026-10-04T08:14:57Z",
+     "thumb": "/demo/facades/talbot_01.svg"
+    },
+    {
+     "building_id": "talbot_02",
+     "lon": -6.2577872,
+     "lat": 53.3501333,
+     "t": "2026-10-04T08:15:19Z",
+     "thumb": "/demo/facades/talbot_02.svg"
+    },
+    {
+     "building_id": "talbot_03",
+     "lon": -6.25756,
+     "lat": 53.3501683,
+     "t": "2026-10-04T08:15:45Z",
+     "thumb": "/demo/facades/talbot_03.svg"
+    },
+    {
+     "building_id": "talbot_04",
+     "lon": -6.2563651,
+     "lat": 53.3503523,
+     "t": "2026-10-04T08:17:02Z",
+     "thumb": "/demo/facades/talbot_04.svg"
+    },
+    {
+     "building_id": "talbot_05",
+     "lon": -6.2541363,
+     "lat": 53.3507251,
+     "t": "2026-10-04T08:19:14Z",
+     "thumb": "/demo/facades/talbot_05.svg"
+    },
+    {
+     "building_id": "talbot_06",
+     "lon": -6.2539542,
+     "lat": 53.3507575,
+     "t": "2026-10-04T08:19:38Z",
+     "thumb": "/demo/facades/talbot_06.svg"
+    },
+    {
+     "building_id": "talbot_07",
+     "lon": -6.2537583,
+     "lat": 53.3507868,
+     "t": "2026-10-04T08:20:02Z",
+     "thumb": "/demo/facades/talbot_07.svg"
+    },
+    {
+     "building_id": "talbot_08",
+     "lon": -6.2516415,
+     "lat": 53.3511293,
+     "t": "2026-10-04T08:22:09Z",
+     "thumb": "/demo/facades/talbot_08.svg"
+    }
+   ]
+  },
+  {
+   "id": "walk_talbot_0410_lunch",
+   "walker_id": "w_rodion",
+   "started_at": "2026-10-04T12:05:00Z",
+   "ended_at": "2026-10-04T12:10:53Z",
+   "path": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      -6.2506186,
+      53.3514461
+     ],
+     [
+      -6.2506735,
+      53.3514298
+     ],
+     [
+      -6.2507285,
+      53.3514135
+     ],
+     [
+      -6.2507837,
+      53.3513976
+     ],
+     [
+      -6.250842,
+      53.3513862
+     ],
+     [
+      -6.2509013,
+      53.3513768
+     ],
+     [
+      -6.2509606,
+      53.3513674
+     ],
+     [
+      -6.2510199,
+      53.351358
+     ],
+     [
+      -6.2510792,
+      53.3513486
+     ],
+     [
+      -6.2511385,
+      53.3513392
+     ],
+     [
+      -6.2511978,
+      53.3513298
+     ],
+     [
+      -6.251257,
+      53.3513204
+     ],
+     [
+      -6.2513163,
+      53.351311
+     ],
+     [
+      -6.2513756,
+      53.3513016
+     ],
+     [
+      -6.2514349,
+      53.3512922
+     ],
+     [
+      -6.2514942,
+      53.3512828
+     ],
+     [
+      -6.2515535,
+      53.3512734
+     ],
+     [
+      -6.2516128,
+      53.351264
+     ],
+     [
+      -6.2516721,
+      53.3512546
+     ],
+     [
+      -6.2517314,
+      53.3512452
+     ],
+     [
+      -6.2517907,
+      53.3512358
+     ],
+     [
+      -6.25185,
+      53.3512264
+     ],
+     [
+      -6.2519093,
+      53.351217
+     ],
+     [
+      -6.2519686,
+      53.3512076
+     ],
+     [
+      -6.2520279,
+      53.3511982
+     ],
+     [
+      -6.2520872,
+      53.3511888
+     ],
+     [
+      -6.2521465,
+      53.3511794
+     ],
+     [
+      -6.2522047,
+      53.351168
+     ],
+     [
+      -6.2522608,
+      53.3511533
+     ],
+     [
+      -6.2523068,
+      53.3511291
+     ],
+     [
+      -6.2523588,
+      53.3511103
+     ],
+     [
+      -6.2524172,
+      53.351099
+     ],
+     [
+      -6.2524764,
+      53.3510896
+     ],
+     [
+      -6.2525363,
+      53.3510815
+     ],
+     [
+      -6.2525961,
+      53.3510734
+     ],
+     [
+      -6.2526559,
+      53.3510653
+     ],
+     [
+      -6.2527157,
+      53.3510572
+     ],
+     [
+      -6.2527756,
+      53.351049
+     ],
+     [
+      -6.2528354,
+      53.3510409
+     ],
+     [
+      -6.2528952,
+      53.3510328
+     ],
+     [
+      -6.2529551,
+      53.3510247
+     ],
+     [
+      -6.2530149,
+      53.3510166
+     ],
+     [
+      -6.2530747,
+      53.3510085
+     ],
+     [
+      -6.2531345,
+      53.3510004
+     ],
+     [
+      -6.2531944,
+      53.3509922
+     ],
+     [
+      -6.2532542,
+      53.3509841
+     ],
+     [
+      -6.253314,
+      53.350976
+     ],
+     [
+      -6.2533739,
+      53.3509679
+     ],
+     [
+      -6.2534337,
+      53.3509598
+     ],
+     [
+      -6.2534935,
+      53.3509517
+     ],
+     [
+      -6.2535533,
+      53.3509436
+     ],
+     [
+      -6.2536132,
+      53.3509354
+     ],
+     [
+      -6.253673,
+      53.3509273
+     ],
+     [
+      -6.2537328,
+      53.3509192
+     ],
+     [
+      -6.2537927,
+      53.3509111
+     ],
+     [
+      -6.2538525,
+      53.350903
+     ],
+     [
+      -6.2539123,
+      53.3508949
+     ],
+     [
+      -6.2539716,
+      53.3508855
+     ],
+     [
+      -6.2540305,
+      53.3508752
+     ],
+     [
+      -6.2540893,
+      53.3508647
+     ],
+     [
+      -6.2541481,
+      53.3508543
+     ],
+     [
+      -6.2542069,
+      53.3508438
+     ],
+     [
+      -6.2542656,
+      53.3508333
+     ],
+     [
+      -6.2543244,
+      53.3508228
+     ],
+     [
+      -6.2543832,
+      53.3508123
+     ],
+     [
+      -6.254442,
+      53.3508018
+     ],
+     [
+      -6.2545008,
+      53.3507914
+     ],
+     [
+      -6.2545596,
+      53.3507809
+     ],
+     [
+      -6.2546184,
+      53.3507704
+     ],
+     [
+      -6.2546771,
+      53.3507599
+     ],
+     [
+      -6.2547359,
+      53.3507494
+     ],
+     [
+      -6.2547947,
+      53.350739
+     ],
+     [
+      -6.2548535,
+      53.3507285
+     ],
+     [
+      -6.2549123,
+      53.350718
+     ],
+     [
+      -6.2549711,
+      53.3507075
+     ],
+     [
+      -6.2550299,
+      53.350697
+     ],
+     [
+      -6.2550887,
+      53.3506865
+     ],
+     [
+      -6.2551474,
+      53.3506761
+     ],
+     [
+      -6.2552062,
+      53.3506656
+     ],
+     [
+      -6.255265,
+      53.3506551
+     ],
+     [
+      -6.2553238,
+      53.3506446
+     ],
+     [
+      -6.2553826,
+      53.3506341
+     ],
+     [
+      -6.2554417,
+      53.3506244
+     ],
+     [
+      -6.2555011,
+      53.3506152
+     ],
+     [
+      -6.2555605,
+      53.3506061
+     ],
+     [
+      -6.2556199,
+      53.3505969
+     ],
+     [
+      -6.2556793,
+      53.3505878
+     ],
+     [
+      -6.2557387,
+      53.3505786
+     ],
+     [
+      -6.2557982,
+      53.3505695
+     ],
+     [
+      -6.2558576,
+      53.3505603
+     ],
+     [
+      -6.255917,
+      53.3505512
+     ],
+     [
+      -6.2559764,
+      53.350542
+     ],
+     [
+      -6.2560358,
+      53.3505329
+     ],
+     [
+      -6.2560952,
+      53.3505237
+     ],
+     [
+      -6.2561546,
+      53.3505146
+     ],
+     [
+      -6.256214,
+      53.3505054
+     ]
+    ]
+   },
+   "times": [
+    "2026-10-04T12:05:00Z",
+    "2026-10-04T12:05:03Z",
+    "2026-10-04T12:05:06Z",
+    "2026-10-04T12:05:23Z",
+    "2026-10-04T12:05:26Z",
+    "2026-10-04T12:05:29Z",
+    "2026-10-04T12:05:32Z",
+    "2026-10-04T12:05:35Z",
+    "2026-10-04T12:05:39Z",
+    "2026-10-04T12:05:42Z",
+    "2026-10-04T12:05:45Z",
+    "2026-10-04T12:05:48Z",
+    "2026-10-04T12:05:51Z",
+    "2026-10-04T12:05:54Z",
+    "2026-10-04T12:05:57Z",
+    "2026-10-04T12:06:01Z",
+    "2026-10-04T12:06:04Z",
+    "2026-10-04T12:06:07Z",
+    "2026-10-04T12:06:10Z",
+    "2026-10-04T12:06:13Z",
+    "2026-10-04T12:06:16Z",
+    "2026-10-04T12:06:19Z",
+    "2026-10-04T12:06:22Z",
+    "2026-10-04T12:06:26Z",
+    "2026-10-04T12:06:29Z",
+    "2026-10-04T12:06:32Z",
+    "2026-10-04T12:06:35Z",
+    "2026-10-04T12:06:38Z",
+    "2026-10-04T12:06:41Z",
+    "2026-10-04T12:06:44Z",
+    "2026-10-04T12:07:02Z",
+    "2026-10-04T12:07:05Z",
+    "2026-10-04T12:07:08Z",
+    "2026-10-04T12:07:11Z",
+    "2026-10-04T12:07:14Z",
+    "2026-10-04T12:07:17Z",
+    "2026-10-04T12:07:20Z",
+    "2026-10-04T12:07:23Z",
+    "2026-10-04T12:07:27Z",
+    "2026-10-04T12:07:30Z",
+    "2026-10-04T12:07:33Z",
+    "2026-10-04T12:07:36Z",
+    "2026-10-04T12:07:39Z",
+    "2026-10-04T12:07:42Z",
+    "2026-10-04T12:07:45Z",
+    "2026-10-04T12:07:49Z",
+    "2026-10-04T12:07:52Z",
+    "2026-10-04T12:07:55Z",
+    "2026-10-04T12:07:58Z",
+    "2026-10-04T12:08:01Z",
+    "2026-10-04T12:08:04Z",
+    "2026-10-04T12:08:07Z",
+    "2026-10-04T12:08:11Z",
+    "2026-10-04T12:08:14Z",
+    "2026-10-04T12:08:17Z",
+    "2026-10-04T12:08:20Z",
+    "2026-10-04T12:08:23Z",
+    "2026-10-04T12:08:26Z",
+    "2026-10-04T12:08:29Z",
+    "2026-10-04T12:08:32Z",
+    "2026-10-04T12:08:36Z",
+    "2026-10-04T12:08:53Z",
+    "2026-10-04T12:08:56Z",
+    "2026-10-04T12:08:59Z",
+    "2026-10-04T12:09:02Z",
+    "2026-10-04T12:09:05Z",
+    "2026-10-04T12:09:08Z",
+    "2026-10-04T12:09:12Z",
+    "2026-10-04T12:09:15Z",
+    "2026-10-04T12:09:18Z",
+    "2026-10-04T12:09:21Z",
+    "2026-10-04T12:09:24Z",
+    "2026-10-04T12:09:27Z",
+    "2026-10-04T12:09:30Z",
+    "2026-10-04T12:09:34Z",
+    "2026-10-04T12:09:37Z",
+    "2026-10-04T12:09:40Z",
+    "2026-10-04T12:09:43Z",
+    "2026-10-04T12:10:00Z",
+    "2026-10-04T12:10:03Z",
+    "2026-10-04T12:10:06Z",
+    "2026-10-04T12:10:09Z",
+    "2026-10-04T12:10:13Z",
+    "2026-10-04T12:10:16Z",
+    "2026-10-04T12:10:19Z",
+    "2026-10-04T12:10:22Z",
+    "2026-10-04T12:10:25Z",
+    "2026-10-04T12:10:28Z",
+    "2026-10-04T12:10:31Z",
+    "2026-10-04T12:10:35Z",
+    "2026-10-04T12:10:38Z",
+    "2026-10-04T12:10:41Z",
+    "2026-10-04T12:10:44Z",
+    "2026-10-04T12:10:47Z",
+    "2026-10-04T12:10:50Z",
+    "2026-10-04T12:10:53Z"
+   ],
+   "distance_m": 387,
+   "building_ids": [
+    "talbot_09",
+    "talbot_10",
+    "talbot_11",
+    "talbot_12"
+   ],
+   "captures": [
+    {
+     "building_id": "talbot_09",
+     "lon": -6.2507799,
+     "lat": 53.3513987,
+     "t": "2026-10-04T12:05:16Z",
+     "thumb": "/demo/facades/talbot_09.svg"
+    },
+    {
+     "building_id": "talbot_10",
+     "lon": -6.2523068,
+     "lat": 53.3511291,
+     "t": "2026-10-04T12:06:51Z",
+     "thumb": "/demo/facades/talbot_10.svg"
+    },
+    {
+     "building_id": "talbot_11",
+     "lon": -6.2541723,
+     "lat": 53.3508499,
+     "t": "2026-10-04T12:08:44Z",
+     "thumb": "/demo/facades/talbot_11.svg"
+    },
+    {
+     "building_id": "talbot_12",
+     "lon": -6.2551879,
+     "lat": 53.3506689,
+     "t": "2026-10-04T12:09:52Z",
+     "thumb": "/demo/facades/talbot_12.svg"
+    }
+   ]
+  }
+ ],
+ "stats": {
+  "distance_m": 1556,
+  "minutes": 26,
+  "facades": 24,
+  "streets": 3,
+  "floors_scanned": 73,
+  "streak_days": 2
+ },
+ "awards": [
+  {
+   "id": "award_first_look",
+   "walker_id": "w_rodion",
+   "badge_id": "first_look",
+   "building_id": null,
+   "at": "2026-10-03T17:05:24Z",
+   "reason": "Captured your first facade.",
+   "title": "First Look"
+  },
+  {
+   "id": "award_street_scout",
+   "walker_id": "w_rodion",
+   "badge_id": "street_scout",
+   "building_id": null,
+   "at": "2026-10-04T08:12:49Z",
+   "reason": "Captured 10 facades.",
+   "title": "Street Scout"
+  },
+  {
+   "id": "award_local_knowledge",
+   "walker_id": "w_rodion",
+   "badge_id": "local_knowledge",
+   "building_id": null,
+   "at": "2026-10-04T12:05:16Z",
+   "reason": "Logged an answer from shop staff.",
+   "title": "Local Knowledge"
+  },
+  {
+   "id": "award_homes_above_capel_02",
+   "walker_id": "w_rodion",
+   "badge_id": "homes_above",
+   "building_id": "capel_02",
+   "at": "2026-10-04T10:30:00Z",
+   "reason": "A facade you captured was confirmed by a council inspection.",
+   "title": "Homes Above"
+  }
+ ],
+ "progress": [
+  {
+   "badge_id": "first_look",
+   "current": 1,
+   "target": 1
+  },
+  {
+   "badge_id": "street_scout",
+   "current": 10,
+   "target": 10
+  },
+  {
+   "badge_id": "main_street",
+   "current": 12,
+   "target": 20
+  },
+  {
+   "badge_id": "five_k",
+   "current": 1556,
+   "target": 5000
+  },
+  {
+   "badge_id": "streak_3",
+   "current": 2,
+   "target": 3
+  },
+  {
+   "badge_id": "local_knowledge",
+   "current": 1,
+   "target": 1
+  },
+  {
+   "badge_id": "second_look",
+   "current": 0,
+   "target": 1
+  },
+  {
+   "badge_id": "homes_above",
+   "current": 1,
+   "target": 1
+  },
+  {
+   "badge_id": "lights_on",
+   "current": 0,
+   "target": 1
+  }
+ ],
+ "badges": [
+  {
+   "id": "first_look",
+   "title": "First Look",
+   "description": "Captured your first facade.",
+   "tier": "bronze",
+   "icon": "camera",
+   "target": 1,
+   "unit": "facades"
+  },
+  {
+   "id": "street_scout",
+   "title": "Street Scout",
+   "description": "Captured 10 facades.",
+   "tier": "silver",
+   "icon": "footprints",
+   "target": 10,
+   "unit": "facades"
+  },
+  {
+   "id": "main_street",
+   "title": "Main Street",
+   "description": "Captured 20 facades on one street.",
+   "tier": "gold",
+   "icon": "store",
+   "target": 20,
+   "unit": "facades"
+  },
+  {
+   "id": "five_k",
+   "title": "5K for Homes",
+   "description": "Walked 5 km while capturing, in total.",
+   "tier": "gold",
+   "icon": "route",
+   "target": 5000,
+   "unit": "m"
+  },
+  {
+   "id": "streak_3",
+   "title": "Three-Day Streak",
+   "description": "Captured facades on 3 different days.",
+   "tier": "silver",
+   "icon": "flame",
+   "target": 3,
+   "unit": "days"
+  },
+  {
+   "id": "local_knowledge",
+   "title": "Local Knowledge",
+   "description": "Logged an answer from shop staff.",
+   "tier": "bronze",
+   "icon": "message-circle",
+   "target": 1,
+   "unit": "answers"
+  },
+  {
+   "id": "second_look",
+   "title": "Second Look",
+   "description": "Re-captured a facade another walker captured first.",
+   "tier": "silver",
+   "icon": "repeat",
+   "target": 1,
+   "unit": "facades"
+  },
+  {
+   "id": "homes_above",
+   "title": "Homes Above",
+   "description": "A facade you captured was confirmed by a council inspection.",
+   "tier": "civic",
+   "icon": "house",
+   "target": 1,
+   "unit": "buildings"
+  },
+  {
+   "id": "lights_on",
+   "title": "Lights On",
+   "description": "A building you captured returned to use as homes.",
+   "tier": "civic",
+   "icon": "lightbulb",
+   "target": 1,
+   "unit": "buildings"
+  }
+ ],
+ "eval": {
+  "rows": [
+   {
+    "id": "nearl_02",
+    "label": "North Earl St · facade 2",
+    "street": "North Earl Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.84,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "capel_02",
+    "label": "Capel St · facade 2",
+    "street": "Capel Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.8,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "talbot_09",
+    "label": "Talbot St · facade 9",
+    "street": "Talbot Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.74,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": "Nobody's lived up there for years, it's only used for storage.",
+    "shop_staff_reading": "empty_upstairs",
+    "shop_staff_confirms_ai": true
+   },
+   {
+    "id": "talbot_02",
+    "label": "Talbot St · facade 2",
+    "street": "Talbot Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.77,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "capel_08",
+    "label": "Capel St · facade 8",
+    "street": "Capel Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.76,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "nearl_03",
+    "label": "North Earl St · facade 3",
+    "street": "North Earl Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.72,
+    "verifier": "likely_used",
+    "verifier_agrees": false,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": true,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "capel_05",
+    "label": "Capel St · facade 5",
+    "street": "Capel Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.71,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "talbot_05",
+    "label": "Talbot St · facade 5",
+    "street": "Talbot Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.69,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "capel_04",
+    "label": "Capel St · facade 4",
+    "street": "Capel Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.66,
+    "verifier": "unclear",
+    "verifier_agrees": false,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": true,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "talbot_07",
+    "label": "Talbot St · facade 7",
+    "street": "Talbot Street",
+    "ai": "likely_underused",
+    "ai_confidence": 0.63,
+    "verifier": "likely_underused",
+    "verifier_agrees": true,
+    "human": "likely_underused",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "nearl_04",
+    "label": "North Earl St · facade 4",
+    "street": "North Earl Street",
+    "ai": "unclear",
+    "ai_confidence": 0.64,
+    "verifier": "unclear",
+    "verifier_agrees": true,
+    "human": "unclear",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "capel_06",
+    "label": "Capel St · facade 6",
+    "street": "Capel Street",
+    "ai": "unclear",
+    "ai_confidence": 0.61,
+    "verifier": "unclear",
+    "verifier_agrees": true,
+    "human": "likely_used",
+    "ai_matches_human": false,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "talbot_11",
+    "label": "Talbot St · facade 11",
+    "street": "Talbot Street",
+    "ai": "unclear",
+    "ai_confidence": 0.58,
+    "verifier": "likely_used",
+    "verifier_agrees": false,
+    "human": "unclear",
+    "ai_matches_human": true,
+    "escalated": true,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "talbot_04",
+    "label": "Talbot St · facade 4",
+    "street": "Talbot Street",
+    "ai": "unclear",
+    "ai_confidence": 0.48,
+    "verifier": "likely_underused",
+    "verifier_agrees": false,
+    "human": "unclear",
+    "ai_matches_human": true,
+    "escalated": true,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "capel_07",
+    "label": "Capel St · facade 7",
+    "street": "Capel Street",
+    "ai": "likely_used",
+    "ai_confidence": 0.84,
+    "verifier": "likely_used",
+    "verifier_agrees": true,
+    "human": "likely_used",
+    "ai_matches_human": true,
+    "escalated": false,
+    "shop_staff_answer": null,
+    "shop_staff_reading": null,
+    "shop_staff_confirms_ai": null
+   },
+   {
+    "id": "talbot_10",
+    "label": "Talbot St · facade 10",
+    "street": "Talbot Street",
+    "ai": "likely_used",
+    "ai_confidence": 0.86,
+    "verifier": "likely_used",
+    "verifier_agrees": true,
+    "human": null,
+    "ai_matches_human": null,
+    "escalated": false,
+    "shop_staff_answer": "Yes, the owner's family has the flat upstairs.",
+    "shop_staff_reading": "lives_upstairs",
+    "shop_staff_confirms_ai": true
+   }
+  ],
+  "agreement": "14/15",
+  "escalated": 4,
+  "shop_confirmed": "2/2",
+  "shop_answers_total": 2,
+  "shop_answers_unsure": 0,
+  "buildings_read_by_ai": 24,
+  "note": "Demo data, generated to show the evaluation view; these numbers were not measured.",
+  "generated_at": "2026-10-04T14:19:44Z"
+ }
+}
