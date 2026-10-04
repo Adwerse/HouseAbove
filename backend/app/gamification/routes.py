@@ -70,4 +70,4 @@ def evaluate(walker_id: str) -> dict:
     for a in awards:
         events.publish("badge.awarded", {"walker_id": a["walker_id"], "badge_id": a["badge_id"],
                                          "building_id": a["building_id"], "title": engine.title(a["badge_id"])})
-    return {"awards": to_json([{**a, "title": engine.title(a["badge_id"])} for a in awards])}
+    return {"awards": to_json([engine.public_award(a) for a in awards])}

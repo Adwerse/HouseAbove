@@ -266,12 +266,17 @@ def progress(db, walker_id: str, facts: dict | None = None, awards: list[dict] |
             for b in CATALOG]
 
 
+def public_award(a: dict) -> dict:
+    """The award as the API shows it: id (web/src/lib/types.ts Award) next to _id, plus the title."""
+    return {**a, "id": a["_id"], "title": title(a["badge_id"])}
+
+
 def profile(db, walker_id: str) -> dict:
     """{stats, awards, progress} for GET /walkers/{id}; awards oldest first, each with its title."""
     f = _facts(db, walker_id)
     awards = sorted(db.awards.find({"walker_id": walker_id}), key=lambda a: (_utc(a.get("at")), a["_id"]))
     return {
         "stats": {k: f[k] for k in STAT_KEYS},
-        "awards": [{**a, "title": title(a["badge_id"])} for a in awards],
+        "awards": [public_award(a) for a in awards],
         "progress": progress(db, walker_id, f, awards),
     }

@@ -251,6 +251,7 @@ class RoutesTest(Base):
         self.assertEqual(d["stats"]["facades"], 1)
         self.assertEqual([a["badge_id"] for a in d["awards"]], ["first_look"])
         self.assertEqual(d["awards"][0]["title"], "First Look")
+        self.assertEqual(d["awards"][0]["id"], "w_a:first_look:-")
         self.assertEqual(datetime.fromisoformat(d["awards"][0]["at"]).utcoffset(), timedelta(0))
         prog = {p["badge_id"]: p for p in d["progress"]}
         self.assertEqual(len(prog), 9)
