@@ -20,7 +20,7 @@ export const BADGE_META: Record<BadgeId, { title: string; tier: BadgeTier; icon:
   local_knowledge: { title: 'Local Knowledge', tier: 'bronze', icon: MessageCircle, line: 'You logged what shop staff told you. Local answers matter most.' },
   second_look: { title: 'Second Look', tier: 'silver', icon: Repeat, line: 'You re-captured a facade another walker photographed first.' },
   homes_above: { title: 'Homes Above', tier: 'civic', icon: House, line: 'A facade you photographed was confirmed by the council as a candidate for homes.' },
-  lights_on: { title: 'Lights On', tier: 'civic', icon: Lightbulb, line: 'A building you photographed is back in use as homes.' },
+  lights_on: { title: 'Lights On', tier: 'civic', icon: Lightbulb, line: "A building you photographed is now home to someone. Real conversions take months; we'll tell you when it happens." },
 }
 
 export function badgeMeta(id: string) {

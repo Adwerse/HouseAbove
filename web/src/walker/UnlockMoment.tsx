@@ -68,7 +68,7 @@ export function UnlockMoment({ walkerId, onAward }: { walkerId: string; onAward?
       {current && meta ? (
         <motion.div
           key={current.uid}
-          className="absolute inset-0 z-40 flex flex-col items-center justify-center px-8 text-center"
+          className="absolute inset-0 z-[60] flex flex-col items-center justify-center px-8 text-center"
           style={{ backgroundColor: 'rgba(3, 7, 18, 0.82)', backdropFilter: 'blur(6px)' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
