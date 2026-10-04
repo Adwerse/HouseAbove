@@ -1,15 +1,18 @@
-import { useMemo, useState } from "react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { ChevronDown, CircleAlert, Info, MapPinned } from "lucide-react"
+import { useCallback, useMemo, useState } from "react"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { BarChart3, ChevronDown, CircleAlert, Info, MapPinned } from "lucide-react"
 
 import { api } from "../lib/api"
 import { displayStatus } from "../lib/status"
 import { useEventStream } from "../lib/sse"
-import type { Building, StreetSummary } from "../lib/types"
+import type { Building, InspectionOutcome, StreetSummary, UpperStatus } from "../lib/types"
 import CityMap, { cityMapCamera } from "../map/CityMap"
 import { TALBOT_STREET, mockBuildings, mockContextBuildings } from "../mocks"
+import BuildingActions from "../officer/BuildingActions"
 import BuildingDrawer from "../officer/BuildingDrawer"
 import { CandidateRail, CandidateRailSkeleton } from "../officer/CandidateRail"
+import EvalDialog from "../officer/EvalDialog"
+import { Button, ToastViewport, type ToastItem } from "../ui"
 
 const TALBOT_STREET_VIEW = {
   longitude: -6.2512,
@@ -33,6 +36,10 @@ function summaryFor(buildings: Building[]): StreetSummary {
 
 function sameStreet(building: Building, street: string) {
   return building.street?.trim().toLocaleLowerCase() === street.trim().toLocaleLowerCase()
+}
+
+function errorCopy(error: unknown) {
+  return error instanceof Error ? error.message : "Please try again."
 }
 
 function PipelineStrip({ summary, loading }: { summary: StreetSummary; loading: boolean }) {
@@ -77,10 +84,24 @@ export default function OfficerConsole() {
   const [street, setStreet] = useState(TALBOT_STREET)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [highlightId, setHighlightId] = useState<string | null>(null)
+  const [evalOpen, setEvalOpen] = useState(false)
+  const [toasts, setToasts] = useState<ToastItem[]>([])
+
+  const dismissToast = useCallback((id: string) => {
+    setToasts((current) => current.filter((toast) => toast.id !== id))
+  }, [])
+  const addToast = useCallback((toast: Omit<ToastItem, "id">) => {
+    const id = `notice_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
+    setToasts((current) => [...current.slice(-3), { ...toast, id }])
+  }, [])
 
   const buildingsQuery = useQuery({
     queryKey: ["officer-buildings", street],
     queryFn: () => api.getBuildings({ street }),
+  })
+  const streetsQuery = useQuery({
+    queryKey: ["officer-streets"],
+    queryFn: () => api.getBuildings(),
   })
   const contextQuery = useQuery({
     queryKey: ["officer-context-buildings"],
@@ -116,28 +137,85 @@ export default function OfficerConsole() {
     queryFn: () => api.getSimilarBuildings(selectedId!, 5),
     enabled: Boolean(selectedId),
   })
+  const evalQuery = useQuery({
+    queryKey: ["officer-eval"],
+    queryFn: api.getEval,
+    enabled: evalOpen,
+  })
   const detailBuilding = buildingDetailQuery.data ?? selectedBuilding
   const detailError = buildingDetailQuery.error ?? servicesQuery.error ?? similarQuery.error ?? null
 
+  const refreshBuildingData = useCallback(() => {
+    void queryClient.invalidateQueries({ queryKey: ["officer-buildings"] })
+    void queryClient.invalidateQueries({ queryKey: ["officer-streets"] })
+    void queryClient.invalidateQueries({ queryKey: ["officer-street-summary"] })
+    void queryClient.invalidateQueries({ queryKey: ["officer-building"] })
+    void queryClient.invalidateQueries({ queryKey: ["officer-building-services"] })
+    void queryClient.invalidateQueries({ queryKey: ["officer-building-similar"] })
+    void queryClient.invalidateQueries({ queryKey: ["officer-eval"] })
+  }, [queryClient])
+
+  const humanLabelMutation = useMutation({
+    mutationFn: ({ id, label }: { id: string; label: UpperStatus }) => api.setHumanLabel(id, label),
+    onSuccess: refreshBuildingData,
+    onError: (error) => addToast({
+      title: "Could not record the human screen",
+      description: errorCopy(error),
+      tone: "error",
+    }),
+  })
+  const inspectionMutation = useMutation({
+    mutationFn: ({ id, outcome }: { id: string; outcome: InspectionOutcome }) => api.recordInspection(id, outcome),
+    onSuccess: refreshBuildingData,
+    onError: (error) => addToast({
+      title: "Could not record the inspection",
+      description: errorCopy(error),
+      tone: "error",
+    }),
+  })
+
   const streetOptions = useMemo(() => {
     const options = new Set([TALBOT_STREET, street])
+    for (const feature of streetsQuery.data?.features ?? []) {
+      if (feature.properties.street) options.add(feature.properties.street)
+    }
     for (const building of buildings) if (building.street) options.add(building.street)
     return [...options]
-  }, [buildings, street])
+  }, [buildings, street, streetsQuery.data])
 
   useEventStream((event) => {
     if (event.type === "building.updated" || event.type === "inspection.recorded") {
-      void queryClient.invalidateQueries({ queryKey: ["officer-buildings"] })
-      void queryClient.invalidateQueries({ queryKey: ["officer-street-summary"] })
-      void queryClient.invalidateQueries({ queryKey: ["officer-building"] })
-      void queryClient.invalidateQueries({ queryKey: ["officer-building-services"] })
-      void queryClient.invalidateQueries({ queryKey: ["officer-building-similar"] })
+      refreshBuildingData()
+    }
+    if (event.type === "inspection.recorded") {
+      addToast({
+        title: "Inspection recorded",
+        description: "The building record and inspection queue have been refreshed.",
+        tone: "success",
+      })
+    }
+    if (event.type === "badge.awarded") {
+      void api.getWalker(event.data.walker_id)
+        .then(({ walker }) => addToast({
+          title: `Badge awarded to ${walker.name}: ${event.data.title}`,
+          tone: "success",
+        }))
+        .catch(() => addToast({
+          title: `Badge awarded to ${event.data.walker_id}: ${event.data.title}`,
+          tone: "success",
+        }))
     }
   })
 
   const selectBuilding = (id: string) => {
     setSelectedId(id)
     cityMapCamera.flyTo(id)
+  }
+  const recordHumanLabel = (label: UpperStatus) => {
+    if (detailBuilding) humanLabelMutation.mutate({ id: detailBuilding.id, label })
+  }
+  const recordInspection = (outcome: InspectionOutcome) => {
+    if (detailBuilding) inspectionMutation.mutate({ id: detailBuilding.id, outcome })
   }
 
   return (
@@ -180,6 +258,14 @@ export default function OfficerConsole() {
           <div className="order-last w-full min-w-0 lg:order-none lg:flex-1">
             <PipelineStrip summary={summary} loading={summaryQuery.isPending} />
           </div>
+          <Button
+            variant="secondary"
+            size="sm"
+            leadingIcon={<BarChart3 size={15} />}
+            onClick={() => setEvalOpen(true)}
+          >
+            Eval
+          </Button>
         </header>
 
         <div className="grid min-h-0 grid-cols-1 gap-px bg-white/[0.07] xl:grid-cols-[360px_minmax(0,1fr)_440px]">
@@ -205,7 +291,7 @@ export default function OfficerConsole() {
             )}
           </aside>
 
-          <section className="relative min-h-[34rem] bg-dusk-background xl:min-h-0" aria-label="3D survey map">
+          <section className="relative min-h-[34rem] bg-dusk-background [&_.city-map]:h-full [&_.city-map]:min-h-0 xl:min-h-0" aria-label="3D survey map">
             <CityMap
               mode="officer"
               buildings={buildings}
@@ -225,11 +311,28 @@ export default function OfficerConsole() {
               loading={buildingDetailQuery.isPending || servicesQuery.isPending || similarQuery.isPending}
               error={detailError}
               onSelectSimilar={selectBuilding}
+              actionSlot={(
+                <BuildingActions
+                  building={detailBuilding}
+                  isLabelPending={humanLabelMutation.isPending}
+                  isInspectionPending={inspectionMutation.isPending}
+                  onHumanLabel={recordHumanLabel}
+                  onInspection={recordInspection}
+                />
+              )}
               className="h-full max-w-none"
             />
           </aside>
         </div>
       </section>
+      <EvalDialog
+        open={evalOpen}
+        onClose={() => setEvalOpen(false)}
+        result={evalQuery.data ?? null}
+        loading={evalQuery.isPending}
+        error={evalQuery.error ?? null}
+      />
+      <ToastViewport toasts={toasts} onDismiss={dismissToast} />
     </main>
   )
 }

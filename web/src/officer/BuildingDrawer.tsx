@@ -82,7 +82,9 @@ function safeCopy(value: string | null | undefined, fallback: string) {
 }
 
 function confidence(value: number | null) {
-  return value === null ? "Not scored" : `${Math.round(value * 100)}% confidence`;
+  if (value === null) return "Not scored";
+  const percent = value > 1 ? value : value * 100;
+  return `${Math.round(percent)}% confidence`;
 }
 
 function photoAlt(building: Building) {
