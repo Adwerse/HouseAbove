@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+sse-starlette
+pymongo>=4.10
+pydantic>=2
+python-dotenv
+openai
+openai-agents
+mcp
+pillow
+pillow-heif
+imagehash
+numpy
+requests
+pandas
+shapely
+fastembed
