@@ -1,4 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Award as AwardIcon, Footprints, Sun } from 'lucide-react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { api } from '../lib/api'
 import { BADGE_IDS, type Award, type WalkerProfileResponse } from '../lib/types'
@@ -6,6 +8,7 @@ import { DEFAULT_MOCK_WALKER_ID, mockWalkerProfile } from '../mocks'
 import { Card, Skeleton, Stat } from '../ui'
 import { Medal } from './Medal'
 import { UnlockMoment } from './UnlockMoment'
+import { WalkReplay } from './WalkReplay'
 import { badgeMeta } from './badges'
 
 /** /walker/:walkerId, or VITE_DEMO_WALKER inside the /demo phone frame (no route param there). */
@@ -67,6 +70,33 @@ function WalkerHome({ profile, sample }: { profile: WalkerProfileResponse; sampl
   )
 }
 
+function AllBadges({ profile }: { profile: WalkerProfileResponse }) {
+  const earned = new Set(profile.awards.map((a) => a.badge_id))
+  const progress = new Map(profile.progress.map((p) => [p.badge_id, p]))
+  return (
+    <div className="h-full overflow-y-auto px-4 pb-6 pt-6">
+      <h1 className="text-dusk-xl font-semibold tracking-[-0.01em]">Badges</h1>
+      <p className="mt-1 text-dusk-sm text-dusk-muted">Earned by walking and covering streets.</p>
+      <ul className="mt-5 space-y-3">
+        {BADGE_IDS.map((id) => {
+          const p = progress.get(id)
+          return (
+            <li key={id} className="flex items-center gap-3">
+              <Medal badgeId={id} size={52} muted={!earned.has(id)} />
+              <div className="min-w-0">
+                <p className="text-dusk-sm font-semibold">{badgeMeta(id).title}</p>
+                <p className="text-dusk-xs text-dusk-muted">
+                  {earned.has(id) ? 'Earned' : p ? `${p.badge_id === 'five_k' ? `${(p.current / 1000).toFixed(1)} / 5 km` : `${p.current} / ${p.target}`}` : 'Not yet'}
+                </p>
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+
 function LoadingHome() {
   return (
     <div className="space-y-4 px-4 pt-6">
@@ -78,18 +108,42 @@ function LoadingHome() {
   )
 }
 
+const TABS = [
+  { id: 'today', label: 'Today', icon: Sun },
+  { id: 'walk', label: 'Walk', icon: Footprints },
+  { id: 'badges', label: 'Badges', icon: AwardIcon },
+] as const
+type TabId = (typeof TABS)[number]['id']
+
 export default function WalkerApp() {
   const walkerId = useWalkerId()
   const queryClient = useQueryClient()
+  const [tab, setTab] = useState<TabId>('today')
   const profile = useQuery({ queryKey: ['walker', walkerId], queryFn: () => api.getWalker(walkerId) })
+  const data = profile.data ?? mockWalkerProfile
 
   return (
-    <main className="relative mx-auto h-dvh w-full max-w-[390px] overflow-hidden bg-dusk-background text-dusk-text">
-      {profile.isPending ? (
-        <LoadingHome />
-      ) : (
-        <WalkerHome profile={profile.data ?? mockWalkerProfile} sample={!profile.data} />
-      )}
+    <main className="relative mx-auto flex h-dvh w-full max-w-[390px] flex-col overflow-hidden bg-dusk-background text-dusk-text">
+      <div className="min-h-0 flex-1">
+        {tab === 'walk' ? (
+          <WalkReplay walkerId={walkerId} />
+        ) : profile.isPending ? (
+          <LoadingHome />
+        ) : tab === 'badges' ? (
+          <AllBadges profile={data} />
+        ) : (
+          <WalkerHome profile={data} sample={!profile.data} />
+        )}
+      </div>
+      <nav className="z-20 grid shrink-0 grid-cols-3 border-t border-white/[0.07] bg-dusk-background" aria-label="Walker sections">
+        {TABS.map(({ id, label, icon: Icon }) => (
+          <button key={id} type="button" onClick={() => setTab(id)} aria-current={tab === id ? 'page' : undefined}
+            className={`flex flex-col items-center gap-0.5 py-2.5 text-dusk-xs font-medium ${tab === id ? 'text-dusk-warm' : 'text-dusk-muted'}`}>
+            <Icon size={20} aria-hidden="true" />
+            {label}
+          </button>
+        ))}
+      </nav>
       <UnlockMoment walkerId={walkerId} onAward={() => queryClient.invalidateQueries({ queryKey: ['walker', walkerId] })} />
     </main>
   )
