@@ -42,7 +42,14 @@ export default function DemoView() {
   const buildingsQuery = useQuery({ queryKey: ["buildings"], queryFn: () => api.getBuildings() });
   const walksQuery = useQuery({ queryKey: ["walks", WALKER], queryFn: () => api.getWalkerWalks(WALKER) });
   const all = useMemo<Building[]>(() => buildingsQuery.data?.features.map((f) => f.properties) ?? [], [buildingsQuery.data]);
-  const talbot = useMemo(() => all.filter((b) => b.street === TALBOT_STREET).sort(byRank), [all]);
+  // the story street: Talbot Street in the demo data, else the street with the most facades
+  const storyStreet = useMemo(() => {
+    if (all.some((b) => b.street === TALBOT_STREET)) return TALBOT_STREET;
+    const counts = new Map<string, number>();
+    for (const b of all) if (b.street) counts.set(b.street, (counts.get(b.street) ?? 0) + 1);
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? TALBOT_STREET;
+  }, [all]);
+  const talbot = useMemo(() => all.filter((b) => b.street === storyStreet).sort(byRank), [all, storyStreet]);
   const top = talbot.find((b) => b.display_status === "likely_underused" || b.display_status === "confirmed") ?? talbot[0];
   const disagreement = talbot.find((b) => b.display_status === "review" && b.verifier && !b.verifier.agree) ?? all.find((b) => b.display_status === "review");
   // the walk with the most facades is the story's "Sunday morning" walk
@@ -90,7 +97,7 @@ export default function DemoView() {
     setPadding({ left: 470, right: 372 * phoneScale + 56, top: 80, bottom: 110 }, false);
     stopOrbit();
     const base = { buildings: all, walks: [] as Walk[], replay: null, focusWalkId: null, photoPins: false, services: null, selectedId: null, revealed: null, visibleIds: null, hoverId: null };
-    const street = streetCamera(TALBOT_STREET, all);
+    const street = streetCamera(storyStreet, all);
     switch (current.key) {
       case "hook":
         scene.set({ ...base, colorMode: "none" });
