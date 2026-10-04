@@ -251,6 +251,9 @@ def write_to_db(walker_id: str, name: str, town: str,
             "times": times,
             "distance_m": round(dist, 1),
             "building_ids": [c.building_id for c in walk],
+            # Photographer position per photo (the path drops jitter points); the walker view reads it.
+            "captures": [{"building_id": c.building_id, "lon": c.lon, "lat": c.lat, "t": c.taken_at}
+                         for c in walk],
         }}, upsert=True)
         for c in walk:
             db.buildings.update_one({"_id": c.building_id}, {"$set": {
