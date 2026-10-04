@@ -1,11 +1,13 @@
 """C's REST routes (CONTRACT "REST"). B's /walkers and /badges live in gamification/routes.py."""
+import json
 import logging
 from typing import Literal
 
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from sse_starlette.sse import EventSourceResponse
 
-from app import events, repo
+from app import agent, events, repo
 from app.db import get_db
 from app.gamification import engine
 
@@ -22,6 +24,10 @@ BADGE_TITLES = {
 
 class HumanLabelIn(BaseModel):
     label: Literal["likely_underused", "likely_used", "unclear"] | None
+
+
+class AskIn(BaseModel):
+    question: str = Field(min_length=1, max_length=500)
 
 
 class InspectionIn(BaseModel):
@@ -122,3 +128,14 @@ def context_buildings() -> dict:
 @router.get("/eval")
 def eval_summary() -> dict:
     return repo.eval_summary()
+
+
+@router.post("/agent/ask")
+async def agent_ask(body: AskIn) -> EventSourceResponse:
+    """SSE: tool_call, tool_result, delta, done (CONTRACT)."""
+
+    async def stream():
+        async for event, data in agent.stream_agent(body.question):
+            yield {"event": event, "data": json.dumps(data)}
+
+    return EventSourceResponse(stream(), ping=15)
