@@ -70,13 +70,21 @@ def main() -> int:
     docs = [d for d in db.buildings.find({"models.vision": {"$nin": [None, ""]}})
             if args.force or not d.get("embedding")]
     log.info("%d buildings to embed with %s (%d dims)", len(docs), model, dim)
-    embed = embedder(model)
+    embed = embedder(model) if docs else None
     for i in range(0, len(docs), BATCH):
         batch = docs[i:i + BATCH]
-        for d, vec in zip(batch, embed([describe(d) for d in batch])):
+        vectors = embed([describe(d) for d in batch])
+        # Never claim a batch completed when a provider returned fewer (or more)
+        # vectors than requested. Validate the whole batch before writing any of
+        # it, so a retry is clean and every write remains a $set of embedding.
+        if len(vectors) != len(batch):
+            log.error("%s returned %d vectors for %d buildings", model, len(vectors), len(batch))
+            return 2
+        for vec in vectors:
             if len(vec) != dim:
                 log.error("%s returned %d dimensions but EMBED_DIM is %d", model, len(vec), dim)
                 return 2
+        for d, vec in zip(batch, vectors):
             db.buildings.update_one({"_id": d["_id"]}, {"$set": {"embedding": vec}})
     print(f"embed: {len(docs)} buildings embedded")
     init_db.create_vector_index(db, dim, wait=True)

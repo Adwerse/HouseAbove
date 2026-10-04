@@ -40,9 +40,31 @@ def write_json(path: Path, data) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
 
+def copy_files(source: Path, destination: Path) -> int:
+    """Copy every regular file below ``source`` and return the number copied.
+
+    survey_vision currently writes flat JPGs, but retaining a relative path makes
+    this safe for a future thumbnail or format variant.  ``--photos-web`` can
+    also deliberately point at the destination during a local static preview.
+    """
+    destination.mkdir(parents=True, exist_ok=True)
+    if not source.is_dir() or source.resolve() == destination.resolve():
+        return 0
+    copied = 0
+    for item in sorted(source.rglob("*")):
+        if not item.is_file():
+            continue
+        target = destination / item.relative_to(source)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(item, target)
+        copied += 1
+    return copied
+
+
 def walker_files(db, api: str, out: Path) -> tuple[int, int]:
     """-> (walkers written from the API, walkers written from raw collections)."""
     from_api = raw = 0
+    (out / "walkers").mkdir(parents=True, exist_ok=True)
     for walker in db.walkers.find():
         wid = walker["_id"]
         try:
@@ -50,7 +72,8 @@ def walker_files(db, api: str, out: Path) -> tuple[int, int]:
             walks = requests.get(f"{api}/api/walkers/{wid}/walks", timeout=15)
             if profile.status_code != 200 or walks.status_code != 200:
                 raise RuntimeError(f"HTTP {profile.status_code} / {walks.status_code}")
-            data = {"profile": profile.json(), "walks": walks.json(), "awards": profile.json().get("awards", [])}
+            profile_data = profile.json()
+            data = {"profile": profile_data, "walks": walks.json(), "awards": profile_data.get("awards", [])}
             from_api += 1
         except (requests.RequestException, RuntimeError, ValueError) as exc:
             log.warning("%s: walker routes not usable (%s): wrote the raw collections", wid, exc)
@@ -75,8 +98,14 @@ def main() -> int:
     write_json(out / "buildings.geojson", fc)
     context = repo.context_buildings()
     write_json(out / "context.geojson", context)
-    pois = [{"id": p["_id"], "kind": p["kind"], "name": p["name"], "lat": p["location"]["coordinates"][1],
-             "lon": p["location"]["coordinates"][0]} for p in db.pois.find()]
+    pois = []
+    for p in db.pois.find():
+        coordinates = (p.get("location") or {}).get("coordinates") or []
+        if len(coordinates) < 2:
+            log.warning("skipping POI %r without a Point location", p.get("_id"))
+            continue
+        pois.append({"id": repo.to_json(p.get("_id")), "kind": p.get("kind"), "name": p.get("name"),
+                     "lat": coordinates[1], "lon": coordinates[0]})
     write_json(out / "pois.json", pois)
     streets = sorted({b["street"] for b in repo.list_buildings(db=db) if b["street"]})
     total = {k: 0 for k in ("total", "processed", "likely_underused", "review", "confirmed", "home")}
@@ -89,14 +118,11 @@ def main() -> int:
     write_json(out / "eval.json", repo.eval_summary(db))
     from_api, raw = walker_files(db, args.api.rstrip("/"), out)
 
-    photos = sorted(args.photos_web.glob("*.jpg")) if args.photos_web.is_dir() else []
-    (out / "photos").mkdir(parents=True, exist_ok=True)
-    for p in photos:
-        shutil.copy2(p, out / "photos" / p.name)
+    photos = copy_files(args.photos_web, out / "photos")
     agent_src = DEFAULT_OUT / "agent"
-    if agent_src.exists() and agent_src.resolve() != (out / "agent").resolve():
-        shutil.copytree(agent_src, out / "agent", dirs_exist_ok=True)
-    runs = len(list((out / "agent").glob("*.jsonl"))) if (out / "agent").exists() else 0
+    agent_out = out / "agent"
+    copy_files(agent_src, agent_out)
+    runs = len(list(agent_out.rglob("*.jsonl")))
 
     print(f"export -> {out}: {len(fc['features'])} buildings, {len(context['features'])} context, {len(pois)} pois, "
           f"{len(streets)} streets, {from_api + raw} walkers ({from_api} via API, {raw} raw), {len(photos)} photos, "

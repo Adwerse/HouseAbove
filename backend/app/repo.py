@@ -12,7 +12,7 @@ import numpy as np
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
 from pymongo import UpdateOne
-from pymongo.errors import OperationFailure
+from pymongo.errors import PyMongoError
 from pymongo.database import Database
 
 from app import domain
@@ -151,7 +151,7 @@ def similar(building_id: str, k: int = 5, db: Database | None = None) -> tuple[l
             return [_similar_item(h, h["score"]) for h in hits], "$vectorSearch"
         log.warning("$vectorSearch returned %d of %d matches (index missing or still building): cosine-fallback",
                     len(hits), expected)
-    except OperationFailure as exc:
+    except PyMongoError as exc:
         log.warning("$vectorSearch failed (%s): cosine-fallback", str(exc)[:120])
 
     others = list(db.buildings.find({"embedding": {"$exists": True}, "_id": {"$ne": building_id}},

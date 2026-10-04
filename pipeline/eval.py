@@ -42,6 +42,7 @@ SYSTEM = ("A shop worker on an Irish main street was asked: \"Do you know if any
           "empty_upstairs: they say the upper floors are empty or unused. unsure: they do not know, or the answer is "
           "unclear or mixed.")
 CONFIRMS = {"lives_upstairs": "likely_used", "empty_upstairs": "likely_underused"}
+STAFF_READINGS = {*CONFIRMS, "unsure"}
 
 
 def normalize_label(text: str | None) -> str | None:
@@ -60,11 +61,44 @@ def normalize_label(text: str | None) -> str | None:
     return None
 
 
+def cached_readings(cache_path: Path) -> dict[str, str]:
+    """Return the usable portion of the durable answer cache.
+
+    A damaged cache should not make an otherwise useful static snapshot fail.
+    We deliberately leave an unreadable file in place for diagnosis; a successful
+    run below writes a fresh, valid cache over it.
+    """
+    if not cache_path.exists():
+        return {}
+    try:
+        raw = json.loads(cache_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        log.warning("cannot read staff-answer cache %s (%s); rebuilding it", cache_path, exc)
+        return {}
+    if not isinstance(raw, dict):
+        log.warning("staff-answer cache %s is not an object; rebuilding it", cache_path)
+        return {}
+    return {str(answer): reading for answer, reading in raw.items() if reading in STAFF_READINGS}
+
+
+def direct_reading(answer: str) -> str | None:
+    """Accept a deliberately coded answer in a demo CSV without an LLM call."""
+    normalized = re.sub(r"[\s-]+", "_", answer.strip().lower())
+    return normalized if normalized in STAFF_READINGS else None
+
+
 async def read_answers(answers: list[str], cache_path: Path) -> dict[str, str]:
-    cache = json.loads(cache_path.read_text()) if cache_path.exists() else {}
-    todo = sorted({a for a in answers if a not in cache})
+    cache = cached_readings(cache_path)
+    direct = {answer: reading for answer in set(answers) if (reading := direct_reading(answer))}
+    todo = sorted({a for a in answers if a not in cache and a not in direct})
     if todo:
-        model = llm.model_from_env("AGENT_MODEL")
+        try:
+            model = llm.model_from_env("AGENT_MODEL")
+        except RuntimeError as exc:
+            # A cache-only/static run can still publish an honest 0/M result.
+            # Do not guess at free text when TensorX is not configured.
+            log.warning("%s; %d uncached shop answers are counted as unsure", exc, len(todo))
+            return {a: cache.get(a, direct.get(a, "unsure")) for a in answers}
         results = await asyncio.gather(*(llm.structured(model, SYSTEM, f"Answer: {a}", StaffReading) for a in todo),
                                        return_exceptions=True)
         for answer, res in zip(todo, results):
@@ -74,7 +108,7 @@ async def read_answers(answers: list[str], cache_path: Path) -> dict[str, str]:
             cache[answer] = res.value.reading
         cache_path.parent.mkdir(parents=True, exist_ok=True)
         cache_path.write_text(json.dumps(cache, indent=2, ensure_ascii=False))
-    return {a: cache.get(a, "unsure") for a in answers}
+    return {a: cache.get(a, direct.get(a, "unsure")) for a in answers}
 
 
 def main() -> int:
@@ -90,11 +124,14 @@ def main() -> int:
     buildings = list(get_db().buildings.find({"models.vision": {"$nin": [None, ""]}}, {"embedding": 0}))
     rows = []
     for b in sorted(buildings, key=lambda b: b["_id"]):
-        row = labels.get(b["_id"].lower(), {})
-        human = normalize_label(row.get("human_label"))
-        if row.get("human_label") and human is None:
-            log.warning("%s: cannot read human_label %r: ignored", b["_id"], row["human_label"])
-        staff = row.get("shop_staff_answer") or b.get("shop_staff_answer")
+        row = labels.get(str(b["_id"]).lower(), {})
+        # The API's human_label is the current screening decision. CSV labels
+        # seed a run before that field exists in Atlas, so they are a fallback.
+        human_raw = b.get("human_label") or row.get("human_label")
+        human = normalize_label(human_raw)
+        if human_raw and human is None:
+            log.warning("%s: cannot read human_label %r: ignored", b["_id"], human_raw)
+        staff = b.get("shop_staff_answer") or row.get("shop_staff_answer")
         if human is None and not staff:
             continue
         rows.append({"id": b["_id"], "label": b.get("label"), "street": b.get("street"), "ai": b["upper_status"],
