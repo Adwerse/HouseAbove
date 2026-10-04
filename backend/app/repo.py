@@ -4,16 +4,21 @@ Functions return plain JSON-friendly dicts (embedding removed, id and
 display_status added). They never publish events: the API routes do.
 """
 import json
+import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
 from pymongo import UpdateOne
+from pymongo.errors import OperationFailure
 from pymongo.database import Database
 
 from app import domain
 from app.db import get_db
+
+log = logging.getLogger("repo")
 
 # C's contract fields. A building the pipeline has not finished yet still comes
 # back with every key, so the front end never meets a missing one.
@@ -96,10 +101,55 @@ def building_services(building_id: str, db: Database | None = None) -> dict | No
     return {"services": doc.get("services"), "pois": pois}
 
 
+VECTOR_INDEX = "facade_vec"
+NUM_CANDIDATES = 50
+
+
+def _similar_item(doc: dict, score: float) -> dict:
+    return {"id": doc["_id"], "label": doc.get("label"), "score": round(float(score), 4),
+            "display_status": domain.display_status(doc), "photo": doc.get("photo")}
+
+
 def similar(building_id: str, k: int = 5, db: Database | None = None) -> tuple[list[dict], str]:
-    """(results, db_op). db_op is "$vectorSearch" or "cosine-fallback" once C4 builds
-    embeddings; "none" means no search ran."""
-    return [], "none"  # filled in C4
+    """(results, db_op). "$vectorSearch" when Atlas answered; "cosine-fallback" when it could not
+    (no index, index still building, error) and plain cosine in Python answered instead; "none"
+    when this building has no embedding to search with. Scores are Atlas's cosine score,
+    (1 + cos) / 2, on both paths."""
+    db = _db(db)
+    k = max(1, min(k, 20))
+    doc = db.buildings.find_one({"_id": building_id}, {"embedding": 1})
+    if not doc or not doc.get("embedding"):
+        return [], "none"
+    embedded = db.buildings.count_documents({"embedding": {"$exists": True}})
+    expected = min(k, embedded - 1)  # the building itself is not a match
+    if expected <= 0:
+        return [], "none"
+
+    display = {"label": 1, "photo": 1, "inspection": 1, "human_label": 1, "needs_human": 1, "upper_status": 1}
+    try:
+        hits = list(db.buildings.aggregate([
+            {"$vectorSearch": {"index": VECTOR_INDEX, "path": "embedding", "queryVector": doc["embedding"],
+                               "numCandidates": NUM_CANDIDATES, "limit": k + 1}},
+            {"$addFields": {"score": {"$meta": "vectorSearchScore"}}},
+            {"$project": {**display, "score": 1}}]))
+        hits = [h for h in hits if h["_id"] != building_id][:k]
+        if len(hits) >= expected:
+            return [_similar_item(h, h["score"]) for h in hits], "$vectorSearch"
+        log.warning("$vectorSearch returned %d of %d matches (index missing or still building): cosine-fallback",
+                    len(hits), expected)
+    except OperationFailure as exc:
+        log.warning("$vectorSearch failed (%s): cosine-fallback", str(exc)[:120])
+
+    others = list(db.buildings.find({"embedding": {"$exists": True}, "_id": {"$ne": building_id}},
+                                    {**display, "embedding": 1}))
+    query = np.asarray(doc["embedding"], dtype=float)
+    query /= np.linalg.norm(query) or 1.0
+    scored = []
+    for o in others:
+        v = np.asarray(o["embedding"], dtype=float)
+        scored.append((float((1 + query @ v / (np.linalg.norm(v) or 1.0)) / 2), o))
+    scored.sort(key=lambda x: -x[0])
+    return [_similar_item(o, sc) for sc, o in scored[:k]], "cosine-fallback"
 
 
 def public_registers(building_id: str, db: Database | None = None) -> dict | None:
