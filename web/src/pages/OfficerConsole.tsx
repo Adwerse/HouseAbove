@@ -8,6 +8,7 @@ import { useEventStream } from "../lib/sse"
 import type { Building, StreetSummary } from "../lib/types"
 import CityMap, { cityMapCamera } from "../map/CityMap"
 import { TALBOT_STREET, mockBuildings, mockContextBuildings } from "../mocks"
+import BuildingDrawer from "../officer/BuildingDrawer"
 import { CandidateRail, CandidateRailSkeleton } from "../officer/CandidateRail"
 
 const TALBOT_STREET_VIEW = {
@@ -100,6 +101,23 @@ export default function OfficerConsole() {
   const fallbackSummary = useMemo(() => summaryFor(buildings), [buildings])
   const summary = summaryQuery.data ?? fallbackSummary
   const selectedBuilding = selectedId ? buildings.find((building) => building.id === selectedId) ?? null : null
+  const buildingDetailQuery = useQuery({
+    queryKey: ["officer-building", selectedId],
+    queryFn: () => api.getBuilding(selectedId!),
+    enabled: Boolean(selectedId),
+  })
+  const servicesQuery = useQuery({
+    queryKey: ["officer-building-services", selectedId],
+    queryFn: () => api.getBuildingServices(selectedId!),
+    enabled: Boolean(selectedId),
+  })
+  const similarQuery = useQuery({
+    queryKey: ["officer-building-similar", selectedId],
+    queryFn: () => api.getSimilarBuildings(selectedId!, 5),
+    enabled: Boolean(selectedId),
+  })
+  const detailBuilding = buildingDetailQuery.data ?? selectedBuilding
+  const detailError = buildingDetailQuery.error ?? servicesQuery.error ?? similarQuery.error ?? null
 
   const streetOptions = useMemo(() => {
     const options = new Set([TALBOT_STREET, street])
@@ -111,6 +129,9 @@ export default function OfficerConsole() {
     if (event.type === "building.updated" || event.type === "inspection.recorded") {
       void queryClient.invalidateQueries({ queryKey: ["officer-buildings"] })
       void queryClient.invalidateQueries({ queryKey: ["officer-street-summary"] })
+      void queryClient.invalidateQueries({ queryKey: ["officer-building"] })
+      void queryClient.invalidateQueries({ queryKey: ["officer-building-services"] })
+      void queryClient.invalidateQueries({ queryKey: ["officer-building-similar"] })
     }
   })
 
@@ -196,18 +217,16 @@ export default function OfficerConsole() {
             {liveBuildings?.length === 0 ? <MapEmptyState /> : null}
           </section>
 
-          <aside className="hidden min-h-0 bg-dusk-background p-3 xl:block" aria-label="Building detail">
-            <div className="grid h-full place-items-center rounded-panel border border-dashed border-white/[0.12] bg-dusk-glass p-6 text-center">
-              <div>
-                <p className="font-mono text-dusk-xs uppercase tracking-[0.08em] text-dusk-primary">Building detail</p>
-                <p className="mt-2 text-dusk-sm font-semibold text-dusk-text">
-                  {selectedBuilding?.label ?? "Select a facade"}
-                </p>
-                <p className="mt-1 max-w-60 text-dusk-xs leading-4 text-dusk-muted">
-                  Select a ranked candidate to review the two independent model reads and inspection history.
-                </p>
-              </div>
-            </div>
+          <aside className="min-h-[28rem] min-w-0 bg-dusk-background p-2 sm:p-3 xl:min-h-0" aria-label="Building detail">
+            <BuildingDrawer
+              building={detailBuilding}
+              services={servicesQuery.data}
+              similar={similarQuery.data}
+              loading={buildingDetailQuery.isPending || servicesQuery.isPending || similarQuery.isPending}
+              error={detailError}
+              onSelectSimilar={selectBuilding}
+              className="h-full max-w-none"
+            />
           </aside>
         </div>
       </section>
