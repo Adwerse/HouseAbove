@@ -24,14 +24,15 @@ from app.db import get_db  # noqa: E402
 
 log = logging.getLogger("init_db")
 
-FACADE_COLLECTION = "buildings"  # guess: align with CONTRACT.md
+FACADE_COLLECTION = "buildings"
 VECTOR_INDEX = "facade_vec"
 
-# (collection, keys, options). Only fields the C1 prompt names; the rest of the
-# contract's indexes still need adding here once CONTRACT.md is pasted.
+# (collection, keys, options), from CONTRACT "MongoDB Atlas M0"
 INDEXES = [
-    (FACADE_COLLECTION, [("street", 1)], {}),
-    (FACADE_COLLECTION, [("upper_status", 1)], {}),
+    ("buildings", [("location", "2dsphere")], {}),
+    ("pois", [("location", "2dsphere")], {}),
+    # awards are unique per (walker, badge, building); building_id may be null
+    ("awards", [("walker_id", 1), ("badge_id", 1), ("building_id", 1)], {"unique": True}),
 ]
 
 

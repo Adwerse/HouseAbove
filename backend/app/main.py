@@ -26,12 +26,13 @@ app.add_middleware(
 
 @app.get("/api/events")
 async def events() -> EventSourceResponse:
-    """SSE stream. Each message is the JSON envelope {"type", "payload", "ts"}."""
+    """SSE stream: `event: <type>` + `data: <payload json>`, e.g.
+    event: building.updated / data: {"id": "talbot_12"}"""
 
     async def stream():
         with subscribe() as sub:
             async for event in sub:
-                yield {"data": json.dumps(event)}
+                yield {"event": event["type"], "data": json.dumps(event["payload"])}
 
     return EventSourceResponse(stream(), ping=15)
 

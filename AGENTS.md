@@ -1,44 +1,54 @@
 # HomesAbove — agent rules
 
 Build for Ireland hackathon (OpenAI x Give(a)Go x Dogpatch Labs, Dublin, 4 Oct 2026).
-`contracts/CONTRACT.md` is binding. `docs/BRIEF.md` is the product brief. If the
-brief conflicts with the contract, the contract wins on stack, ownership and
-interfaces. Feature freeze: 15:00. Keep `main` runnable.
+`contracts/CONTRACT.md` is binding (v1.1, changes only by team agreement) and
+`docs/BRIEF.md` is the product brief. Where they conflict the contract wins on
+stack, ownership and interfaces. Feature freeze 15:00. Keep `main` runnable.
 
-> `contracts/CONTRACT.md` is still a placeholder. Until it is pasted, the
-> ownership table, git rules and product rules below come from the C1 task
-> prompt plus defaults, and must be reconciled with the contract.
+## Ownership (edit only your paths)
 
-## Ownership
-
-| Path | Owner |
+| Owner | Paths |
 |---|---|
-| `web/**` | A (React app, Vite on http://localhost:5173) |
-| `backend/app/gamification/**` | B (stubs created by C once, then B's) |
-| `backend/**` except `backend/app/gamification/**` | C |
-| `pipeline/**`, `data/export/**`, `data/cache/**`, `data/photos_web/` | C |
-| `walker/**` | not named in the C1 prompt, owner TBD |
-| `contracts/**`, `docs/**` | shared; change only by agreement |
+| A | `web/**` except `web/src/walker/**` |
+| B | `web/src/walker/**`, `backend/app/gamification/**`, `walker/**`, `data/labels.csv`, `data/photos/` (shared folder, never in git) |
+| C | `backend/**` except `backend/app/gamification/**`, `pipeline/**`, `data/export/**`, `data/cache/**`, `data/photos_web/` |
 
-Never edit another person's paths. If you need a change there, ask the owner.
+Single owner of shared files: `web/package.json` + lockfile (A),
+`backend/requirements.txt` (C), `backend/app/main.py` (C), `.env.example` (C),
+`README.md` (A), `contracts/` (team).
 
-## Git rules (defaults until the contract is pasted)
+## Git
 
-- Work on `main`, small commits, keep `main` runnable.
-- `git pull --rebase` before every push. Never force-push.
-- Never commit secrets: `.env` is ignored, `.env.example` lists the variables.
-- Never commit `data/photos/`, `data/photos_web/`, `data/cache/`, `node_modules/`, `.venv/`.
+- Trunk on `main`. Small commits. `git pull --rebase` before every push.
+- Never run repo-wide formatters or `lint --fix` outside your paths.
+- Never commit `.env` or photos.
+- Need a change in someone else's file: ask the owner.
 
-## Product rules
+## Runtime
 
-- Stack: Python 3.11 + FastAPI backend (`backend/`, run from `backend/` with
-  `uvicorn app.main:app`), React front end (`web/`), MongoDB Atlas.
-- All inference goes through TensorX (OpenAI-compatible, `TENSORX_BASE_URL`).
-  Models come from env: `VISION_MODEL`, `VERIFIER_MODEL`, `AGENT_MODEL`, `EMBED_MODEL`.
-- The agent runs inside the API, not as a separate process.
-- MongoDB is the source of truth. `buildings.json` is only an export (`data/export/`).
-- Live updates go through the in-process event bus (`app/events.py`) and `GET /api/events` (SSE).
-- Be honest in reported ops: similar search without the Atlas vector index
-  falls back to in-Python cosine and reports `db_op: "cosine-fallback"`.
+- web :5173 (Vite proxies `/api` and `/photos` to :8000) | API :8000 | MCP :8001 (streamable HTTP, path `/mcp`).
+- Backend runs from `backend/`: `uvicorn app.main:app --port 8000`.
+- All model inference goes through TensorX (OpenAI-compatible, EU-hosted). No
+  OpenAI key at runtime. `chat.completions` only.
+- Env: `MONGODB_URI`, `TENSORX_API_KEY`, `TENSORX_BASE_URL`, `VISION_MODEL`,
+  `VERIFIER_MODEL`, `AGENT_MODEL`, `EMBED_MODEL`, `EMBED_DIM`, `DEMO_CACHE`,
+  `VITE_DATA_MODE`, `VITE_DEMO_WALKER`. See `.env.example`.
+- MongoDB Atlas M0, db `homesabove`. Never replace documents; `$set` only the fields you own.
+- Live updates: `app/events.py` `publish(type, payload)` / `subscribe()`, streamed
+  by `GET /api/events` as `event: <type>` + `data: <payload json>`.
+- Rule: the API route that creates awards publishes `badge.awarded`. Scripts call
+  the API; they never publish events.
+
+## Product rules (UI, prompts, agent)
+
+- Say "likely underused", "candidate for inspection", "services within walking
+  distance". Never "vacant". Never state grant eligibility; link the official FAQ.
+- Badges reward walking and coverage, never "finding empty buildings".
+- Walker views show only the walker's own captures and coverage, never AI status.
+  AI statuses and addresses appear only in the officer console.
+- The agent is read-only: it recommends; only humans record labels and inspections.
+- `models.vision` and `verifier.model` must be different model families.
+- Report ops honestly: similar search without the Atlas vector index falls back
+  to in-Python cosine and reports `db_op: "cosine-fallback"`.
 - Vision prompt rules, ranking, services scoring, eval method and the MCP tool
   list come from `docs/BRIEF.md`.

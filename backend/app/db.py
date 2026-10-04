@@ -8,6 +8,8 @@ from pymongo.database import Database
 
 load_dotenv()
 
+DB_NAME = "homesabove"
+
 
 @lru_cache(maxsize=1)
 def get_client() -> MongoClient:
@@ -15,4 +17,4 @@ def get_client() -> MongoClient:
 
 
 def get_db() -> Database:
-    return get_client()[os.environ.get("MONGODB_DB", "homesabove")]
+    return get_client()[DB_NAME]

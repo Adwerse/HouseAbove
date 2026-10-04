@@ -43,7 +43,7 @@ load_dotenv(ROOT / ".env")
 LOCAL_EMBED = ("BAAI/bge-small-en-v1.5", 384)
 EMBED_RE = re.compile(r"embed|bge|e5-|gte-|nomic|minilm|mxbai", re.I)
 NON_CHAT_RE = re.compile(
-    EMBED_RE.pattern + r"|whisper|tts|rerank|moderation|dall-e|flux|stable-diffusion|sdxl|transcri|speech",
+    EMBED_RE.pattern + r"|whisper|tts|chatterbox|rerank|moderation|dall-e|flux|stable-diffusion|sdxl|transcri|speech",
     re.I,
 )
 
@@ -111,13 +111,12 @@ TOOL_MESSAGES = [
 ]
 
 
-def family_of(model_id: str, owned_by: str | None = None) -> str:
+def family_of(model_id: str) -> str:
+    # not owned_by: TensorX reports "openai" for every model
     low = model_id.lower()
     for pattern, family in FAMILIES:
         if re.search(pattern, low):
             return family
-    if owned_by and owned_by.lower() not in ("", "system", "tensorx", "organization"):
-        return owned_by.lower()
     return re.split(r"[-_:.]", low.rsplit("/", 1)[-1])[0]
 
 
@@ -214,8 +213,8 @@ def probe_tools(client, model, r, trials):
     r["tools_ms"] = int(statistics.median(latencies)) if latencies else None
 
 
-def probe_model(client, model_id, owned_by, trials):
-    r = {"id": model_id, "family": family_of(model_id, owned_by), "vision": False,
+def probe_model(client, model_id, trials):
+    r = {"id": model_id, "family": family_of(model_id), "vision": False,
          "json_schema": False, "tools_ok": 0, "trials": trials, "errors": {}}
     probe_vision(client, model_id, r)
     probe_json_schema(client, model_id, r)
@@ -294,17 +293,15 @@ def main() -> int:
         return 2
     client = OpenAI(base_url=base_url, api_key=api_key, max_retries=3)
 
-    listed = [(m.id, getattr(m, "owned_by", None)) for m in client.models.list()]
-    all_ids = [i for i, _ in listed]
-    print(f"{len(listed)} models listed at {base_url}")
+    all_ids = [m.id for m in client.models.list()]
+    print(f"{len(all_ids)} models listed at {base_url}")
     chosen = set(args.models.split(",")) if args.models else None
-    chat_models = [(i, o) for i, o in listed
-                   if not NON_CHAT_RE.search(i) and (chosen is None or i in chosen)]
-    chat_models.sort(key=lambda m: "gpt-oss" not in m[0].lower())  # gpt-oss is tested first
+    chat_models = [i for i in all_ids if not NON_CHAT_RE.search(i) and (chosen is None or i in chosen)]
+    chat_models.sort(key=lambda i: "gpt-oss" not in i.lower())  # gpt-oss is tested first
     print(f"probing {len(chat_models)} chat models, {args.trials} tool trials each ...", file=sys.stderr)
 
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        results = list(pool.map(lambda m: probe_model(client, m[0], m[1], args.trials), chat_models))
+        results = list(pool.map(lambda m: probe_model(client, m, args.trials), chat_models))
 
     vision, verifier, agent, roles = pick_roles(
         results, {"vision": args.vision, "verifier": args.verifier, "agent": args.agent})
