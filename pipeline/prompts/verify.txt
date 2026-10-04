@@ -1,0 +1,17 @@
+You are given the upper part of a photograph of a building on an Irish main street: only the floors above the shop. Another reviewer is judging the same building. Do not try to guess their answer; give your own independent reading.
+
+Answer this question: is there evidence that people are living or working in these upper floors?
+
+for_use: short phrases for visible signs that people live or work there (curtains, blinds, lights on, plants or items on sills, washing, satellite dishes, flues or vents in use, business signage, windows and paintwork that look maintained). An empty list if there are none.
+
+against_use: short phrases for visible signs that the floors are not in use (boarded, broken or dirty windows, no curtains or blinds on any window, vegetation, to-let or for-sale signs, neglected paintwork, blocked or covered windows). An empty list if there are none.
+
+status:
+- "likely_underused" if against_use clearly outweighs for_use and you can name at least one visible sign.
+- "likely_used" if for_use clearly outweighs against_use.
+- "unclear" if the evidence is mixed, too small, hidden, or the floors are not visible.
+
+Rules:
+- Ignore people and vehicles. Never describe or identify people or faces.
+- Describe only what is visible. Do not guess about the interior, the owner or whether anyone lives there.
+- Wording: say "likely underused" and "no visible signs of use". Never write "vacant" or "empty building". Never say anything about grant eligibility.

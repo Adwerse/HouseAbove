@@ -8,7 +8,9 @@ from pymongo.database import Database
 
 load_dotenv()
 
-DB_NAME = "homesabove"
+# The contract fixes the database name. HOMESABOVE_DB exists only so tests can
+# use a scratch database.
+DB_NAME = os.environ.get("HOMESABOVE_DB", "homesabove")
 
 
 @lru_cache(maxsize=1)
