@@ -121,7 +121,7 @@ export const mockBuildings: Building[] = [
       ["One lit room could indicate occasional use."],
     ),
     services: services(75, 160, 630, 520, 730, 5),
-    registers: { derelict: false, protected: false },
+    registers: { derelict: true, protected: false },
     rank: 1,
     height_m: 9.6,
     shop_staff_answer: "The upstairs rooms have not been used for a while, as far as I know.",
