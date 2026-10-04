@@ -1,142 +1,239 @@
 @import "tailwindcss";
 
-/* Tailwind v4's Dusk palette: the canonical TypeScript values live in theme/tokens.ts. */
+/* "Fresh air": paper white, ink black and greens. TypeScript values live in theme/tokens.ts. */
 @theme {
-  --color-dusk-background: #0a0f1e;
-  --color-dusk-glass: rgb(18 25 51 / 72%);
-  --color-dusk-elevated: #151d3b;
-  --color-dusk-text: #e7eaf3;
-  --color-dusk-muted: #8b93a9;
-  --color-dusk-primary: #7c9cff;
-  --color-dusk-warm: #ffd166;
-  --color-status-likely-underused: #ff5a4e;
-  --color-status-review: #ffb020;
-  --color-status-unclear: #94a3b8;
-  --color-status-likely-used: #475569;
-  --color-status-confirmed: #8b5cf6;
-  --color-status-home: #ffd166;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-paper: #f3f5f0;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f7f8f5;
+  --color-ink: #0b100d;
+  --color-ink-2: #161e19;
+  --color-ink-3: #222c26;
+  --color-muted: #66716a;
+  --color-faint: #9aa49e;
+  --color-green: #17b26a;
+  --color-green-600: #0e9c5a;
+  --color-green-700: #0a7d47;
+  --color-forest: #0e4d33;
+  --color-mint: #e3f6ea;
+  --color-volt: #c6f36b;
+  --color-teal: #5cd6c0;
+  --color-amber: #f5a524;
+  --color-gold: #ffc94a;
+  --color-danger: #e5484d;
+  --color-status-likely-underused: #17b26a;
+  --color-status-review: #f5a524;
+  --color-status-unclear: #c7d0ca;
+  --color-status-likely-used: #98a69e;
+  --color-status-confirmed: #0e4d33;
+  --color-status-home: #ffc94a;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius-panel: 22px;
+  --radius-card: 16px;
+  --shadow-panel: 0 1px 2px rgb(11 16 13 / 4%), 0 18px 48px -12px rgb(11 16 13 / 22%);
+  --shadow-float: 0 1px 1px rgb(11 16 13 / 4%), 0 8px 24px -6px rgb(11 16 13 / 18%);
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Old "dusk" names, kept for the shared ui/ components and the walker app:
+     the dark side of the fitness palette (ink, white, green, volt). */
+  --color-dusk-background: #0b100d;
+  --color-dusk-glass: rgb(22 30 25 / 78%);
+  --color-dusk-elevated: #161e19;
+  --color-dusk-text: #f4f7f2;
+  --color-dusk-muted: #9aa49e;
+  --color-dusk-primary: #3dd68c;
+  --color-dusk-warm: #c6f36b;
   --text-dusk-xs: 0.75rem;
   --text-dusk-sm: 0.875rem;
   --text-dusk-base: 1rem;
   --text-dusk-lg: 1.25rem;
   --text-dusk-xl: 1.75rem;
   --text-dusk-display: 2.5rem;
-  --radius-panel: 0.875rem;
-  --radius-card: 0.625rem;
   --radius-chip: 999px;
-  --shadow-panel: 0 8px 30px rgb(0 0 0 / 35%);
-  --backdrop-blur-glass: 14px;
-  --ease-dusk-out: ease-out;
+  --backdrop-blur-glass: 18px;
   --duration-dusk-fast: 180ms;
   --duration-dusk-normal: 220ms;
 }
 
-:root {
-  color: #e7eaf3;
-  background: #0a0f1e;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+@layer base {
+  :root {
+    color: #0b100d;
+    background: #f3f5f0;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  body {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: #c6f36b;
+    color: #0b100d;
+  }
 }
 
-* {
-  box-sizing: border-box;
+@layer components {
+  /* Panels floating over the map */
+  .glass {
+    background: rgb(255 255 255 / 88%);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid rgb(11 16 13 / 7%);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .glass-ink {
+    background: rgb(11 16 13 / 92%);
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgb(255 255 255 / 8%);
+    box-shadow: 0 24px 60px -12px rgb(0 0 0 / 45%);
+    color: #f4f7f2;
+  }
+
+  .numeral {
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.03em;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(11 16 13 / 16%) transparent;
+  }
+
+  .scroll-thin-dark {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 16%) transparent;
+  }
+
+  /* Map */
+  .map-root {
+    position: absolute;
+    inset: 0;
+    background: #eef1eb;
+  }
+
+  .maplibregl-ctrl-group {
+    overflow: hidden;
+    border: 1px solid rgb(11 16 13 / 8%) !important;
+    border-radius: 14px !important;
+    background: rgb(255 255 255 / 92%) !important;
+    box-shadow: var(--shadow-float) !important;
+  }
+
+  .maplibregl-ctrl-attrib {
+    background: rgb(255 255 255 / 70%) !important;
+    border-radius: 10px !important;
+    font-size: 10px;
+  }
+
+  .photo-pin {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 2.5px solid #ffffff;
+    box-shadow: 0 4px 14px rgb(11 16 13 / 28%);
+    background: #e3f6ea center / cover no-repeat;
+    transform-origin: bottom center;
+    transition: transform 220ms var(--ease-out-expo), opacity 220ms ease;
+  }
+
+  .map-far .photo-pin {
+    width: 13px;
+    height: 13px;
+    border-width: 2px;
+    background-image: none !important;
+    background-color: #17b26a;
+  }
+
+  .photo-pin:hover {
+    transform: scale(1.35);
+  }
+
+  .poi-pin {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px 4px 4px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px -4px rgb(11 16 13 / 30%);
+    font-size: 11px;
+    font-weight: 600;
+    color: #0b100d;
+    white-space: nowrap;
+    animation: pop-in 420ms var(--ease-out-expo) both;
+  }
+
+  .poi-pin span.icon {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    color: #ffffff;
+  }
 }
 
-html,
-body,
-#root {
-  min-width: 320px;
-  min-height: 100%;
-  margin: 0;
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-body {
-  min-height: 100vh;
-  background: #0a0f1e;
-  font-variant-numeric: tabular-nums lining-nums;
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
 }
 
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-.route-shell {
-  display: grid;
-  min-height: 100vh;
-  place-items: center;
-  padding: 24px;
-}
-
-.route-card {
-  width: min(100%, 420px);
-  border: 1px solid rgb(255 255 255 / 7%);
-  border-radius: 14px;
-  background: rgb(18 25 51 / 72%);
-  box-shadow: 0 8px 30px rgb(0 0 0 / 35%);
-  padding: 32px;
-}
-
-.route-card h1 {
-  margin: 8px 0;
-  font-size: 28px;
-  letter-spacing: -0.01em;
-}
-
-.route-card p:last-child {
-  margin: 0;
-  color: #8b93a9;
-  line-height: 1.5;
-}
-
-.eyebrow {
-  margin: 0;
-  color: #7c9cff;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.city-map {
-  position: relative;
-  min-height: 280px;
-  overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 7%);
-  border-radius: 14px;
-  background: #151d3b;
-}
-
-.city-map__canvas {
-  position: absolute;
-  inset: 0;
-}
-
-.city-map__overlay {
-  pointer-events: none;
-  position: relative;
-  z-index: 1;
-}
-
-.city-map__overlay > * {
-  pointer-events: auto;
-}
-
-.maplibregl-ctrl-group {
-  overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 7%);
-  border-radius: 10px;
-  background: rgb(18 25 51 / 90%);
-  box-shadow: 0 8px 30px rgb(0 0 0 / 35%);
-}
-
-.maplibregl-ctrl-group button {
-  background-color: transparent;
+.skeleton {
+  background: linear-gradient(90deg, #eef1eb 0%, #f7f8f5 50%, #eef1eb 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

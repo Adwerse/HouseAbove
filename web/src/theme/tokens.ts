@@ -1,125 +1,127 @@
 /**
- * HomesAbove's shared visual language.  Keep these values framework-neutral so
- * that components, MapLibre overlays, and the Tailwind theme can all use the
- * same source of truth.
+ * HomesAbove "Fresh air" design tokens: a fitness-app palette of paper white,
+ * ink black and greens. Plain values, so React, MapLibre paint expressions and
+ * deck.gl layers all read the same source of truth.
  */
 
-export const duskColors = {
-  background: "#0A0F1E",
-  surface: "rgba(18, 25, 51, 0.72)",
-  elevated: "#151D3B",
-  text: "#E7EAF3",
-  muted: "#8B93A9",
-  primary: "#7C9CFF",
-  warm: "#FFD166",
-  border: "rgba(255, 255, 255, 0.07)",
-  overlay: "rgba(3, 7, 18, 0.64)",
-  focus: "#A8BEFF",
+export const palette = {
+  paper: "#F3F5F0",
+  surface: "#FFFFFF",
+  surfaceAlt: "#F7F8F5",
+  line: "rgba(11, 16, 13, 0.08)",
+  lineStrong: "rgba(11, 16, 13, 0.14)",
+  ink: "#0B100D",
+  ink2: "#161E19",
+  ink3: "#222C26",
+  muted: "#66716A",
+  faint: "#9AA49E",
+  green: "#17B26A",
+  green600: "#0E9C5A",
+  green700: "#0A7D47",
+  forest: "#0E4D33",
+  mint: "#E3F6EA",
+  volt: "#C6F36B",
+  teal: "#5CD6C0",
+  amber: "#F5A524",
+  gold: "#FFC94A",
+  red: "#E5484D",
+  water: "#CFE3E9",
+  park: "#D8EBD2",
 } as const;
 
-/** Display-status colours are contract values and must not be changed locally. */
+/** What each display status looks like on the map and in chips. */
 export const statusColors = {
-  likely_underused: "#FF5A4E",
-  review: "#FFB020",
-  unclear: "#94A3B8",
-  likely_used: "#475569",
-  confirmed: "#8B5CF6",
-  home: "#FFD166",
+  likely_underused: "#17B26A",
+  review: "#F5A524",
+  unclear: "#C7D0CA",
+  likely_used: "#98A69E",
+  confirmed: "#0E4D33",
+  home: "#FFC94A",
 } as const;
 
-export type DuskStatus = keyof typeof statusColors;
+/** Map-only building states outside the officer's status palette. */
+export const mapStateColors = {
+  base: "#FFFFFF",
+  captured: "#3DD68C",
+  pending: "#E3F6EA",
+} as const;
+
+export const serviceColors = {
+  bus: "#2E90FA",
+  grocery: "#17B26A",
+  school: "#9E77ED",
+  gp_or_pharmacy: "#F04438",
+  park: "#66C61C",
+} as const;
+
+export const ringColors = {
+  distance: palette.volt,
+  facades: palette.green,
+  streets: palette.teal,
+} as const;
+
+export const tierColors = {
+  bronze: "#D39B6A",
+  silver: "#C9D2CC",
+  gold: "#FFC94A",
+  civic: "#3DD68C",
+} as const;
+
+export function hexToRgb(hex: string, alpha = 255): [number, number, number, number] {
+  const n = Number.parseInt(hex.replace("#", ""), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255, alpha];
+}
+
+export const motionTokens = {
+  spring: { type: "spring", stiffness: 340, damping: 32, mass: 0.9 },
+  soft: { type: "spring", stiffness: 180, damping: 26 },
+  ease: [0.22, 1, 0.36, 1],
+} as const;
+
+/**
+ * Compatibility for the shared ui/ components and the walker app (owned by B):
+ * the old "dusk" names, now mapped onto the dark side of the fitness palette:
+ * ink black surfaces, white text, green and volt accents.
+ */
+export const duskColors = {
+  background: palette.ink,
+  surface: "rgba(22, 30, 25, 0.78)",
+  elevated: palette.ink2,
+  text: "#F4F7F2",
+  muted: "#9AA49E",
+  primary: "#3DD68C",
+  warm: palette.volt,
+  border: "rgba(255, 255, 255, 0.08)",
+  overlay: "rgba(5, 8, 6, 0.7)",
+  focus: palette.volt,
+} as const;
 
 export const tokens = {
-  color: {
-    ...duskColors,
-    status: statusColors,
-  },
+  color: { ...duskColors, status: statusColors },
   font: {
     ui: '"Inter", ui-sans-serif, system-ui, sans-serif',
     mono: '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace',
   },
   type: {
-    xs: "0.75rem", // 12px
-    sm: "0.875rem", // 14px
-    base: "1rem", // 16px
-    lg: "1.25rem", // 20px
-    xl: "1.75rem", // 28px
-    display: "2.5rem", // 40px
-    headingLetterSpacing: "-0.01em",
+    xs: "0.75rem",
+    sm: "0.875rem",
+    base: "1rem",
+    lg: "1.25rem",
+    xl: "1.75rem",
+    display: "2.5rem",
+    headingLetterSpacing: "-0.02em",
     numericFeatureSettings: '"tnum" 1, "lnum" 1',
   },
-  space: {
-    1: "0.25rem",
-    2: "0.5rem",
-    3: "0.75rem",
-    4: "1rem",
-    5: "1.25rem",
-    6: "1.5rem",
-    8: "2rem",
-    10: "2.5rem",
-    12: "3rem",
-  },
-  radius: {
-    panel: "0.875rem", // 14px
-    card: "0.625rem", // 10px
-    chip: "999px",
-  },
-  shadow: {
-    panel: "0 8px 30px rgba(0, 0, 0, 0.35)",
-  },
-  blur: {
-    glass: "14px",
-  },
-  motion: {
-    fast: "180ms",
-    normal: "220ms",
-    easing: "ease-out",
-  },
-} as const;
-
-/**
- * Handy when creating a root style object. CSS custom properties also make the
- * tokens available to plain MapLibre controls, which do not consume Tailwind.
- */
-export const duskCssVariables = {
-  "--ha-background": duskColors.background,
-  "--ha-surface": duskColors.surface,
-  "--ha-elevated": duskColors.elevated,
-  "--ha-text": duskColors.text,
-  "--ha-muted": duskColors.muted,
-  "--ha-primary": duskColors.primary,
-  "--ha-warm": duskColors.warm,
-  "--ha-border": duskColors.border,
-  "--ha-status-likely-underused": statusColors.likely_underused,
-  "--ha-status-review": statusColors.review,
-  "--ha-status-unclear": statusColors.unclear,
-  "--ha-status-likely-used": statusColors.likely_used,
-  "--ha-status-confirmed": statusColors.confirmed,
-  "--ha-status-home": statusColors.home,
-} as const;
-
-/**
- * This is deliberately a plain object so `tailwind.config.*` can spread it
- * into `theme.extend` without duplicating any visual values.
- */
-export const tailwindTheme = {
-  colors: {
-    dusk: duskColors,
-    status: statusColors,
-  },
-  fontFamily: {
-    sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-    mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
-  },
-  borderRadius: tokens.radius,
-  boxShadow: tokens.shadow,
-  transitionDuration: {
-    fast: tokens.motion.fast,
-    normal: tokens.motion.normal,
-  },
+  space: { 1: "0.25rem", 2: "0.5rem", 3: "0.75rem", 4: "1rem", 5: "1.25rem", 6: "1.5rem", 8: "2rem", 10: "2.5rem", 12: "3rem" },
+  radius: { panel: "1.375rem", card: "1rem", chip: "999px" },
+  shadow: { panel: "0 18px 48px -12px rgba(0, 0, 0, 0.45)" },
+  blur: { glass: "18px" },
+  motion: { fast: "180ms", normal: "220ms", easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
 } as const;
 
 export const numericStyle = {
   fontVariantNumeric: "tabular-nums lining-nums",
   fontFeatureSettings: tokens.type.numericFeatureSettings,
 } as const;
+
+export type DuskStatus = keyof typeof statusColors;

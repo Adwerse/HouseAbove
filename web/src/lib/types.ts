@@ -265,10 +265,17 @@ export interface Award {
   title?: string;
 }
 
+export type BadgeTier = "bronze" | "silver" | "gold" | "civic";
+
 export interface Badge {
   id: BadgeId;
   title: string;
   description: string;
+  /** From the badge engine's catalog; optional so older exports still parse. */
+  tier?: BadgeTier;
+  icon?: string;
+  target?: number;
+  unit?: string;
 }
 
 export interface BadgeProgress {

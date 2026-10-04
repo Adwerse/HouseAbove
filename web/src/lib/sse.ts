@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { getMockAgentTranscript, untimedAgentEvent } from '../mocks'
-import { isStaticDataMode } from './data-mode'
+import { isLocalData, isStaticDataMode, markApiUnavailable } from './data-mode'
 import type { AgentEvent, HomesAboveEvent, HomesAboveEventType, TimedAgentEvent } from './types'
 
 export type EventStreamHandler = (event: HomesAboveEvent) => void
@@ -41,8 +41,9 @@ export function useEventStream(handler: EventStreamHandler) {
   }, [handler])
 
   useEffect(() => {
-    if (isStaticDataMode) return subscribeLocalEvents((event) => handlerRef.current(event))
-    if (typeof EventSource === 'undefined') return undefined
+    // Local writes (static or demo data) are announced on the local bus; the API on SSE.
+    const unsubscribeLocal = subscribeLocalEvents((event) => handlerRef.current(event))
+    if (isLocalData() || typeof EventSource === 'undefined') return () => { unsubscribeLocal() }
 
     const source = new EventSource('/api/events')
     const listeners = LOCAL_EVENT_TYPES.map((type) => {
@@ -59,6 +60,7 @@ export function useEventStream(handler: EventStreamHandler) {
     })
 
     return () => {
+      unsubscribeLocal()
       for (const [type, listener] of listeners) source.removeEventListener(type, listener)
       source.close()
     }
@@ -90,6 +92,7 @@ function pause(milliseconds: number, signal?: AbortSignal) {
 type AgentIndex = { questions?: Array<{ question?: string; file?: string }> }
 
 async function replaySource(question: string): Promise<TimedAgentEvent[]> {
+  if (!isStaticDataMode) return getMockAgentTranscript(question)
   try {
     const indexResponse = await fetch('/data/agent/index.json', { cache: 'no-store' })
     const index = indexResponse.ok ? (await indexResponse.json()) as AgentIndex : undefined
@@ -165,23 +168,43 @@ export async function streamPost(
   onEvent: AgentStreamHandler,
   signal?: AbortSignal,
 ) {
-  if (isStaticDataMode) {
+  const replay = async () => {
     const question = typeof body.question === 'string' ? body.question : ''
-    const transcript = await replaySource(question)
     let previous = 0
-    for (const record of transcript) {
+    for (const record of await replaySource(question)) {
       await pause(record.t_ms - previous, signal)
       previous = record.t_ms
       onEvent(untimedAgentEvent(record))
     }
-    return
   }
+  if (isLocalData()) return replay()
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { Accept: 'text/event-stream', 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-    signal,
-  })
+  let response: Response
+  try {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: { Accept: 'text/event-stream', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal,
+    })
+  } catch (error) {
+    if (signal?.aborted) throw error
+    markApiUnavailable()
+    return replay()
+  }
+  if (response.status >= 500) {
+    markApiUnavailable()
+    return replay()
+  }
   await streamResponse(response, onEvent, signal)
+}
+
+/** Replay an agent answer from the bundled demo transcripts, at its recorded timings. */
+export async function replayAgent(question: string, onEvent: AgentStreamHandler, signal?: AbortSignal) {
+  let previous = 0
+  for (const record of getMockAgentTranscript(question)) {
+    await pause(record.t_ms - previous, signal)
+    previous = record.t_ms
+    onEvent(untimedAgentEvent(record))
+  }
 }

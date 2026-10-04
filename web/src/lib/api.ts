@@ -9,9 +9,12 @@ import {
   mockSimilarByBuilding,
   mockWalkerProfile,
   mockWalks,
+  summaryFor,
 } from '../mocks'
 import { displayStatus } from './status'
-import { isStaticDataMode } from './data-mode'
+import { isLocalData, isStaticDataMode, markApiUnavailable } from './data-mode'
+
+export { useDataSource, type DataSource } from './data-mode'
 import { emitLocalEvent } from './sse'
 import type {
   Award,
@@ -43,15 +46,40 @@ export class ApiError extends Error {
 export const API_PREFIX = '/api'
 export const AGENT_ASK_PATH = `${API_PREFIX}/agent/ask`
 
+function isUnreachable(error: unknown) {
+  return error instanceof TypeError || (error instanceof ApiError && error.status >= 500)
+}
+
+/** Try the API; if it cannot be reached, switch to the local dataset for the rest of the session. */
+async function either<T>(remote: () => Promise<T>, local: () => Promise<T>): Promise<T> {
+  if (isLocalData()) return local()
+  try {
+    return await remote()
+  } catch (error) {
+    if (!isUnreachable(error)) throw error
+    markApiUnavailable()
+    return local()
+  }
+}
+
+/** Decide early, so the first screen does not wait on a dead proxy. */
+export async function probeApi(timeoutMs = 1800) {
+  if (isStaticDataMode) return
+  try {
+    const response = await fetch(`${API_PREFIX}/health`, { signal: AbortSignal.timeout(timeoutMs) })
+    if (!response.ok) markApiUnavailable()
+  } catch {
+    markApiUnavailable()
+  }
+}
+
 type StaticWalkerExport = {
   profile: WalkerProfileResponse
   walks: Walk[]
   awards: Award[]
 }
 
-type StaticState = ReturnType<typeof createMockState>
-
-let staticState: StaticState = createMockState()
+const staticState = createMockState()
 let staticBuildingsLoad: Promise<Building[]> | undefined
 
 function clone<T>(value: T): T {
@@ -69,13 +97,14 @@ function buildingFeature(building: Building) {
 }
 
 function buildGeoJson(buildings: Building[]): BuildingsGeoJson {
-  return { type: 'FeatureCollection', features: buildings.map(buildingFeature).filter((feature): feature is NonNullable<typeof feature> => Boolean(feature)) }
+  return { type: 'FeatureCollection', features: buildings.map(buildingFeature).filter((f): f is NonNullable<typeof f> => Boolean(f)) }
 }
 
 async function staticJson<T>(path: string, fallback: T): Promise<T> {
+  if (!isStaticDataMode) return clone(fallback)
   try {
     const response = await fetch(path, { cache: 'no-store' })
-    if (!response.ok) throw new Error(`Static file unavailable: ${path}`)
+    if (!response.ok || !response.headers.get('content-type')?.includes('json')) throw new Error(path)
     return await response.json() as T
   } catch {
     return clone(fallback)
@@ -102,23 +131,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
       const body = await response.json() as { detail?: string }
       detail = body.detail ?? detail
     } catch {
-      // Keep the useful HTTP message when an upstream proxy returns plain text.
+      // Keep the HTTP message when a proxy answers with plain text.
     }
     throw new ApiError(response.status, detail)
   }
   return await response.json() as T
-}
-
-function staticSummary(buildings: Building[]): StreetSummary {
-  const statuses = buildings.map(displayStatus)
-  return {
-    total: buildings.length,
-    processed: buildings.filter((building) => Boolean(building.models.vision)).length,
-    likely_underused: statuses.filter((status) => status === 'likely_underused').length,
-    review: statuses.filter((status) => status === 'review').length,
-    confirmed: statuses.filter((status) => status === 'confirmed').length,
-    home: statuses.filter((status) => status === 'home').length,
-  }
 }
 
 function staticBuildingOrThrow(buildings: Building[], id: string) {
@@ -131,149 +148,161 @@ function staticBadgeTitle(id: BadgeId) {
   return mockBadges.find((badge) => badge.id === id)?.title ?? id.replaceAll('_', ' ')
 }
 
-export async function health() {
-  return isStaticDataMode ? { ok: true } : request<{ ok: true }>('/health')
-}
+const sameStreet = (b: Building, street?: string) =>
+  !street || b.street?.trim().toLowerCase() === street.trim().toLowerCase()
 
 export async function getBuildings(filters: { street?: string; status?: DisplayStatus } = {}) {
-  if (isStaticDataMode) {
-    const buildings = await staticBuildings()
-    const normalizedStreet = filters.street?.trim().toLowerCase()
-    return buildGeoJson(buildings.filter((building) =>
-      (!normalizedStreet || building.street?.toLowerCase() === normalizedStreet) &&
-      (!filters.status || displayStatus(building) === filters.status),
-    ))
-  }
-  const params = new URLSearchParams()
-  if (filters.street) params.set('street', filters.street)
-  if (filters.status) params.set('status', filters.status)
-  return request<BuildingsGeoJson>(`/buildings${params.size ? `?${params}` : ''}`)
+  return either(
+    () => {
+      const params = new URLSearchParams()
+      if (filters.street) params.set('street', filters.street)
+      if (filters.status) params.set('status', filters.status)
+      return request<BuildingsGeoJson>(`/buildings${params.size ? `?${params}` : ''}`)
+    },
+    async () => buildGeoJson((await staticBuildings()).filter((b) =>
+      sameStreet(b, filters.street) && (!filters.status || displayStatus(b) === filters.status))),
+  )
 }
 
 export async function getBuilding(id: string) {
-  if (isStaticDataMode) return publicBuilding(staticBuildingOrThrow(await staticBuildings(), id))
-  return request<Building>(`/buildings/${encodeURIComponent(id)}`)
+  return either(
+    () => request<Building>(`/buildings/${encodeURIComponent(id)}`),
+    async () => publicBuilding(staticBuildingOrThrow(await staticBuildings(), id)),
+  )
 }
 
 export async function getBuildingServices(id: string) {
-  if (isStaticDataMode) {
-    staticBuildingOrThrow(await staticBuildings(), id)
-    return clone(mockServicesByBuilding[id] ?? { services: null, pois: [] })
-  }
-  return request<BuildingServicesResponse>(`/buildings/${encodeURIComponent(id)}/services`)
+  return either(
+    () => request<BuildingServicesResponse>(`/buildings/${encodeURIComponent(id)}/services`),
+    async () => {
+      staticBuildingOrThrow(await staticBuildings(), id)
+      return clone(mockServicesByBuilding[id] ?? { services: null, pois: [] })
+    },
+  )
 }
 
 export async function getSimilarBuildings(id: string, k = 5) {
-  if (isStaticDataMode) {
-    staticBuildingOrThrow(await staticBuildings(), id)
-    return clone((mockSimilarByBuilding[id] ?? []).slice(0, Math.max(1, Math.min(k, 20))))
-  }
-  return request<SimilarBuilding[]>(`/buildings/${encodeURIComponent(id)}/similar?k=${Math.max(1, Math.min(k, 20))}`)
+  const limit = Math.max(1, Math.min(k, 20))
+  return either(
+    () => request<SimilarBuilding[]>(`/buildings/${encodeURIComponent(id)}/similar?k=${limit}`),
+    async () => {
+      staticBuildingOrThrow(await staticBuildings(), id)
+      return clone((mockSimilarByBuilding[id] ?? []).slice(0, limit))
+    },
+  )
 }
 
 export async function getReviewQueue() {
-  if (isStaticDataMode) return (await staticBuildings()).filter((building) => displayStatus(building) === 'review').map(publicBuilding)
-  return request<Building[]>('/review-queue')
+  return either(
+    () => request<Building[]>('/review-queue'),
+    async () => (await staticBuildings()).filter((b) => displayStatus(b) === 'review').map(publicBuilding),
+  )
 }
 
 export async function setHumanLabel(id: string, label: UpperStatus | null) {
-  if (!isStaticDataMode) return request<Building>(`/buildings/${encodeURIComponent(id)}/human-label`, {
-    method: 'POST', body: JSON.stringify({ label }),
-  })
-  const building = staticBuildingOrThrow(await staticBuildings(), id)
-  building.human_label = label
-  building.display_status = displayStatus(building)
-  emitLocalEvent({ type: 'building.updated', data: { id } })
-  return publicBuilding(building)
+  return either(
+    () => request<Building>(`/buildings/${encodeURIComponent(id)}/human-label`, { method: 'POST', body: JSON.stringify({ label }) }),
+    async () => {
+      const building = staticBuildingOrThrow(await staticBuildings(), id)
+      building.human_label = label
+      building.display_status = displayStatus(building)
+      emitLocalEvent({ type: 'building.updated', data: { id } })
+      return publicBuilding(building)
+    },
+  )
 }
 
 export async function recordInspection(id: string, outcome: InspectionOutcome, note: string | null = null) {
-  if (!isStaticDataMode) return request<InspectionResponse>(`/buildings/${encodeURIComponent(id)}/inspection`, {
-    method: 'POST', body: JSON.stringify({ outcome, note }),
-  })
-  const building = staticBuildingOrThrow(await staticBuildings(), id)
-  building.inspection = { outcome, note, at: new Date().toISOString() }
-  building.display_status = displayStatus(building)
-  const awards: Award[] = []
-  const badgeId = outcome === 'confirmed_candidate' ? 'homes_above' : outcome === 'returned_to_use' ? 'lights_on' : null
-  if (badgeId && building.captured_by && !staticState.awards.some((award) => award.badge_id === badgeId && award.building_id === id)) {
-    const award: Award = {
-      id: `local_${badgeId}_${id}`,
-      walker_id: building.captured_by,
-      badge_id: badgeId,
-      building_id: id,
-      at: building.inspection.at,
-      reason: outcome === 'confirmed_candidate' ? 'A captured facade was confirmed by council inspection.' : 'A captured building returned to use as homes.',
-      title: staticBadgeTitle(badgeId),
-    }
-    staticState.awards.push(award)
-    awards.push(award)
-  }
-  emitLocalEvent({ type: 'building.updated', data: { id } })
-  emitLocalEvent({ type: 'inspection.recorded', data: { id, outcome } })
-  for (const award of awards) {
-    emitLocalEvent({ type: 'badge.awarded', data: { walker_id: award.walker_id, badge_id: award.badge_id, building_id: award.building_id, title: award.title ?? staticBadgeTitle(award.badge_id) } })
-  }
-  return { building: publicBuilding(building), awards: clone(awards) }
+  return either(
+    () => request<InspectionResponse>(`/buildings/${encodeURIComponent(id)}/inspection`, { method: 'POST', body: JSON.stringify({ outcome, note }) }),
+    async () => {
+      const building = staticBuildingOrThrow(await staticBuildings(), id)
+      building.inspection = { outcome, note, at: new Date().toISOString() }
+      building.display_status = displayStatus(building)
+      const awards: Award[] = []
+      const badgeId = outcome === 'confirmed_candidate' ? 'homes_above' : outcome === 'returned_to_use' ? 'lights_on' : null
+      if (badgeId && building.captured_by && !staticState.awards.some((a) => a.badge_id === badgeId && a.building_id === id)) {
+        const award: Award = {
+          id: `local_${badgeId}_${id}`,
+          walker_id: building.captured_by,
+          badge_id: badgeId,
+          building_id: id,
+          at: building.inspection.at,
+          reason: outcome === 'confirmed_candidate' ? 'A facade you captured was confirmed by a council inspection.' : 'A building you captured returned to use as homes.',
+          title: staticBadgeTitle(badgeId),
+        }
+        staticState.awards.push(award)
+        awards.push(award)
+      }
+      emitLocalEvent({ type: 'building.updated', data: { id } })
+      emitLocalEvent({ type: 'inspection.recorded', data: { id, outcome } })
+      for (const award of awards) {
+        emitLocalEvent({ type: 'badge.awarded', data: { walker_id: award.walker_id, badge_id: award.badge_id, building_id: award.building_id, title: award.title ?? staticBadgeTitle(award.badge_id) } })
+      }
+      return { building: publicBuilding(building), awards: clone(awards) }
+    },
+  )
 }
 
-export async function getStreetSummary(street: string) {
-  if (isStaticDataMode) {
-    const buildings = await staticBuildings()
-    // This deliberately derives from the mutable local state, so an
-    // inspection logged during a static demo immediately updates the strip.
-    return staticSummary(buildings.filter((building) => building.street?.toLowerCase() === street.trim().toLowerCase()))
-  }
-  return request<StreetSummary>(`/streets/${encodeURIComponent(street)}/summary`)
+export async function getStreetSummary(street: string): Promise<StreetSummary> {
+  return either(
+    () => request<StreetSummary>(`/streets/${encodeURIComponent(street)}/summary`),
+    async () => summaryFor((await staticBuildings()).filter((b) => sameStreet(b, street))),
+  )
 }
 
 export async function getContextBuildings() {
-  if (isStaticDataMode) return staticJson('/data/context.geojson', mockContextBuildings)
-  return request<ContextBuildingsGeoJson>('/context-buildings')
+  return either(
+    () => request<ContextBuildingsGeoJson>('/context-buildings'),
+    () => staticJson('/data/context.geojson', mockContextBuildings),
+  )
 }
 
 export async function getEval() {
-  if (isStaticDataMode) return staticJson('/data/eval.json', mockEval)
-  return request<EvalResult>('/eval')
+  return either(() => request<EvalResult>('/eval'), () => staticJson('/data/eval.json', mockEval))
 }
 
 async function staticWalkerExport(id: string): Promise<StaticWalkerExport> {
   const fallback: StaticWalkerExport = {
     profile: { ...mockWalkerProfile, walker: { ...mockWalkerProfile.walker, id } },
-    walks: mockWalks.filter((walk) => walk.walker_id === id),
+    walks: mockWalks.filter((walk) => walk.walker_id === id || id === mockWalkerProfile.walker.id),
     awards: staticState.awards.filter((award) => award.walker_id === id),
   }
   const exported = await staticJson(`/data/walkers/${encodeURIComponent(id)}.json`, fallback)
   const exportedAwards = exported.awards ?? exported.profile.awards ?? []
-  // Exported walker files are immutable snapshots. Merge only awards earned in
-  // this browser session so a local inspection appears on the demo phone.
-  const localAwards = staticState.awards.filter((award) => award.walker_id === id && award.id.startsWith('local_'))
-  const awards = Array.from(new Map([...exportedAwards, ...localAwards].map((award) => [award.id, award])).values())
-  return {
-    profile: { ...exported.profile, awards },
-    walks: exported.walks,
-    awards,
-  }
+  // Exported walker files are snapshots: merge awards earned in this browser session.
+  const localAwards = staticState.awards.filter((a) => a.walker_id === id && a.id.startsWith('local_'))
+  const awards = Array.from(new Map([...exportedAwards, ...localAwards].map((a) => [a.id, a])).values())
+  return { profile: { ...exported.profile, awards }, walks: exported.walks, awards }
 }
 
 export async function getWalker(id: string) {
-  if (isStaticDataMode) return clone((await staticWalkerExport(id)).profile)
-  return request<WalkerProfileResponse>(`/walkers/${encodeURIComponent(id)}`)
+  return either(
+    () => request<WalkerProfileResponse>(`/walkers/${encodeURIComponent(id)}`),
+    async () => clone((await staticWalkerExport(id)).profile),
+  )
 }
 
 export async function getWalkerWalks(id: string) {
-  if (isStaticDataMode) return clone((await staticWalkerExport(id)).walks)
-  return request<Walk[]>(`/walkers/${encodeURIComponent(id)}/walks`)
+  return either(
+    () => request<Walk[]>(`/walkers/${encodeURIComponent(id)}/walks`),
+    async () => clone((await staticWalkerExport(id)).walks),
+  )
 }
 
 export async function evaluateWalker(id: string) {
-  if (isStaticDataMode) return { awards: [] as Award[] }
-  return request<{ awards: Award[] }>(`/walkers/${encodeURIComponent(id)}/evaluate`, { method: 'POST' })
+  return either(
+    () => request<{ awards: Award[] }>(`/walkers/${encodeURIComponent(id)}/evaluate`, { method: 'POST' }),
+    async () => ({ awards: [] as Award[] }),
+  )
 }
 
 export async function getBadges() {
-  if (isStaticDataMode) return staticJson('/data/badges.json', mockBadges)
-  return request<Badge[]>('/badges')
+  return either(() => request<Badge[]>('/badges'), () => staticJson('/data/badges.json', mockBadges))
+}
+
+export async function health() {
+  return either(() => request<{ ok: true }>('/health'), async () => ({ ok: true as const }))
 }
 
 export const api = {

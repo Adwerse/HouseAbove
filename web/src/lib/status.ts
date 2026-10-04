@@ -1,18 +1,12 @@
+import { statusColors } from "../theme/tokens";
 import type { Building, DisplayStatus, UpperStatus } from "./types";
 
-/** Contract v1.1 status colours. Do not substitute theme colours here. */
-export const STATUS_COLORS: Record<DisplayStatus, string> = {
-  likely_underused: "#FF5A4E",
-  review: "#FFB020",
-  unclear: "#94A3B8",
-  likely_used: "#475569",
-  confirmed: "#8B5CF6",
-  home: "#FFD166",
-};
+/** Display-status colours, from the "Fresh air" palette in theme/tokens.ts. */
+export const STATUS_COLORS: Record<DisplayStatus, string> = statusColors;
 
 export const STATUS_LABELS: Record<DisplayStatus, string> = {
   likely_underused: "Likely underused",
-  review: "Needs review",
+  review: "Needs a human",
   unclear: "Unclear",
   likely_used: "Likely used",
   confirmed: "Confirmed candidate",
