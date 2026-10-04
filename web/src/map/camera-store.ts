@@ -11,6 +11,13 @@ export type FlyToRequest = Readonly<{
 
 type FlyToListener = (request: FlyToRequest | null) => void
 
+/** A one-shot request to return to the street-wide initial camera. */
+export type OverviewRequest = Readonly<{
+  version: number
+}>
+
+type OverviewListener = (request: OverviewRequest | null) => void
+
 export type CityMapCameraState = {
   /** The latest instruction for a mounted CityMap to consume. */
   flyToRequest: FlyToRequest | null
@@ -23,6 +30,12 @@ export type CityMapCameraState = {
    * map effect from clearing a newer request that arrived while it was flying.
    */
   clearFlyTo: (version?: number) => boolean
+  /** The latest request to return to the street overview. */
+  overviewRequest: OverviewRequest | null
+  /** A separate version counter keeps overview acknowledgements race-safe. */
+  overviewVersion: number
+  requestOverview: () => OverviewRequest
+  clearOverview: (version?: number) => boolean
 }
 
 /**
@@ -49,6 +62,22 @@ export const useCityMapCameraStore = create<CityMapCameraState>((set, get) => ({
     set({ flyToRequest: null })
     return true
   },
+  overviewRequest: null,
+  overviewVersion: 0,
+  requestOverview: () => {
+    const version = get().overviewVersion + 1
+    const request: OverviewRequest = { version }
+    set({ overviewVersion: version, overviewRequest: request })
+    return request
+  },
+  clearOverview: (version) => {
+    const activeRequest = get().overviewRequest
+    if (!activeRequest || (version !== undefined && activeRequest.version !== version)) {
+      return false
+    }
+    set({ overviewRequest: null })
+    return true
+  },
 }))
 
 /**
@@ -62,6 +91,14 @@ export const cityMapCamera = {
 
   clear(version?: number): boolean {
     return useCityMapCameraStore.getState().clearFlyTo(version)
+  },
+
+  overview(): OverviewRequest {
+    return useCityMapCameraStore.getState().requestOverview()
+  },
+
+  clearOverview(version?: number): boolean {
+    return useCityMapCameraStore.getState().clearOverview(version)
   },
 
   /**
@@ -83,6 +120,20 @@ export const cityMapCamera = {
       listener(previousRequest)
     }
 
+    return unsubscribe
+  },
+
+  /** Subscribe to overview commands without observing building fly-to state. */
+  subscribeOverview(listener: OverviewListener, options: { emitCurrent?: boolean } = {}): () => void {
+    let previousRequest = useCityMapCameraStore.getState().overviewRequest
+    const unsubscribe = useCityMapCameraStore.subscribe((state) => {
+      if (state.overviewRequest === previousRequest) return
+
+      previousRequest = state.overviewRequest
+      listener(previousRequest)
+    })
+
+    if (options.emitCurrent) listener(previousRequest)
     return unsubscribe
   },
 }

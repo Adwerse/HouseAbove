@@ -5,7 +5,6 @@ import {
   mockBuildingsGeoJson,
   mockContextBuildings,
   mockEval,
-  mockSummary,
   mockServicesByBuilding,
   mockSimilarByBuilding,
   mockWalkerProfile,
@@ -48,11 +47,6 @@ type StaticWalkerExport = {
   profile: WalkerProfileResponse
   walks: Walk[]
   awards: Award[]
-}
-
-type ExportSummary = {
-  streets: Record<string, StreetSummary>
-  all: StreetSummary
 }
 
 type StaticState = ReturnType<typeof createMockState>
@@ -226,8 +220,9 @@ export async function recordInspection(id: string, outcome: InspectionOutcome, n
 export async function getStreetSummary(street: string) {
   if (isStaticDataMode) {
     const buildings = await staticBuildings()
-    const snapshot = await staticJson<ExportSummary>('/data/summary.json', mockSummary)
-    return snapshot.streets[street] ?? staticSummary(buildings.filter((building) => building.street?.toLowerCase() === street.trim().toLowerCase()))
+    // This deliberately derives from the mutable local state, so an
+    // inspection logged during a static demo immediately updates the strip.
+    return staticSummary(buildings.filter((building) => building.street?.toLowerCase() === street.trim().toLowerCase()))
   }
   return request<StreetSummary>(`/streets/${encodeURIComponent(street)}/summary`)
 }
@@ -249,10 +244,15 @@ async function staticWalkerExport(id: string): Promise<StaticWalkerExport> {
     awards: staticState.awards.filter((award) => award.walker_id === id),
   }
   const exported = await staticJson(`/data/walkers/${encodeURIComponent(id)}.json`, fallback)
+  const exportedAwards = exported.awards ?? exported.profile.awards ?? []
+  // Exported walker files are immutable snapshots. Merge only awards earned in
+  // this browser session so a local inspection appears on the demo phone.
+  const localAwards = staticState.awards.filter((award) => award.walker_id === id && award.id.startsWith('local_'))
+  const awards = Array.from(new Map([...exportedAwards, ...localAwards].map((award) => [award.id, award])).values())
   return {
-    profile: { ...exported.profile, awards: exported.awards ?? exported.profile.awards },
+    profile: { ...exported.profile, awards },
     walks: exported.walks,
-    awards: exported.awards,
+    awards,
   }
 }
 

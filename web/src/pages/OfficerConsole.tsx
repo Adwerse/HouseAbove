@@ -1,18 +1,20 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { BarChart3, ChevronDown, CircleAlert, Info, MapPinned } from "lucide-react"
+import { BarChart3, Bot, ChevronDown, CircleAlert, Info, MapPinned } from "lucide-react"
 
-import { api } from "../lib/api"
+import { AGENT_ASK_PATH, api } from "../lib/api"
 import { displayStatus } from "../lib/status"
-import { useEventStream } from "../lib/sse"
-import type { Building, InspectionOutcome, StreetSummary, UpperStatus } from "../lib/types"
+import { streamPost, useEventStream } from "../lib/sse"
+import type { AgentEvent, Building, InspectionOutcome, StreetSummary, UpperStatus } from "../lib/types"
 import CityMap, { cityMapCamera } from "../map/CityMap"
 import { TALBOT_STREET, mockBuildings, mockContextBuildings } from "../mocks"
+import AgentPanel, { AGENT_SUGGESTIONS, EMPTY_AGENT_TRACE, type AgentPanelTrace } from "../officer/AgentPanel"
 import BuildingActions from "../officer/BuildingActions"
 import BuildingDrawer from "../officer/BuildingDrawer"
 import { CandidateRail, CandidateRailSkeleton } from "../officer/CandidateRail"
+import { officerDemoControls } from "../officer/demo-controls"
 import EvalDialog from "../officer/EvalDialog"
-import { Button, ToastViewport, type ToastItem } from "../ui"
+import { Button, Chip, ToastViewport, type ToastItem } from "../ui"
 
 const TALBOT_STREET_VIEW = {
   longitude: -6.2512,
@@ -20,6 +22,11 @@ const TALBOT_STREET_VIEW = {
   zoom: 17.2,
   bearing: -18,
   pitch: 58,
+}
+
+export type OfficerConsoleProps = {
+  /** The demo stage uses a compact two-column console inside its 70% pane. */
+  embedded?: boolean
 }
 
 function summaryFor(buildings: Building[]): StreetSummary {
@@ -40,6 +47,10 @@ function sameStreet(building: Building, street: string) {
 
 function errorCopy(error: unknown) {
   return error instanceof Error ? error.message : "Please try again."
+}
+
+function emptyAgentTrace(): AgentPanelTrace {
+  return { ...EMPTY_AGENT_TRACE, toolCalls: [], toolResults: [], answer: "", error: null }
 }
 
 function PipelineStrip({ summary, loading }: { summary: StreetSummary; loading: boolean }) {
@@ -79,13 +90,18 @@ function MapEmptyState() {
   )
 }
 
-export default function OfficerConsole() {
+export default function OfficerConsole({ embedded = false }: OfficerConsoleProps) {
   const queryClient = useQueryClient()
   const [street, setStreet] = useState(TALBOT_STREET)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const [evalOpen, setEvalOpen] = useState(false)
   const [toasts, setToasts] = useState<ToastItem[]>([])
+  const [agentOpen, setAgentOpen] = useState(false)
+  const [agentQuestion, setAgentQuestion] = useState("")
+  const [agentTrace, setAgentTrace] = useState<AgentPanelTrace>(emptyAgentTrace)
+  const [agentStreaming, setAgentStreaming] = useState(false)
+  const agentAbortRef = useRef<AbortController | null>(null)
 
   const dismissToast = useCallback((id: string) => {
     setToasts((current) => current.filter((toast) => toast.id !== id))
@@ -94,6 +110,8 @@ export default function OfficerConsole() {
     const id = `notice_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
     setToasts((current) => [...current.slice(-3), { ...toast, id }])
   }, [])
+
+  useEffect(() => () => agentAbortRef.current?.abort(), [])
 
   const buildingsQuery = useQuery({
     queryKey: ["officer-buildings", street],
@@ -174,6 +192,50 @@ export default function OfficerConsole() {
     }),
   })
 
+  const receiveAgentEvent = useCallback((event: AgentEvent) => {
+    setAgentTrace((current) => {
+      if (event.event === "tool_call") {
+        return { ...current, toolCalls: [...current.toolCalls, event.data] }
+      }
+      if (event.event === "tool_result") {
+        return { ...current, toolResults: [...current.toolResults, event.data] }
+      }
+      if (event.event === "delta") {
+        return { ...current, answer: `${current.answer}${event.data.text}` }
+      }
+      return {
+        ...current,
+        answer: event.data.text || current.answer,
+        error: event.data.error ? event.data.text || "The agent could not complete this request." : null,
+      }
+    })
+  }, [])
+
+  const askAgent = useCallback(async (rawQuestion: string) => {
+    const question = rawQuestion.trim()
+    if (!question) return
+
+    agentAbortRef.current?.abort()
+    const controller = new AbortController()
+    agentAbortRef.current = controller
+    setAgentQuestion(question)
+    setAgentTrace(emptyAgentTrace())
+    setAgentStreaming(true)
+
+    try {
+      await streamPost(AGENT_ASK_PATH, { question }, receiveAgentEvent, controller.signal)
+    } catch (error) {
+      if (!controller.signal.aborted) {
+        setAgentTrace((current) => ({ ...current, error: errorCopy(error) }))
+      }
+    } finally {
+      if (agentAbortRef.current === controller) {
+        agentAbortRef.current = null
+        setAgentStreaming(false)
+      }
+    }
+  }, [receiveAgentEvent])
+
   const streetOptions = useMemo(() => {
     const options = new Set([TALBOT_STREET, street])
     for (const feature of streetsQuery.data?.features ?? []) {
@@ -217,10 +279,40 @@ export default function OfficerConsole() {
   const recordInspection = (outcome: InspectionOutcome) => {
     if (detailBuilding) inspectionMutation.mutate({ id: detailBuilding.id, outcome })
   }
+  const recordInspectionFor = (buildingId: string, outcome: InspectionOutcome) => {
+    setSelectedId(buildingId)
+    cityMapCamera.flyTo(buildingId)
+    inspectionMutation.mutate({ id: buildingId, outcome })
+  }
+
+  useEffect(() => officerDemoControls.subscribe((command) => {
+    if (command.type === "overview") {
+      setSelectedId(null)
+      setHighlightId(null)
+      cityMapCamera.overview()
+      return
+    }
+    if (command.type === "select") {
+      selectBuilding(command.buildingId)
+      return
+    }
+    if (command.type === "ask") {
+      setAgentOpen(true)
+      void askAgent(command.question)
+      return
+    }
+    recordInspectionFor(command.buildingId, command.outcome)
+  }), [askAgent, inspectionMutation, selectBuilding])
 
   return (
-    <main className="min-h-[100dvh] bg-dusk-background p-3 sm:p-5" aria-labelledby="officer-console-title">
-      <section className="grid min-h-[calc(100dvh-1.5rem)] grid-rows-[auto_minmax(0,1fr)] overflow-hidden rounded-panel border border-white/[0.07] bg-dusk-elevated shadow-panel sm:min-h-[calc(100dvh-2.5rem)]">
+    <main
+      className={embedded ? "h-full min-h-0 bg-dusk-background" : "min-h-[100dvh] bg-dusk-background p-3 sm:p-5"}
+      aria-labelledby="officer-console-title"
+    >
+      <section className={embedded
+        ? "grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)] overflow-hidden border border-white/[0.07] bg-dusk-elevated shadow-panel"
+        : "grid min-h-[calc(100dvh-1.5rem)] grid-rows-[auto_minmax(0,1fr)] overflow-hidden rounded-panel border border-white/[0.07] bg-dusk-elevated shadow-panel sm:min-h-[calc(100dvh-2.5rem)]"}
+      >
         <header className="relative z-20 flex flex-wrap items-center gap-x-5 gap-y-3 border-b border-white/[0.07] bg-dusk-glass px-3 py-3 backdrop-blur-glass sm:px-5">
           <div className="flex items-center gap-3">
             <div>
@@ -259,6 +351,17 @@ export default function OfficerConsole() {
             <PipelineStrip summary={summary} loading={summaryQuery.isPending} />
           </div>
           <Button
+            variant="primary"
+            size="sm"
+            leadingIcon={<Bot size={15} />}
+            onClick={() => {
+              setAgentQuestion((current) => current || AGENT_SUGGESTIONS[0])
+              setAgentOpen(true)
+            }}
+          >
+            Ask HomesAbove
+          </Button>
+          <Button
             variant="secondary"
             size="sm"
             leadingIcon={<BarChart3 size={15} />}
@@ -268,7 +371,10 @@ export default function OfficerConsole() {
           </Button>
         </header>
 
-        <div className="grid min-h-0 grid-cols-1 gap-px bg-white/[0.07] xl:grid-cols-[360px_minmax(0,1fr)_440px]">
+        <div className={embedded
+          ? "grid min-h-0 grid-cols-1 gap-px bg-white/[0.07] lg:grid-cols-[minmax(15rem,18rem)_minmax(0,1fr)]"
+          : "grid min-h-0 grid-cols-1 gap-px bg-white/[0.07] xl:grid-cols-[360px_minmax(0,1fr)_440px]"}
+        >
           <aside className="min-h-[28rem] bg-dusk-background p-2 sm:p-3 xl:min-h-0">
             {buildingsQuery.isPending && !buildingsQuery.data ? (
               <CandidateRailSkeleton className="max-w-none" />
@@ -301,9 +407,24 @@ export default function OfficerConsole() {
               onSelect={setSelectedId}
             />
             {liveBuildings?.length === 0 ? <MapEmptyState /> : null}
+            {embedded && detailBuilding ? (
+              <aside className="absolute right-3 top-3 z-10 w-[min(18rem,calc(100%-1.5rem))] rounded-card border border-white/[0.1] bg-dusk-glass p-3 shadow-panel backdrop-blur-glass" aria-label="Selected building summary">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="font-mono text-[10px] text-dusk-primary">{detailBuilding.id}</p>
+                    <p className="truncate text-dusk-sm font-semibold text-dusk-text">{detailBuilding.label ?? detailBuilding.id}</p>
+                  </div>
+                  <Chip status={detailBuilding.display_status} className="shrink-0" />
+                </div>
+                <p className={`mt-2 text-dusk-xs leading-4 ${detailBuilding.verifier?.agree === false ? "text-status-review" : "text-dusk-muted"}`}>
+                  {detailBuilding.verifier?.agree === false ? "Disagreement: sent to human" : "Two independent model families agree"}
+                </p>
+                <p className="mt-1 font-mono text-[10px] text-dusk-muted">Services {detailBuilding.services?.score ?? 0}/5 within walking distance</p>
+              </aside>
+            ) : null}
           </section>
 
-          <aside className="min-h-[28rem] min-w-0 bg-dusk-background p-2 sm:p-3 xl:min-h-0" aria-label="Building detail">
+          <aside className={embedded ? "hidden" : "min-h-[28rem] min-w-0 bg-dusk-background p-2 sm:p-3 xl:min-h-0"} aria-label="Building detail">
             <BuildingDrawer
               building={detailBuilding}
               services={servicesQuery.data}
@@ -331,6 +452,21 @@ export default function OfficerConsole() {
         result={evalQuery.data ?? null}
         loading={evalQuery.isPending}
         error={evalQuery.error ?? null}
+      />
+      <AgentPanel
+        open={agentOpen}
+        onOpenChange={(open) => {
+          setAgentOpen(open)
+          if (!open) agentAbortRef.current?.abort()
+        }}
+        question={agentQuestion}
+        onQuestionChange={setAgentQuestion}
+        onAsk={(question) => { void askAgent(question) }}
+        trace={agentTrace}
+        isStreaming={agentStreaming}
+        modelName={import.meta.env.VITE_AGENT_MODEL || "configured AGENT_MODEL"}
+        buildingIds={buildings.map((building) => building.id)}
+        onSelectBuilding={selectBuilding}
       />
       <ToastViewport toasts={toasts} onDismiss={dismissToast} />
     </main>

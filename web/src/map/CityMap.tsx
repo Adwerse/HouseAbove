@@ -327,11 +327,30 @@ export default function CityMap({
     })
   }, [buildingsById])
 
+  const returnToOverview = useCallback(() => {
+    const view = initialViewRef.current ?? TALBOT_VIEW
+    setSelectedId(null)
+    mapRef.current?.flyTo({
+      center: [view.longitude, view.latitude],
+      zoom: view.zoom,
+      pitch: view.pitch,
+      bearing: view.bearing,
+      duration: 1050,
+      essential: true,
+    })
+  }, [])
+
   useEffect(() => cityMapCamera.subscribe((request) => {
     if (!request) return
     selectAndFlyTo(request.buildingId)
     cityMapCamera.clear(request.version)
   }, { emitCurrent: true }), [selectAndFlyTo])
+
+  useEffect(() => cityMapCamera.subscribeOverview((request) => {
+    if (!request) return
+    returnToOverview()
+    cityMapCamera.clearOverview(request.version)
+  }, { emitCurrent: true }), [returnToOverview])
 
   const selectedMappableBuilding = selectedId ? buildingsById.get(selectedId) ?? null : null
   const highlightedMappableBuilding = highlightId && highlightId !== selectedId
