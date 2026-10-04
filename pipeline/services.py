@@ -112,14 +112,6 @@ def poi_docs(elements: list[dict]) -> list[dict]:
     return docs
 
 
-def nearest_m(pois, location: dict, kind: str) -> int | None:
-    hit = next(iter(pois.aggregate([
-        {"$geoNear": {"near": location, "distanceField": "dist_m", "maxDistance": 1000,
-                      "spherical": True, "query": {"kind": kind}}},
-        {"$limit": 1}, {"$project": {"dist_m": 1}}])), None)
-    return round(hit["dist_m"]) if hit else None
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--refresh", action="store_true", help="query Overpass again and replace the cache")
@@ -153,7 +145,8 @@ def main() -> int:
     print("pois:", dict(Counter(p["kind"] for p in pois)))
 
     for b in buildings:
-        dist = {k: nearest_m(db.pois, b["location"], k) for k in domain.SERVICE_KINDS}
+        found = {p["kind"]: p["dist_m"] for p in repo.nearest_pois(db, b["location"])}
+        dist = {k: found.get(k) for k in domain.SERVICE_KINDS}
         db.buildings.update_one({"_id": b["_id"]}, {"$set": {"services": {
             **{f"{k}_m": v for k, v in dist.items()}, "score": domain.services_score(dist)}}})
     ranked = repo.recompute_ranks(db)
