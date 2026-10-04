@@ -88,31 +88,37 @@ def tool_result_event(call_id: str, name: str, output: Any) -> dict:
             "summary": str(summary)[:200]}
 
 
-async def stream_agent(question: str) -> AsyncIterator[tuple[str, dict]]:
+async def stream_with_server(server: Any, question: str) -> AsyncIterator[tuple[str, dict]]:
+    """Run the agent against an already connected MCP server and yield the contract's events."""
     names: dict[str, str] = {}  # call_id -> tool name
     started = False  # the model often opens with blank lines: drop them
+    result = Runner.run_streamed(build_agent(server), question, max_turns=MAX_TURNS)
+    async for ev in result.stream_events():
+        if ev.type == "raw_response_event":
+            if isinstance(ev.data, ResponseTextDeltaEvent):
+                text = ev.data.delta if started else ev.data.delta.lstrip()
+                if text:
+                    started = True
+                    yield "delta", {"text": text}
+        elif ev.type == "run_item_stream_event" and ev.name == "tool_called":
+            raw = ev.item.raw_item
+            call_id, name = _field(raw, "call_id"), _field(raw, "name")
+            names[call_id] = name
+            yield "tool_call", {"id": call_id, "name": name, "args": json.loads(_field(raw, "arguments") or "{}")}
+        elif ev.type == "run_item_stream_event" and ev.name == "tool_output":
+            call_id = _field(ev.item.raw_item, "call_id")
+            yield "tool_result", tool_result_event(call_id, names.get(call_id, "?"), ev.item.output)
+    yield "done", {"text": str(result.final_output or "").strip()}
+
+
+async def stream_agent(question: str) -> AsyncIterator[tuple[str, dict]]:
+    """The API's agent: tools over the MCP server on 127.0.0.1:8001."""
     try:
         async with asyncio.timeout(RUN_TIMEOUT_S):
             async with MCPServerStreamableHttp({"url": MCP_URL}, cache_tools_list=True,
                                                client_session_timeout_seconds=30) as server:
-                result = Runner.run_streamed(build_agent(server), question, max_turns=MAX_TURNS)
-                async for ev in result.stream_events():
-                    if ev.type == "raw_response_event":
-                        if isinstance(ev.data, ResponseTextDeltaEvent):
-                            text = ev.data.delta if started else ev.data.delta.lstrip()
-                            if text:
-                                started = True
-                                yield "delta", {"text": text}
-                    elif ev.type == "run_item_stream_event" and ev.name == "tool_called":
-                        raw = ev.item.raw_item
-                        call_id, name = _field(raw, "call_id"), _field(raw, "name")
-                        names[call_id] = name
-                        yield "tool_call", {"id": call_id, "name": name,
-                                            "args": json.loads(_field(raw, "arguments") or "{}")}
-                    elif ev.type == "run_item_stream_event" and ev.name == "tool_output":
-                        call_id = _field(ev.item.raw_item, "call_id")
-                        yield "tool_result", tool_result_event(call_id, names.get(call_id, "?"), ev.item.output)
-                yield "done", {"text": str(result.final_output or "").strip()}
+                async for event in stream_with_server(server, question):
+                    yield event
     except Exception as exc:  # the officer sees the failure instead of a stalled stream
         log.exception("agent run failed")
         yield "done", {"text": f"The agent could not complete this request ({type(exc).__name__}: {str(exc)[:160]}).",
