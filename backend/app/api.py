@@ -41,14 +41,6 @@ def _or_404(value, building_id: str):
     return value
 
 
-def _feature(b: dict) -> dict | None:
-    """GeoJSON feature: the footprint if there is one, else the point. None if it cannot be placed."""
-    geometry = b["footprint"] or b["location"]
-    if not geometry:
-        return None
-    return {"type": "Feature", "id": b["id"], "geometry": geometry, "properties": b}
-
-
 def _badge_title(award: dict) -> str:
     if award.get("title"):
         return award["title"]
@@ -67,8 +59,7 @@ def health() -> dict:
 
 @router.get("/buildings")
 def list_buildings(street: str | None = None, status: str | None = None) -> dict:
-    features = [f for f in map(_feature, repo.list_buildings(street, status)) if f]
-    return {"type": "FeatureCollection", "features": features}
+    return repo.buildings_geojson(street, status)
 
 
 @router.get("/buildings/{building_id}")

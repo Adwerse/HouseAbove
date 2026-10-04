@@ -73,6 +73,20 @@ def list_buildings(street: str | None = None, status: str | None = None,
     return sorted(out, key=lambda b: (b["rank"] is None, b["rank"] or 0, b["id"]))
 
 
+def feature(b: dict) -> dict | None:
+    """GeoJSON feature: the footprint if there is one, else the point. None if it cannot be placed."""
+    geometry = b["footprint"] or b["location"]
+    if not geometry:
+        return None
+    return {"type": "Feature", "id": b["id"], "geometry": geometry, "properties": b}
+
+
+def buildings_geojson(street: str | None = None, status: str | None = None,
+                      db: Database | None = None) -> dict:
+    features = [f for f in map(feature, list_buildings(street, status, db)) if f]
+    return {"type": "FeatureCollection", "features": features}
+
+
 def review_queue(db: Database | None = None) -> list[dict]:
     return list_buildings(status="review", db=db)
 
