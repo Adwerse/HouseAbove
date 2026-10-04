@@ -29,10 +29,14 @@ def _scrub(text: str) -> str:
     return re.sub(r"\bvacant\b", "unused", text, flags=re.I)
 
 
+def clean_phrases(items: list[str]) -> list[str]:
+    return [_scrub(s.strip())[:120] for s in items if s.strip()][:8]
+
+
 def clean_reading(r: FacadeReading) -> FacadeReading:
     """Rules the prompt asks for but code enforces: likely_underused needs at
     least one visible signal, otherwise unclear."""
-    signals = [_scrub(s.strip())[:120] for s in r.upper_signals if s.strip()][:8]
+    signals = clean_phrases(r.upper_signals)
     status = r.upper_status
     if status == "likely_underused" and not signals:
         status = "unclear"
