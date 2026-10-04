@@ -78,7 +78,7 @@ def building_services(building_id: str) -> dict:
 @router.get("/buildings/{building_id}/similar")
 def similar(building_id: str, k: int = 5) -> list:
     _or_404(repo.get_building(building_id), building_id)
-    return repo.similar(building_id, k)
+    return repo.similar(building_id, k)[0]
 
 
 @router.get("/review-queue")

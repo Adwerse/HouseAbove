@@ -94,8 +94,21 @@ def building_services(building_id: str, db: Database | None = None) -> dict | No
     return {"services": doc.get("services"), "pois": pois}
 
 
-def similar(building_id: str, k: int = 5, db: Database | None = None) -> list[dict]:
-    return []  # filled in C4 ($vectorSearch, else cosine fallback)
+def similar(building_id: str, k: int = 5, db: Database | None = None) -> tuple[list[dict], str]:
+    """(results, db_op). db_op is "$vectorSearch" or "cosine-fallback" once C4 builds
+    embeddings; "none" means no search ran."""
+    return [], "none"  # filled in C4
+
+
+def public_registers(building_id: str, db: Database | None = None) -> dict | None:
+    """derelict / protected are None until registers.py has checked the building:
+    None means "not checked", never "not on the register"."""
+    doc = _db(db).buildings.find_one({"_id": building_id}, {"registers": 1})
+    if doc is None:
+        return None
+    reg = doc.get("registers") or {}
+    out = {"derelict": reg.get("derelict"), "protected": reg.get("protected")}
+    return {**out, "checked": all(v is not None for v in out.values())}
 
 
 def street_summary(street: str, db: Database | None = None) -> dict:
