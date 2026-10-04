@@ -100,6 +100,12 @@ class EvaluateTest(Base):
             self.capture(f"y{i}", street="middle abbey street")
         self.assertIn("main_street", self.ids(engine.evaluate_walker(self.db, "w_a")))
 
+    def test_no_street_from_photo_name(self):
+        for i in range(20):
+            self.capture(f"IMG_{8500 + i}", street=None)
+        self.assertEqual(engine.stats(self.db, "w_a")["streets"], 0)
+        self.assertNotIn("main_street", self.ids(engine.evaluate_walker(self.db, "w_a")))
+
     def test_same_building_counts_once(self):
         self.capture("a1")
         self.db.walks.update_one({"_id": "w_a_walk"}, {"$push": {"building_ids": "a1"}})

@@ -20,7 +20,7 @@ from zoneinfo import ZoneInfo
 
 from pymongo.errors import DuplicateKeyError, OperationFailure
 
-from app.domain import derive_street, haversine_m, street_key
+from app.domain import haversine_m, street_key
 
 log = logging.getLogger("gamification")
 
@@ -98,7 +98,8 @@ def hamming(a: str | None, b: str | None) -> int | None:
 
 
 def _street(b: dict) -> str:
-    return street_key(b.get("street") or derive_street(b["_id"]) or "")
+    # Stored street only: deriving it from the id turns "IMG_8528" into "Img Street".
+    return street_key(b.get("street") or "")
 
 
 def _photographer_positions(db, walker_id: str | None = None) -> dict[str, tuple[float, float]]:
