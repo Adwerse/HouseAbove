@@ -35,6 +35,7 @@ import {
 
 import type {
   Building,
+  ContextBuildingsGeoJson,
   DisplayStatus,
   NearbyPoi,
   PointGeometry,
@@ -43,7 +44,6 @@ import type {
 } from "../lib/types"
 import {
   mockBuildings,
-  mockBuildingsById,
   mockContextBuildings,
   mockNearbyPoisByBuilding,
 } from "../mocks"
@@ -70,6 +70,12 @@ export type CityMapProps = {
   initialViewState?: CityMapViewState
   /** Called when a surveyed building is selected from a rendered layer. */
   onSelect?: (id: string) => void
+  /** Optional live survey data. The deterministic Talbot Street data remains the fallback. */
+  buildings?: Building[]
+  /** Optional live OSM massing around the surveyed street. */
+  contextBuildings?: ContextBuildingsGeoJson
+  /** A lightweight external hover outline, used by the officer candidate rail. */
+  highlightId?: string | null
   children?: ReactNode
 }
 
@@ -160,15 +166,6 @@ const LIGHTING_EFFECTS = [
 const isMappableBuilding = (building: Building): building is MappableBuilding => Boolean(building.location)
 const hasFootprint = (building: MappableBuilding): building is FootprintBuilding => Boolean(building.footprint)
 
-/* These immutable data arrays are deliberately prepared once, never per animation frame. */
-const SURVEYED_BUILDINGS = mockBuildings.filter(isMappableBuilding)
-const FOOTPRINT_BUILDINGS = SURVEYED_BUILDINGS.filter(hasFootprint)
-const PRISM_BUILDINGS = SURVEYED_BUILDINGS.filter((building) => !building.footprint)
-const REVIEW_BUILDINGS = SURVEYED_BUILDINGS.filter((building) => building.display_status === "review")
-const HOME_BUILDINGS = SURVEYED_BUILDINGS.filter((building) => building.display_status === "home")
-const DERELICT_BUILDINGS = SURVEYED_BUILDINGS.filter((building) => building.registers.derelict === true)
-const PROTECTED_BUILDINGS = SURVEYED_BUILDINGS.filter((building) => building.registers.protected === true)
-
 function buildingHeight(building: Building) {
   return Math.max(building.height_m ?? DEFAULT_HEIGHT_M, GROUND_HEIGHT_M)
 }
@@ -243,6 +240,9 @@ export default function CityMap({
   extraLayers,
   initialViewState,
   onSelect,
+  buildings,
+  contextBuildings,
+  highlightId,
   children,
 }: CityMapProps) {
   const mapRef = useRef<MapRef | null>(null)
@@ -255,6 +255,34 @@ export default function CityMap({
     protected: true,
   })
   const [useFallbackStyle, setUseFallbackStyle] = useState(false)
+
+  /* Recompute only when the API snapshot changes, never as a side effect of camera animation. */
+  const surveyBuildings = useMemo(
+    () => (buildings ?? mockBuildings).filter(isMappableBuilding),
+    [buildings],
+  )
+  const buildingsById = useMemo(
+    () => new globalThis.Map(surveyBuildings.map((building) => [building.id, building])),
+    [surveyBuildings],
+  )
+  const footprintBuildings = useMemo(() => surveyBuildings.filter(hasFootprint), [surveyBuildings])
+  const prismBuildings = useMemo(() => surveyBuildings.filter((building) => !building.footprint), [surveyBuildings])
+  const reviewBuildings = useMemo(
+    () => surveyBuildings.filter((building) => building.display_status === "review"),
+    [surveyBuildings],
+  )
+  const homeBuildings = useMemo(
+    () => surveyBuildings.filter((building) => building.display_status === "home"),
+    [surveyBuildings],
+  )
+  const derelictBuildings = useMemo(
+    () => surveyBuildings.filter((building) => building.registers.derelict === true),
+    [surveyBuildings],
+  )
+  const protectedBuildings = useMemo(
+    () => surveyBuildings.filter((building) => building.registers.protected === true),
+    [surveyBuildings],
+  )
 
   if (!initialViewRef.current) {
     initialViewRef.current = {
@@ -282,7 +310,7 @@ export default function CityMap({
   }, [])
 
   const selectAndFlyTo = useCallback((id: string) => {
-    const building = mockBuildingsById[id]
+    const building = buildingsById.get(id)
     if (!building || !isMappableBuilding(building)) return
 
     setSelectedId(id)
@@ -297,7 +325,7 @@ export default function CityMap({
       duration: 1400,
       essential: true,
     })
-  }, [])
+  }, [buildingsById])
 
   useEffect(() => cityMapCamera.subscribe((request) => {
     if (!request) return
@@ -305,8 +333,10 @@ export default function CityMap({
     cityMapCamera.clear(request.version)
   }, { emitCurrent: true }), [selectAndFlyTo])
 
-  const selectedBuilding = selectedId ? mockBuildingsById[selectedId] ?? null : null
-  const selectedMappableBuilding = selectedBuilding && isMappableBuilding(selectedBuilding) ? selectedBuilding : null
+  const selectedMappableBuilding = selectedId ? buildingsById.get(selectedId) ?? null : null
+  const highlightedMappableBuilding = highlightId && highlightId !== selectedId
+    ? buildingsById.get(highlightId) ?? null
+    : null
   const selectedServices = useMemo<ServiceLink[]>(() => {
     if (mode !== "officer" || !selectedMappableBuilding) return []
 
@@ -325,7 +355,7 @@ export default function CityMap({
     const deckLayers: Layer[] = [
       new PolygonLayer({
         id: "context-buildings",
-        data: mockContextBuildings.features,
+        data: (contextBuildings ?? mockContextBuildings).features,
         extruded: true,
         filled: true,
         stroked: false,
@@ -341,7 +371,7 @@ export default function CityMap({
     deckLayers.push(
       new PolygonLayer<FootprintBuilding>({
         id: "surveyed-footprints-ground",
-        data: FOOTPRINT_BUILDINGS,
+        data: footprintBuildings,
         extruded: true,
         filled: true,
         stroked: false,
@@ -356,7 +386,7 @@ export default function CityMap({
       }),
       new PolygonLayer<FootprintBuilding>({
         id: "surveyed-footprints-upper",
-        data: FOOTPRINT_BUILDINGS,
+        data: footprintBuildings,
         extruded: true,
         filled: true,
         stroked: false,
@@ -371,7 +401,7 @@ export default function CityMap({
       }),
       new ColumnLayer<MappableBuilding>({
         id: "surveyed-prisms-ground",
-        data: PRISM_BUILDINGS,
+        data: prismBuildings,
         diskResolution: 4,
         radius: 4.5,
         extruded: true,
@@ -386,7 +416,7 @@ export default function CityMap({
       }),
       new ColumnLayer<MappableBuilding>({
         id: "surveyed-prisms-upper",
-        data: PRISM_BUILDINGS,
+        data: prismBuildings,
         diskResolution: 4,
         radius: 4.5,
         extruded: true,
@@ -401,7 +431,7 @@ export default function CityMap({
       }),
       new ColumnLayer<MappableBuilding>({
         id: "review-beacons",
-        data: REVIEW_BUILDINGS,
+        data: reviewBuildings,
         diskResolution: 4,
         radius: 0.8,
         extruded: true,
@@ -413,7 +443,7 @@ export default function CityMap({
       }),
       new ScatterplotLayer<MappableBuilding>({
         id: "home-ground-halo",
-        data: HOME_BUILDINGS,
+        data: homeBuildings,
         radiusUnits: "meters",
         radiusMinPixels: 6,
         filled: true,
@@ -431,7 +461,7 @@ export default function CityMap({
     if (registerVisibility.derelict) {
       deckLayers.push(new ScatterplotLayer<MappableBuilding>({
         id: "derelict-register-ring",
-        data: DERELICT_BUILDINGS,
+        data: derelictBuildings,
         radiusUnits: "meters",
         radiusMinPixels: 7,
         filled: false,
@@ -447,7 +477,7 @@ export default function CityMap({
     if (registerVisibility.protected) {
       deckLayers.push(new ScatterplotLayer<MappableBuilding>({
         id: "protected-structure-ring",
-        data: PROTECTED_BUILDINGS,
+        data: protectedBuildings,
         radiusUnits: "meters",
         radiusMinPixels: 7,
         filled: false,
@@ -471,6 +501,21 @@ export default function CityMap({
         lineWidthMinPixels: 2,
         getPolygon: outlinePolygon,
         getLineColor: OUTLINE_COLOR,
+        getLineWidth: 2,
+      }))
+    }
+
+    if (highlightedMappableBuilding) {
+      deckLayers.push(new PolygonLayer<MappableBuilding>({
+        id: "candidate-rail-hover-outline",
+        data: [highlightedMappableBuilding],
+        filled: false,
+        stroked: true,
+        extruded: false,
+        lineWidthUnits: "pixels",
+        lineWidthMinPixels: 2,
+        getPolygon: outlinePolygon,
+        getLineColor: [168, 190, 255, 215],
         getLineWidth: 2,
       }))
     }
@@ -522,7 +567,22 @@ export default function CityMap({
     }
 
     return deckLayers
-  }, [mode, pulseStep, registerVisibility, selectAndFlyTo, selectedMappableBuilding, selectedServices])
+  }, [
+    contextBuildings,
+    derelictBuildings,
+    footprintBuildings,
+    highlightedMappableBuilding,
+    homeBuildings,
+    mode,
+    prismBuildings,
+    protectedBuildings,
+    pulseStep,
+    registerVisibility,
+    reviewBuildings,
+    selectAndFlyTo,
+    selectedMappableBuilding,
+    selectedServices,
+  ])
 
   const handleMapError = useCallback((event: { error?: Error }) => {
     const message = event.error?.message.toLowerCase() ?? ""
