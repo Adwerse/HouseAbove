@@ -28,6 +28,10 @@ Single owner of shared files: `web/package.json` + lockfile (A),
 
 - web :5173 (Vite proxies `/api` and `/photos` to :8000) | API :8000 | MCP :8001 (streamable HTTP, path `/mcp`).
 - Backend runs from `backend/`: `uvicorn app.main:app --port 8000`.
+- The agent needs the MCP server: `python backend/mcp_server.py` (HTTP, 127.0.0.1:8001/mcp). Terminal backup that
+  needs neither: `python pipeline/agent_cli.py`. `DEMO_CACHE=1` replays recorded agent runs from
+  `data/export/agent/` (record them with `python backend/scripts/record_demo.py`).
+- `python backend/scripts/smoke.py` hits every endpoint and asserts the contract shapes.
 - All model inference goes through TensorX (OpenAI-compatible, EU-hosted). No
   OpenAI key at runtime. `chat.completions` only.
 - Env: `MONGODB_URI`, `TENSORX_API_KEY`, `TENSORX_BASE_URL`, `VISION_MODEL`,
