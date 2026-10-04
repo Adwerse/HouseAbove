@@ -3,7 +3,9 @@
 Functions return plain JSON-friendly dicts (embedding removed, id and
 display_status added). They never publish events: the API routes do.
 """
+import json
 from datetime import datetime, timezone
+from pathlib import Path
 
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
@@ -121,8 +123,14 @@ def street_summary(street: str, db: Database | None = None) -> dict:
             "confirmed": shown.count("confirmed"), "home": shown.count("home")}
 
 
+CONTEXT_FILE = Path(__file__).resolve().parents[2] / "data" / "export" / "context.geojson"
+
+
 def context_buildings(db: Database | None = None) -> dict:
-    return {"type": "FeatureCollection", "features": []}  # filled in C4
+    """Surrounding OSM buildings (properties.height_m), written by pipeline/geo.py."""
+    if CONTEXT_FILE.exists():
+        return json.loads(CONTEXT_FILE.read_text())
+    return {"type": "FeatureCollection", "features": []}
 
 
 def eval_summary(db: Database | None = None) -> dict:
