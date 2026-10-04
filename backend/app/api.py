@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from sse_starlette.sse import EventSourceResponse
 
-from app import agent, events, repo
+from app import agent_cache, events, repo
 from app.db import get_db
 from app.gamification import engine
 
@@ -135,7 +135,7 @@ async def agent_ask(body: AskIn) -> EventSourceResponse:
     """SSE: tool_call, tool_result, delta, done (CONTRACT)."""
 
     async def stream():
-        async for event, data in agent.stream_agent(body.question):
+        async for event, data in agent_cache.answer(body.question):
             yield {"event": event, "data": json.dumps(data)}
 
     return EventSourceResponse(stream(), ping=15)
