@@ -183,10 +183,17 @@ def context_buildings(db: Database | None = None) -> dict:
     return {"type": "FeatureCollection", "features": []}
 
 
+EVAL_FILE = Path(__file__).resolve().parents[2] / "data" / "export" / "eval.json"
+
+
 def eval_summary(db: Database | None = None) -> dict:
-    """C4 fills rows, agreement and shop_confirmed; escalated is already real."""
-    escalated = _db(db).buildings.count_documents({"needs_human": True})
-    return {"rows": [], "agreement": "0/0", "escalated": escalated, "shop_confirmed": "0/0"}
+    """Written by pipeline/eval.py. `escalated` is always counted live. Without the file the
+    counts are zero: nothing has been evaluated yet."""
+    out = {"rows": [], "agreement": "0/0", "shop_confirmed": "0/0"}
+    if EVAL_FILE.exists():
+        out = json.loads(EVAL_FILE.read_text())
+    out["escalated"] = _db(db).buildings.count_documents({"needs_human": True})
+    return out
 
 
 def recompute_ranks(db: Database | None = None) -> int:

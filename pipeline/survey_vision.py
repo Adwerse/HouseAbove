@@ -93,6 +93,9 @@ async def process(photo: Path, row: dict, buildings, model: str, force: bool, we
     if existing and (existing.get("models") or {}).get("vision") and not force:
         if not (web_dir / f"{pid}.jpg").exists():
             await asyncio.to_thread(prepare, photo, web_dir)
+        if row.get("shop_staff_answer"):  # answers are collected after the first read: pick up new ones
+            await asyncio.to_thread(buildings.update_one, {"_id": pid},
+                                    {"$set": {"shop_staff_answer": row["shop_staff_answer"]}})
         return "skipped"
 
     exif, jpeg = await asyncio.to_thread(prepare, photo, web_dir)

@@ -42,3 +42,9 @@ class UpperFloorsCheck(BaseModel):
     for_use: list[str]
     against_use: list[str]
     status: UpperStatus
+
+
+class StaffReading(BaseModel):
+    """What a shop worker's free-text answer says about the floors above."""
+
+    reading: Literal["lives_upstairs", "empty_upstairs", "unsure"]
